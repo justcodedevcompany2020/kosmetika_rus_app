@@ -1,1 +1,0 @@
-# kosmetika_rus_app
