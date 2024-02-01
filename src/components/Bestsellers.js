@@ -17,7 +17,7 @@ export const Bestsellers = (props) => {
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.containerTop}>
-        <Text style={styles.title}>Хиты продаж</Text>
+        <Text style={styles.title}>{props.name}</Text>
         <TouchableOpacity style={styles.btn}>
           <Text style={styles.btnText}>Смотреть все</Text>
         </TouchableOpacity>
@@ -32,36 +32,19 @@ export const Bestsellers = (props) => {
             return <View style={{ height: "100%", width: 11 }} />;
           }}
         >
-          <CatalogueItem
-            style={{}}
-            rate="4.9"
-            title="Крем лифтинг для лица с наносистемой"
-            currentPrice="378"
-            prevPrice="420"
-          />
-          <CatalogueItem
-            style={{}}
-            sale="20"
-            rate="4.9"
-            title="Крем лифтинг для лица с наносистемой"
-            currentPrice="378"
-            prevPrice="420"
-          />
-          <CatalogueItem
-            style={{}}
-            rate="4.9"
-            title="Крем лифтинг для лица с наносистемой"
-            currentPrice="378"
-            prevPrice="420"
-          />
-          <CatalogueItem
-            style={{}}
-            sale="30"
-            rate="4.9"
-            title="Крем лифтинг для лица с наносистемой"
-            currentPrice="378"
-            prevPrice="420"
-          />
+          {
+            props.product.map((elm, i) => {
+              return <CatalogueItem
+                style={{}}
+                isbasket={elm?.basket_auth_user?.length}
+                image={elm.photos[0].photo}
+                key={i}
+                rate={elm.rate?.length == 0 ? 5 : elm.rate}
+                title={elm.name}
+                currentPrice={elm.price}
+                prevPrice={elm.price}
+              />
+            })}
         </ScrollView>
       </View>
     </View>

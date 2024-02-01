@@ -179,6 +179,7 @@ export const GetStoryes = (token) => {
 }
 
 export const GetBaners = (type, token) => {
+    console.log(token)
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -195,7 +196,7 @@ export const GetBaners = (type, token) => {
     };
     return (dispatch) => {
         dispatch(StartGetBaners())
-        fetch(`https://basrabackend.justcode.am/api/app/get_banner`, requestOptions)
+        fetch(`https://basrarusbackend.justcode.am/api/app/get_banner`, requestOptions)
             .then(response => response.json())
             .then(r => {
                 if (r.status) {

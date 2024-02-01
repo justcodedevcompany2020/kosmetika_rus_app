@@ -159,7 +159,6 @@ export const OrderFirstForm = () => {
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             value={data.phone}
             onChangeText={(masked, unmasked) => {
-              console.log(unmasked)
               HandelChange(unmasked, 'phone')
               // setPhone(masked); // you can use the unmasked value as well
               if (unmasked.length == 10) {

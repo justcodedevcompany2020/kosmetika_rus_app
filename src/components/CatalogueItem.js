@@ -70,7 +70,11 @@ export const CatalogueItem = ({
   return (
     <TouchableOpacity
       style={[styles.item, style]}
-      onPress={() => navigation.navigate("CatalogTab", { screen: "Item" })}
+      onPress={() => navigation.navigate("CatalogTab", {
+        screen: "Item", params: {
+          productId: id
+        },
+      })}
     >
       <View style={styles.saleBox}>
         <Text style={styles.saleText}>{sale}%</Text>

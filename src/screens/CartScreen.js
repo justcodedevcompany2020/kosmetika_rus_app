@@ -95,6 +95,7 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
+              console.log(product, '1')
               return <CartItem
                 RemoveFromBasket={() => RemoveFromBasket(product.product.id, index)}
                 count={product.product_count}

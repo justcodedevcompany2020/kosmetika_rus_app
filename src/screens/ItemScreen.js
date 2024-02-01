@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -21,16 +21,41 @@ import Swiper from "react-native-swiper";
 import RatingBigIcon from "../icons/RatingIcon";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useDispatch, useSelector } from "react-redux";
+import { AddDelateFavorite, AddToBasketAction, GetSinglProduct } from "../services/action/action";
 
-export const ItemScreen = () => {
+export const ItemScreen = (props) => {
   const navigation = useNavigation();
   const [rotation, setRotation] = useState(180);
+  const [product, setProduct] = useState({});
+
+  const productId = props.route.params.productId;
+  const getSinglProduct = useSelector((st) => st.getSinglProduct)
+  const { token } = useSelector((st) => st.static)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (getSinglProduct.data) {
+      setProduct(getSinglProduct.data)
+    }
+
+  }, [getSinglProduct]);
+
+  useEffect(() => {
+    dispatch(GetSinglProduct({ product_id: productId }, token))
+  }, [productId])
+
+
+  const AddRevoeBasket = () => {
+    dispatch(AddToBasketAction({ product_id: productId }, token))
+    navigation.navigate("OrderTab", { screen: "Cart" })
+  }
+  console.log(product.basket_auth_user, 'getSinglProduct')
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
         <View style={styles.inner}>
-          <Swiper
+          {product?.photos?.length > 0 && <Swiper
             style={{
               height: 320,
               paddingTop: 20,
@@ -62,37 +87,18 @@ export const ItemScreen = () => {
               ></View>
             }
           >
-            <View style={styles.slide1}>
-              <Image
-                style={styles.slidePic}
-                source={require("../img/itemPic.png")}
-              ></Image>
-            </View>
-            <View style={styles.slide2}>
-              <Image
-                style={styles.slidePic}
-                source={require("../img/itemPic.png")}
-              ></Image>
-            </View>
-            <View style={styles.slide3}>
-              <Image
-                style={styles.slidePic}
-                source={require("../img/itemPic.png")}
-              ></Image>
-            </View>
-            <View style={styles.slide4}>
-              <Image
-                style={styles.slidePic}
-                source={require("../img/itemPic.png")}
-              ></Image>
-            </View>
-            <View style={styles.slide5}>
-              <Image
-                style={styles.slidePic}
-                source={require("../img/itemPic.png")}
-              ></Image>
-            </View>
-          </Swiper>
+            {product?.photos?.map((elm, i) => {
+              return <View key={i} style={styles.slide1}>
+                <Image
+                  style={styles.slidePic}
+                  source={{ uri: `https://basrarusbackend.justcode.am/uploads/${elm.photo}` }}
+                // source={require("../img/itemPic.png")}
+                ></Image>
+              </View>
+            })
+            }
+
+          </Swiper>}
           <ReturnIcon
             style={styles.retunIcon}
             onPress={() => navigation.goBack()}
@@ -104,7 +110,7 @@ export const ItemScreen = () => {
             <Text style={styles.hitBlockText}>Хит</Text>
           </LinearGradient>
           <View style={styles.mainContainer}>
-            <Text style={styles.title}>Тоник «Коллагеновый»</Text>
+            <Text style={styles.title}>{product.name}</Text>
             <View style={styles.rateContainer}>
               <RatingBigIcon />
               <RatingBigIcon />
@@ -118,17 +124,17 @@ export const ItemScreen = () => {
             <View style={styles.paramContainer}>
               <Text style={styles.paramText}>Артикул: </Text>
               <Text style={[styles.paramText, { marginRight: 8 }]}>
-                pl162220
+                {product.vendor_code}
               </Text>
               <Text style={[styles.paramText, { marginRight: 8 }]}>|</Text>
               <Text style={styles.paramText}>Объем: </Text>
-              <Text style={styles.paramText}>150 мл</Text>
+              <Text style={styles.paramText}>{product.volume} мл</Text>
             </View>
             <View style={styles.priceContainer}>
-              <Text style={styles.currentPrice}>270 ₽</Text>
-              <Text style={styles.prevPrice}>300 ₽</Text>
+              <Text style={styles.currentPrice}>{product.price - (product.price * product.discount / 100)} ₽</Text>
+              <Text style={styles.prevPrice}>{product.price} ₽</Text>
               <View style={styles.discount}>
-                <Text style={styles.discountText}>10%</Text>
+                <Text style={styles.discountText}>{product.discount}</Text>
               </View>
             </View>
             <Collapse
@@ -145,15 +151,7 @@ export const ItemScreen = () => {
               </CollapseHeader>
               <CollapseBody style={styles.accBody}>
                 <Text style={styles.accText}>
-                  Бережно очищает кожу лица, шеи и декольте от поверхностных
-                  загрязнений. Дополнительно насыщает эластином и коллагеном,
-                  способствуя ускоренной регенерации клеток. Не нарушает pH
-                  баланс и гидролипидную мантию кожи. Благодаря своему составу,
-                  обогащает эпидермис низкомолекулярными питательными
-                  компонентами, тонизирует, восстанавливает водный баланс,
-                  устраняет тусклость, придаёт коже упругость и эластичность.
-                  Возможно выпадение осадка в виде коллагеновых хлопьев, при
-                  необходимости встряхнуть.
+                  {product.characteristics}
                 </Text>
               </CollapseBody>
             </Collapse>
@@ -170,7 +168,7 @@ export const ItemScreen = () => {
                 />
               </CollapseHeader>
               <CollapseBody style={styles.accBody}>
-                <Text>Here you can find a descripton of a category item</Text>
+                <Text>{product.description}</Text>
               </CollapseBody>
             </Collapse>
             <Collapse
@@ -186,15 +184,15 @@ export const ItemScreen = () => {
                 />
               </CollapseHeader>
               <CollapseBody style={styles.accBody}>
-                <Text>Here you can find a descripton of a category item</Text>
+                <Text>{product.compound}</Text>
               </CollapseBody>
             </Collapse>
           </View>
           <View style={{ paddingHorizontal: 20 }}>
             <MainButton
-              title={`В корзину · 363 ₽`}
+              title={`В корзину ${product.price - (product.price * product.discount / 100)} ₽`}
               onPress={() =>
-                navigation.navigate("OrderTab", { screen: "Cart" })
+                AddRevoeBasket()
               }
             />
           </View>

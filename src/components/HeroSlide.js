@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { GetBanners } from "../services/action/action";
 
 export const HeroSlide = (props) => {
+  console.log(props.image)
   const navigation = useNavigation();
   const dispatch = useDispatch()
   // useEffect(() => {
@@ -30,18 +31,18 @@ export const HeroSlide = (props) => {
         <Text style={styles.descr}>
           Уникальная косметическая{"\n"}серия в линейке Plazan
         </Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.heroBtn}
           onPress={() =>
             navigation.navigate("CatalogTab", { screen: "Category" })
           }
         >
           <Text style={styles.heroBtnText}>Узнать больше</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.heroRight}>
         <Image
-          source={require("../img/summary-item-pic.png")}
+          source={{ uri: `https://basrarusbackend.justcode.am/uploads/${props.image}` }}
           style={styles.heroPic}
         />
       </View>

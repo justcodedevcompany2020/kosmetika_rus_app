@@ -18,8 +18,9 @@ import { Contacts } from "../components/Contacts";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAuthUser } from "../services/action/action";
+import { GetAuthUser, LogoutAction } from "../services/action/action";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LogoutPopup } from '../components/LogoutPopup'
 
 export const ProfileScreen = (props) => {
   const navigation = useNavigation();
@@ -27,10 +28,11 @@ export const ProfileScreen = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
   const getUser = useSelector((st) => st.getUser)
-
+  const [token, setToken] = useState()
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
     if (token) {
+      setToken(token)
       dispatch(GetAuthUser(token))
     }
   }
@@ -44,6 +46,8 @@ export const ProfileScreen = (props) => {
 
   return (
     <View style={{ backgroundColor: "#f7f7f7", flex: 1, height: "100%" }}>
+      <LogoutPopup />
+
       <ScrollView>
         <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
           {/* <Modal
@@ -140,7 +144,16 @@ export const ProfileScreen = (props) => {
               >
                 <View style={styles.profileMuneItemLeft}>
                   <LogoutIcon />
-                  <Text style={styles.listTextRed}>Выйти из профиля</Text>
+                  <Text
+                    onPress={() => {
+                      dispatch(LogoutAction(token))
+                      navigation.navigate("RegisterTab", {
+                        screen: "SignUp"
+                      })
+                      // navigation.navigate('SignUp')
+
+                    }}
+                    style={styles.listTextRed}>Выйти из профиля</Text>
                 </View>
                 <View></View>
               </TouchableOpacity>

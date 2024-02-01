@@ -13,6 +13,7 @@ export const OrdersScreen = (props) => {
   const { token } = useSelector((st) => st.static)
   const dispatch = useDispatch()
   const getMyOrder = useSelector((st) => st.getMyOrder)
+  console.log(getMyOrder.data.data, 'getMyOrder', 11)
   useEffect(() => {
     dispatch(GetMyOrderAction(token))
   }, [dispatch])
@@ -26,7 +27,7 @@ export const OrdersScreen = (props) => {
               style={{ top: -3 }}
               onPress={() => navigation.navigate("Profile")}
             />
-            <OrderList />
+            <OrderList data={getMyOrder?.data?.data} />
           </View>
         </View>
       </ScrollView>

@@ -128,7 +128,6 @@ export const OrderSecondForm = (props) => {
       setErrorC('')
     }
 
-    console.log(send, send1)
     if (send && send1) {
       navigation.navigate("ThirdStep", { data })
     }
