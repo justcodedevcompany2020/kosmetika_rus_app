@@ -6,15 +6,15 @@ import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 
-export const CartItem = ({ title, descr, currentPrice, prevPrice }) => {
-  const [count, setCount] = useState(1);
-  const onPressMinus = () =>
-    setCount((prevCount) => (prevCount == 0 ? (prevCount = 0) : prevCount - 1));
-  const onPressPlus = () => setCount((prevCount) => prevCount + 1);
+export const CartItem = ({ RemoveFromBasket, count, title, descr, currentPrice, prevPrice, addProductCount, MinusProductCount }) => {
+  // const [count, setCount] = useState(1);
+  // const onPressMinus = () =>
+  //   setCount((prevCount) => (prevCount == 0 ? (prevCount = 0) : prevCount - 1));
+  // const onPressPlus = () => setCount((prevCount) => prevCount + 1);
 
   return (
     <View style={styles.cartItem}>
-      <TouchableOpacity style={{ position: "absolute", bottom: 17, right: 15 }}>
+      <TouchableOpacity onPress={() => { RemoveFromBasket() }} style={{ position: "absolute", bottom: 17, right: 15 }}>
         <RemoveFromCartIcon />
       </TouchableOpacity>
       <SummaryBgIcon style={{ position: "absolute", left: 15 }} />
@@ -28,11 +28,11 @@ export const CartItem = ({ title, descr, currentPrice, prevPrice }) => {
             <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <TouchableOpacity style={styles.minusBtn} onPress={onPressMinus}>
+            <TouchableOpacity style={styles.minusBtn} onPress={MinusProductCount}>
               <MinusIcon />
             </TouchableOpacity>
             <Text style={styles.itemAmount}>{count}</Text>
-            <TouchableOpacity style={styles.plusBtn} onPress={onPressPlus}>
+            <TouchableOpacity style={styles.plusBtn} onPress={addProductCount}>
               <PlusIcon />
             </TouchableOpacity>
           </View>

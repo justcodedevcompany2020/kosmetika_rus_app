@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,10 +12,58 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { OrderItemFinal } from "../../components/OrderItemFinal";
 import { PaymentMethod } from "../../components/PaymentMethod";
+import { useDispatch, useSelector } from "react-redux";
+import { AddNewOrder, ClearValidOrder } from "../../services/action/action";
 
 export const OrderFourthForm = (props) => {
-  const [paymentOption, setPaymentOption] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState(2);
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const getUser = useSelector((st) => st.getUser)
+  const getMyOrder = useSelector((st) => st.getMyOrder)
+
+  const addNewOrder = useSelector((st) => st.addNewOrder)
+
+  const getPaymentType = useSelector((st) => st.getPaymentType)
+  const getBasket = useSelector((st) => st.getBasket)
+  const { token } = useSelector((st) => st.static)
+
+  const [paymentData, setPaymentData] = useState([])
+
+  useEffect(() => {
+    dispatch(ClearValidOrder())
+  }, [])
+
+  useEffect(() => {
+    setPaymentData(getPaymentType?.data)
+  }, [getPaymentType.data])
+
+  const [data, setData] = useState(props.route?.params?.data)
+
+
+  useEffect(() => {
+    let item = { ...data }
+    item.payment_id = 1
+    setData(item)
+  }, [])
+
+  // AddNewOrder
+
+  const handelPress = () => {
+    let item = { ...data }
+    item.payment_id = 2
+    item.platform_id = 1
+    item.phone = getUser.data.user?.phone
+    dispatch(AddNewOrder(item, token))
+    // navigation.navigate("Success")
+  }
+
+  useEffect(() => {
+    if (addNewOrder?.status) {
+      navigation.navigate("ThanksForOrder")
+    }
+  }, [addNewOrder])
+
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -66,20 +114,15 @@ export const OrderFourthForm = (props) => {
           <Text style={[styles.subTitle, { marginBottom: 25 }]}>
             Выберите способ оплаты
           </Text>
+          {paymentData?.map((elm, i) => {
+            return <PaymentMethod
+              title={elm.name}
+              text="Оплатите заказ в течение 30 минут после оформления"
+              onPress={() => setPaymentMethod(elm.id)}
+              active={paymentMethod == elm.id}
+            />
 
-          <PaymentMethod
-            title="Банковской картой, онлайн"
-            text="Оплатите заказ в течение 30 минут после оформления"
-            onPress={() => setPaymentOption("card")}
-            active={paymentOption == "card"}
-          />
-          <PaymentMethod
-            style={{ marginBottom: 47 }}
-            title="Оплата при получении"
-            text="Оплатить заказ можно наличными курьеру"
-            onPress={() => setPaymentOption("courier")}
-            active={paymentOption == "courier"}
-          />
+          })}
 
           <Text style={[styles.subTitle, { marginBottom: 25 }]}>
             Проверьте детали заказа
@@ -138,7 +181,7 @@ export const OrderFourthForm = (props) => {
           {/* </View> */}
           <MainButton
             title="Оформить  заказ"
-            onPress={() => navigation.navigate("ThanksForOrder")}
+            onPress={() => handelPress()}
           />
         </View>
       </ScrollView>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,8 +12,58 @@ import ReturnIcon from "../../icons/ReturnIcon";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
-export const OrderThirdForm = () => {
+export const OrderThirdForm = (props) => {
   const navigation = useNavigation();
+  const [data, setData] = useState(props.route?.params?.data)
+  const [error, setError] = useState({ address: "", home: "", description: '' })
+  useEffect(() => {
+    let item = { ...data }
+    item.address = ''
+    item.home_office = ''
+    item.description = ''
+    setData(item)
+  }, [])
+
+
+  const HandelChange = (e, name) => {
+    let item = { ...data }
+    item[name] = e
+    setData(item)
+  }
+
+  const handelClick = () => {
+    let send = true
+    let item = { ...error }
+    if (!data.address) {
+      item.address = 'error'
+      send = false
+    }
+    else {
+      item.address = ''
+      send = true
+    }
+    if (!data.home_office) {
+      item.home = 'error'
+      send = false
+    }
+    else {
+      item.home = ''
+      send = true
+    }
+    if (!data.description) {
+      item.description = 'error'
+      send = false
+    }
+    else {
+      item.description = ''
+      send = true
+    }
+    if (!item.address && !item.home && !item.description) {
+      // navigation.navigate("Payment", { data })
+      navigation.navigate("FourthStep", { data })
+    }
+    setError(item)
+  }
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -61,24 +111,31 @@ export const OrderThirdForm = () => {
             style={styles.input}
             placeholder="Улица, дом"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'address')}
+            borderColor={error.address && 'red'}
           />
           <TextInput
             style={styles.input}
             placeholder="Квартира/офис"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'home_office')}
+            borderColor={error.home && 'red'}
           />
           <TextInput
             style={[styles.input, { minHeight: 103, paddingTop: 18 }]}
             placeholder="Комментарий для курьера"
             multiline
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'description')}
+            borderColor={error.description && 'red'}
           />
         </View>
       </ScrollView>
       <View style={styles.btnContainer}>
         <MainButton
           title="Выбрать способ оплаты"
-          onPress={() => navigation.navigate("FourthStep")}
+          onPress={() => handelClick()}
+        // onPress={() => navigation.navigate("FourthStep")}
         />
       </View>
     </LinearGradient>

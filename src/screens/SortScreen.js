@@ -61,31 +61,6 @@ export const SortScreen = (props) => {
                 По рейтингу
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={styles.input}
-              type={"popular"}
-              onPress={() => setType("popular")}
-            >
-              <LinearGradient
-                colors={
-                  type == "popular"
-                    ? ["#C2ECD4", "#9AC6AD"]
-                    : ["#f7f7f7", "#f7f7f7"]
-                }
-                style={
-                  type == "popular" ? styles.select : styles.selectDisabled
-                }
-              ></LinearGradient>
-              <Text
-                style={
-                  type == "popular"
-                    ? styles.selectTextActive
-                    : styles.selectText
-                }
-              >
-                По популярности
-              </Text>
-            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.input}
               type={"discount"}

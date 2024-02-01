@@ -9,6 +9,13 @@ import { GetMyOrderReducer } from './GetMyOrderReducer';
 import { GetProductsReducer } from './GetProducetsReducer';
 import { GetProductByCategoryReducer } from './GetProductByCategoryReducer';
 import { SortReducer } from './SortReducer';
+import { GetBasketReducer } from './GetBasketReducer';
+import { ValidOrderReducer } from './ValidOrderReducer';
+import { GetCityesReducer } from './getCityesReducer';
+import { GetDeliveryReducer } from './getDeliveryReducer';
+import { GetPaymentTypeReducer } from './getPaymentTypeReducer';
+import { AddInfoReducer } from './AddInfoReducer';
+import { AddNewOrderReducer } from './AddNewOrderReducer';
 
 const rootReducer = combineReducers({
     login: AutReducer,
@@ -19,7 +26,16 @@ const rootReducer = combineReducers({
     getMyOrder: GetMyOrderReducer,
     getProducets: GetProductsReducer,
     getPorductByCategoy: GetProductByCategoryReducer,
-    sort: SortReducer
+    sort: SortReducer,
+    getBasket: GetBasketReducer,
+    getBasket: GetBasketReducer,
+    validOrder: ValidOrderReducer,
+    getCityes: GetCityesReducer,
+    getDelivery: GetDeliveryReducer,
+    getPaymentType: GetPaymentTypeReducer,
+    addInfo: AddInfoReducer,
+    addNewOrder: AddNewOrderReducer,
+
 });
 
 

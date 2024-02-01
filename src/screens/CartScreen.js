@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import ReturnIcon from "../icons/ReturnIcon";
 import { MainButton } from "../components/MainButton";
@@ -7,10 +7,83 @@ import { CartList } from "../components/CartList";
 import { CartItem } from "../components/CartItem";
 import PresentIcon from "../icons/PresentIcon";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { RemoveFromBasketAction, AddToBasketAction, GetBasketAction, ClearValidOrder, MinusFromBassket } from '../services/action/action'
 
 export const CartScreen = (props) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const { token } = useSelector((st) => st.static)
+  const getBasket = useSelector((st) => st.getBasket)
+  const [basket, setBasket] = useState({})
+  const validOrder = useSelector((st) => st.validOrder)
 
+
+  function totalCost() {
+    let sum = 0;
+    basket?.data?.forEach((product) => {
+      const productPrice =
+        product.product.price - product.product.price * (product.product.discount / 100);
+      sum += product.product_count * productPrice;
+    });
+    return sum;
+  }
+
+  const addProductCount = (id) => {
+    let item = { ...basket }
+    let index = item.data.findIndex((elm) => elm.product.id === id)
+    if (item.data[index].product.product_count - 1 >= item.data[index].product_count) {
+      item.data[index].product_count = +item.data[index].product_count + 1
+    }
+    dispatch(AddToBasketAction({ product_id: id }, token))
+    setBasket(item)
+  }
+  const MinusProductCount = (id) => {
+    let item = { ...basket }
+    let index = item.data.findIndex((elm) => elm.product.id === id)
+    item.data[index].product_count = +item.data[index].product_count - 1
+    if (!item.data[index].product_count) {
+      item.data.splice(index, 1)
+      dispatch(RemoveFromBasketAction({ product_id: id }, token))
+    }
+    else {
+      dispatch(MinusFromBassket({ product_id: id }, token))
+    }
+    setBasket(item)
+  }
+
+  const RemoveFromBasket = (id, index) => {
+    let item = { ...basket }
+    item.data.splice(index, 1)
+    dispatch(RemoveFromBasketAction({ product_id: id }, token))
+    setBasket(item)
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(GetBasketAction(token))
+      dispatch(ClearValidOrder())
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+
+  useEffect(() => {
+    if (getBasket.data) {
+      setBasket(getBasket.data)
+    }
+  }, [getBasket])
+
+  const ValidOrder = () => {
+    dispatch(ValidORderAction(token))
+  }
+
+
+  useEffect(() => {
+    if (validOrder?.status) {
+      navigation.navigate("GeneralInfo")
+    }
+  }, [validOrder])
   return (
     <View style={{ ...styles.container, backgroundColor: "#f7f7f7" }}>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
@@ -21,21 +94,21 @@ export const CartScreen = (props) => {
               style={{ left: 10, top: 0 }}
               onPress={() => navigation.navigate("Main")}
             />
-            <CartItem
-              title={"Крем лифтинг для\nлица с наносистемой"}
-              descr="Объем: 150 мл"
-              currentPrice="678"
-              prevPrice="999"
-            />
-            <CartItem
-              title="Крем коллагеновый"
-              descr="Объем: 50 мл"
-              currentPrice="250"
-              prevPrice="999"
-            />
+            {basket?.data?.map((product, index) => {
+              return <CartItem
+                RemoveFromBasket={() => RemoveFromBasket(product.product.id, index)}
+                count={product.product_count}
+                addProductCount={() => addProductCount(product.product.id)}
+                MinusProductCount={() => MinusProductCount(product.product.id)}
+                title={product.product.name}
+                descr={`Объем: ${product.product.volume} мл`}
+                currentPrice={product.products_counts_price_with_discount}
+                prevPrice={product.products_counts_price}
+              />
+            })}
             <View style={styles.totalContainer}>
               <Text style={styles.totalText}>Сумма заказа</Text>
-              <Text style={styles.totals}>867 ₽</Text>
+              <Text style={styles.totals}>{totalCost()} ₽</Text>
             </View>
             <View style={styles.presentContainer}>
               <Text style={styles.presentTitle}>Вам подарок за отзыв!</Text>

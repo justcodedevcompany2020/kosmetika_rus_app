@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,6 +11,8 @@ import RatingIcon from "../icons/RatingIcon";
 import { CartButton } from "../components/СartButton";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { AddToBasketAction, RemoveFromBasketAction } from "../services/action/action";
 
 export const CatalogueItem = ({
   rate,
@@ -19,9 +21,13 @@ export const CatalogueItem = ({
   prevPrice,
   sale,
   style,
-  image
+  image,
+  isbasket,
+  id
 }) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation();
+  const { token } = useSelector((st) => st.static)
   const TruncatedText = (texts) => {
     let text = JSON.stringify(texts)
     const truncatedText = text.length > 5 ? `${text.substring(0, 5)}` : text;
@@ -49,7 +55,18 @@ export const CatalogueItem = ({
       borderTopLeftRadius: 10,
     };
   }
+  const AddRevoeBasket = () => {
+    if (basket) {
+      dispatch(RemoveFromBasketAction({ product_id: id }, token))
+    }
+    else {
+      dispatch(AddToBasketAction({ product_id: id }, token))
+    }
+    setBasket(!basket)
 
+  }
+
+  const [basket, setBasket] = useState(isbasket)
   return (
     <TouchableOpacity
       style={[styles.item, style]}
@@ -74,7 +91,7 @@ export const CatalogueItem = ({
           <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
         </View>
       </View>
-      <CartButton />
+      <CartButton onPress={() => AddRevoeBasket()} title={basket ? 'удалить из корзины' : ' В корзину'} />
     </TouchableOpacity>
   );
 };

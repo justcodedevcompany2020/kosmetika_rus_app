@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,10 +13,82 @@ import ReturnIcon from "../../icons/ReturnIcon";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import MaskInput from "react-native-mask-input";
+import { useDispatch, useSelector } from "react-redux";
+import { DeliveryType, GetCityes, GetMyOrderAction, GetPaymentType } from "../../services/action/action";
 
 export const OrderFirstForm = () => {
-  const navigation = useNavigation();
   const [phone, setPhone] = useState(" ");
+  const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const { token } = useSelector((st) => st.static)
+  useEffect(() => {
+    dispatch(GetCityes())
+    dispatch(DeliveryType())
+    dispatch(GetPaymentType())
+    dispatch(GetMyOrderAction(token))
+  }, [dispatch])
+  const [data, setData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    phone: ''
+  })
+
+  const [error, setEorrr] = useState({
+    name: '',
+    surname: "",
+    email: '',
+    phone: ''
+  })
+
+  function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return (true)
+    }
+    return (false)
+  }
+
+  const HandelChange = (e, name) => {
+    let item = { ...data }
+    item[name] = e
+    setData(item)
+  }
+
+  const HandelPress = () => {
+    let send = true
+    let item = { ...error }
+    if (data.name == '') {
+      item.name = 'error'
+      send = false
+    }
+    else {
+      item.name = ''
+      send = true
+    }
+
+    if (data.surname == '') {
+      item.surname = 'error'
+      send = false
+    }
+    else {
+      item.surname = ''
+      send = true
+    }
+
+    if (!ValidateEmail(data.email)) {
+      item.email = 'error'
+      send = false
+    }
+    else {
+      item.email = ''
+      send = true
+    }
+    if (send) {
+      navigation.navigate("SecondStep", { data })
+      // navigation.navigate("LocationInfo", { data })
+    }
+    setEorrr(item)
+  }
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -61,17 +133,23 @@ export const OrderFirstForm = () => {
             style={styles.input}
             placeholder="Имя"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'name')}
+            borderColor={error.name != '' && 'red'}
           />
           <TextInput
             style={styles.input}
             placeholder="Фамилия"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            borderColor={error.surname != '' && 'red'}
+            onChangeText={(e) => HandelChange(e, 'surname')}
           />
           <TextInput
             style={styles.input}
             placeholder="E-mail"
             inputMode="email"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            borderColor={error.email != '' && 'red'}
+            onChangeText={(e) => HandelChange(e, 'email')}
           />
           <MaskInput
             style={styles.input}
@@ -79,9 +157,11 @@ export const OrderFirstForm = () => {
             keyboardType="phone-pad"
             // inputMode="tel"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
-            value={phone}
+            value={data.phone}
             onChangeText={(masked, unmasked) => {
-              setPhone(masked); // you can use the unmasked value as well
+              console.log(unmasked)
+              HandelChange(unmasked, 'phone')
+              // setPhone(masked); // you can use the unmasked value as well
               if (unmasked.length == 10) {
                 Keyboard.dismiss();
               }
@@ -108,7 +188,10 @@ export const OrderFirstForm = () => {
         </View>
         <MainButton
           title="Выбрать способ доставки"
-          onPress={() => navigation.navigate("SecondStep")}
+
+          onPress={() =>
+            HandelPress()
+          }
         />
       </ScrollView>
     </LinearGradient>

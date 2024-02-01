@@ -18,6 +18,8 @@ export const PromoList = ({ data }) => {
     <View style={styles.list}>
       {DATA?.map((item, i) => {
         return <CatalogueItem
+          id={item.id}
+          isbasket={item.basket_auth_user?.length}
           style={{ marginRight: 0, width: "48.5%", backgroundColor: "#fff" }}
           title={item.name}
           image={item.photos[0].photo}

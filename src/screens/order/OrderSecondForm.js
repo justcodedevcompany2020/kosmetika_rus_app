@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   ScrollView,
@@ -14,19 +14,125 @@ import SelectDropdown from "react-native-select-dropdown";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { RadioSelect } from "../../components/RadioSelect";
+import { useDispatch, useSelector } from "react-redux";
+import { AddNewOrder, ClearValidOrder } from "../../services/action/action";
+import { CityModal } from "../../components/CityModal";
 
-const cities = [
-  "г. Москва",
-  "г. Санкт-Петербург",
-  "г. Казань",
-  "г. Новосибирск",
-  "г. Екатеринбург",
-  "г. Уфа",
-];
+// const cities = [
+//   "г. Москва",
+//   "г. Санкт-Петербург",
+//   "г. Казань",
+//   "г. Новосибирск",
+//   "г. Екатеринбург",
+//   "г. Уфа",
+// ];
 
-export const OrderSecondForm = () => {
-  const [deliveryMethod, setDeliveryMethod] = useState("courier");
+export const OrderSecondForm = (props) => {
+  const cities = useSelector((st) => st.getCityes)
+  const [error, setError] = useState('')
+  const [openModal, setOpenModal] = useState(false)
+  const [deliveryMethod, setDeliveryMethod] = useState(1);
+  const [deliveryType, setDeliveryType] = useState([])
   const navigation = useNavigation();
+  const [paymentMethod, setPaymentMethod] = useState(2);
+  const [selectedCity, setSelectedCity] = useState({})
+  const [errorC, setErrorC] = useState('')
+  const getDelivery = useSelector((st) => st.getDelivery)
+
+  const dispatch = useDispatch()
+  const getUser = useSelector((st) => st.getUser)
+  const getMyOrder = useSelector((st) => st.getMyOrder)
+
+  const addNewOrder = useSelector((st) => st.addNewOrder)
+
+  const getPaymentType = useSelector((st) => st.getPaymentType)
+  const getBasket = useSelector((st) => st.getBasket)
+  const { token } = useSelector((st) => st.static)
+
+  const [paymentData, setPaymentData] = useState([])
+
+  useEffect(() => {
+    dispatch(ClearValidOrder())
+  }, [])
+
+  useEffect(() => {
+    setPaymentData(getPaymentType?.data)
+  }, [getPaymentType?.data])
+
+  const [data, setData] = useState(props.route?.params?.data)
+
+
+  useEffect(() => {
+    let item = { ...data }
+    item.payment_id = 1
+    setData(item)
+  }, [])
+
+  // AddNewOrder
+
+  const handelPress = () => {
+    let item = { ...data }
+    item.payment_id = 2
+    item.platform_id = 1
+    item.phone = getUser.data?.user?.phone
+    dispatch(AddNewOrder(item, token))
+    // navigation.navigate("Success")
+  }
+
+  useEffect(() => {
+    if (addNewOrder.status) {
+      navigation.navigate("Success")
+    }
+  }, [addNewOrder])
+
+  useEffect(() => {
+    let item = { ...data }
+    item.city_id = ''
+    item.city_name = ''
+    item.delivery_id = 1
+    setData(item)
+  }, [])
+  useEffect(() => {
+    let item = { ...data }
+    setDeliveryType(getDelivery.data)
+    item.delivery_id = 1
+    item.delevery_name = deliveryType[0]?.name
+    setData(item)
+  }, [getDelivery.data])
+
+
+  useEffect(() => {
+    let item = { ...data }
+    item.city_id = selectedCity.id
+    item.city_name = selectedCity.name
+    setData(item)
+  }, [selectedCity])
+
+  const HandelClick = () => {
+    let send1 = false
+    let send = false
+    if (!data.city_id) {
+      setError('error')
+      send1 = false
+    }
+    else {
+      send1 = true
+      setError('')
+    }
+    if (!data.delivery_id) {
+      send = false
+      setErrorC('error')
+    }
+    else {
+      send = true
+      setErrorC('')
+    }
+
+    console.log(send, send1)
+    if (send && send1) {
+      navigation.navigate("ThirdStep", { data })
+    }
+  }
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -76,82 +182,28 @@ export const OrderSecondForm = () => {
           <Text style={[styles.subTitle, { marginBottom: 25 }]}>
             Населенный пункт
           </Text>
-          <SelectDropdown
-            buttonStyle={{
-              marginBottom: 47,
-              paddingHorizontal: 14,
-              width: "100%",
-              backgroundColor: "#FFFFFF",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "rgba(55, 55, 55, 0.15)",
-              borderRadius: 10,
-            }}
-            buttonTextStyle={{
-              textAlign: "left",
-              fontFamily: "MontserratMedium",
-              fontSize: 16,
-              color: "#373737",
-            }}
-            rowTextStyle={{
-              textAlign: "left",
-              fontFamily: "MontserratMedium",
-              fontSize: 16,
-              color: "#373737",
-            }}
-            dropdownStyle={{
-              borderRadius: 10,
-            }}
-            rowStyle={{
-              paddingHorizontal: 20,
-            }}
-            defaultValue="г. Москва"
-            dropdownBackgroundColor="#fff"
-            style={styles.dropdown}
-            defaultButtonText="Выберите населенный пункт"
-            data={cities}
-            renderDropdownIcon={(isOpened) => {
-              return (
-                <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  color={"#444"}
-                  size={12}
-                />
-              );
-            }}
-            dropdownIconPosition={"right"}
-            onSelect={(selectedItem, index) => {
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          />
+          <TouchableOpacity onPress={() => { setOpenModal(true) }} style={[styles.input, { marginBottom: 48, borderColor: error ? 'red' : 'rgba(31, 32, 36, 0.15)' }]} >
+            <Text style={styles.inputText}> {selectedCity.name ? selectedCity.name : ''}</Text>
+          </TouchableOpacity>
+          <CityModal onPress={(e) => setSelectedCity(e)} close={() => setOpenModal(false)} visible={openModal} />
           <Text style={[styles.subTitle, { marginBottom: 25 }]}>
             Способ доставки
           </Text>
-          <RadioSelect
-            title="Курьер"
-            text="Доставка по Москве (в пределах МКАД) – 250 ₽"
-            onPress={() => setDeliveryMethod("courier")}
-            active={deliveryMethod == "courier"}
-          />
-          <RadioSelect
-            title="Пункт выдачи СДЕК"
-            text={`Выберите удобный адрес пункта выдачи${"\n"}заказов, укажите его при оформлении заказа`}
-            onPress={() => setDeliveryMethod("sdek")}
-            active={deliveryMethod == "sdek"}
-          />
-          <RadioSelect
-            title="Самовывоз"
-            text={`Самовывоз из офиса в будние дни с 10 до 18 ч.${"\n"}по адресу: г. Москва, Сущёвский вал, д.5, стр.2`}
-            onPress={() => setDeliveryMethod("pickup")}
-            active={deliveryMethod == "pickup"}
-          />
+          {paymentData?.map((elm, i) => {
+            return <RadioSelect
+              key={i}
+              title={elm.name}
+              // text="Доставка по Москве (в пределах МКАД) – 250 ₽"
+              onPress={() => {
+                setData({ ...data, delevery_name: elm.name, delivery_id: elm.id })
+                setDeliveryMethod(1)
+              }}
+              active={deliveryMethod == 1}
+            />
+          })}
           <MainButton
-            onPress={() => navigation.navigate("ThirdStep")}
+            onPress={() => HandelClick()}
+            // onPress={() => navigation.navigate("ThirdStep")}
             title="Далее"
           />
         </View>
@@ -214,10 +266,33 @@ const styles = StyleSheet.create({
     color: "rgba(rgba(113, 114, 122, 0.5)",
   },
   subTitle: {
-    fontFamily: "MontserratBold",
     fontSize: 18,
     lineHeight: 22,
     textAlign: "center",
     color: "#373737",
   },
+  container: {
+    paddingHorizontal: 15,
+    paddingTop: 20,
+    paddingBottom: 40,
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+  },
+  input: {
+    height: 56,
+    borderColor: "rgba(31, 32, 36, 0.15)",
+    borderWidth: 1,
+    width: "100%",
+    borderRadius: 15,
+    fontSize: 16,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: "#F2F2F4",
+    justifyContent: 'center'
+  },
+  inputText: {
+    textAlign: 'right',
+  }
 });

@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CartIcon from "../icons/CartIcon";
 
-export const CartButton = () => {
+export const CartButton = ({ title, onPress = () => { } }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => onPress()}>
       <View style={styles.linearGradient}>
         <CartIcon />
         <Text numberOfLines={1} style={styles.buttonText}>
-          В корзину
+          {title}
         </Text>
       </View>
     </TouchableOpacity>
