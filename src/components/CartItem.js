@@ -6,7 +6,7 @@ import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 
-export const CartItem = ({ RemoveFromBasket, count, title, descr, currentPrice, prevPrice, addProductCount, MinusProductCount }) => {
+export const CartItem = ({ image, RemoveFromBasket, count, title, descr, currentPrice, prevPrice, addProductCount, MinusProductCount }) => {
   // const [count, setCount] = useState(1);
   // const onPressMinus = () =>
   //   setCount((prevCount) => (prevCount == 0 ? (prevCount = 0) : prevCount - 1));
@@ -18,7 +18,9 @@ export const CartItem = ({ RemoveFromBasket, count, title, descr, currentPrice, 
         <RemoveFromCartIcon />
       </TouchableOpacity>
       <SummaryBgIcon style={{ position: "absolute", left: 15 }} />
-      <Image style={styles.cartPic} source={require("../img/category1.png")} />
+      <Image style={styles.cartPic}
+        source={{ uri: `https://basrarusbackend.justcode.am/uploads/${image}` }}
+      />
       <View style={{ ...styles.itemRight, flexShrink: 1 }}>
         <Text style={styles.itemTitle}>{title}</Text>
         <Text style={styles.itemDescr}>{descr}</Text>

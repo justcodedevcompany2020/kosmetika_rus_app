@@ -88,9 +88,9 @@ export const CategoryScreen = (props, { route }) => {
   useEffect(() => {
     if (getPorduct.data?.data?.data) {
       let item = [...products]
-      let combinedArray = item
-      combinedArray = item.concat(getPorduct.data.data.data);
-      setProducts(combinedArray)
+      // let combinedArray = item
+      // combinedArray = item.concat(getPorduct.data.data.data);
+      setProducts(getPorduct.data.data.data)
     }
   }, [getPorduct])
 

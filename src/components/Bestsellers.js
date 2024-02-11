@@ -18,7 +18,14 @@ export const Bestsellers = (props) => {
     <View style={[styles.container, props.style]}>
       <View style={styles.containerTop}>
         <Text style={styles.title}>{props.name}</Text>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+
+          style={styles.btn}
+          onPress={() => navigation.navigate("CatalogTab", {
+            screen: "CatalogueScreen", params: {
+            },
+          })}
+        >
           <Text style={styles.btnText}>Смотреть все</Text>
         </TouchableOpacity>
       </View>
@@ -36,6 +43,7 @@ export const Bestsellers = (props) => {
             props.product.map((elm, i) => {
               return <CatalogueItem
                 style={{}}
+                id={elm.id}
                 isbasket={elm?.basket_auth_user?.length}
                 image={elm.photos[0].photo}
                 key={i}

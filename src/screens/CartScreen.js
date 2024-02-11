@@ -95,8 +95,10 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
-              console.log(product, '1')
+              console.log(product.product.photos, '1')
               return <CartItem
+                key={index}
+                image={product?.product?.photos[0]?.photo}
                 RemoveFromBasket={() => RemoveFromBasket(product.product.id, index)}
                 count={product.product_count}
                 addProductCount={() => addProductCount(product.product.id)}
