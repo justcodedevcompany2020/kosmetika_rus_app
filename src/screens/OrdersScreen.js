@@ -7,13 +7,13 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMyOrderAction } from "../services/action/action";
+import { EmptyCartScreen } from './EmptyCartScreen'
 
 export const OrdersScreen = (props) => {
   const navigation = useNavigation();
   const { token } = useSelector((st) => st.static)
   const dispatch = useDispatch()
   const getMyOrder = useSelector((st) => st.getMyOrder)
-  console.log(getMyOrder.data.data, 'getMyOrder', 11)
   useEffect(() => {
     dispatch(GetMyOrderAction(token))
   }, [dispatch])
@@ -27,6 +27,9 @@ export const OrdersScreen = (props) => {
               style={{ top: -3 }}
               onPress={() => navigation.navigate("Profile")}
             />
+            {getMyOrder?.data?.data == 0 &&
+              <EmptyCartScreen />
+            }
             <OrderList data={getMyOrder?.data?.data} />
           </View>
         </View>

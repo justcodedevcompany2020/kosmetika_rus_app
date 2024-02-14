@@ -160,3 +160,17 @@ export const SuccessGetMyOrder = (data) => {
         data
     }
 }
+export const SuccessGetCategory = (data) => {
+    return {
+        type: 'SuccessGetCategory',
+        data
+    }
+}
+
+
+export const SuccessGetForAge = (data) => {
+    return {
+        type: 'SuccessGetForAge',
+        data
+    }
+}

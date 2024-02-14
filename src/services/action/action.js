@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ErrorConfirmCode, ErrorDelivery, ErrorGetBaners, ErrorGetBasket, ErrorGetCityes, ErrorGetFavorites, ErrorGetMyOrder, ErrorGetPadborkiId, ErrorGetPadborkiwhteProducts, ErrorGetProductByCategory, ErrorGetProducts, ErrorGetSearchHistory, ErrorGetSinglChat, ErrorGetSinglPorduct, ErrorGetUser, ErrorGetstoryes, ErrorLogin, ErrorNewOrder, ErrorPaymentType, ErrorUpdateUser, ErrorUpdateUserAvatar, ErrorValidOrder } from "./errorAction";
-import { StartConfrimCode, StartDelivery, StartGetBaners, StartGetBasket, StartGetCityes, StartGetFavorites, StartGetMyOrder, StartGetPadborkiId, StartGetPadborkiWhiteProducts, StartGetProducets, StartGetProductByCategory, StartGetSearchHistory, StartGetSinglChat, StartGetSinglProduct, StartGetStoryes, StartGetUser, StartLogin, StartNewOrder, StartPaymentType, StartUpdateProfil, StartUpdateUserAvatar, StartValidOrder } from "./startAction";
-import { SetToken, SuccessConfirmCode, SuccessDelivery, SuccessGetBaners, SuccessGetBasket, SuccessGetCityes, SuccessGetFavorites, SuccessGetFirstBaners, SuccessGetMyOrder, SuccessGetPadborkiId, SuccessGetPadborkiWhiteProducts, SuccessGetProducets, SuccessGetProductByCateogy, SuccessGetSearchHistory, SuccessGetSinglCaht, SuccessGetSinglProduct, SuccessGetStoryes, SuccessGetUser, SuccessLogin, SuccessNewOrder, SuccessPaymentType, SuccessUpdateUser, SuccessUpdateUserAvatar, SuccessValidOrder } from "./successAction";
+import { ErrorConfirmCode, ErrorDelivery, ErrorGetBaners, ErrorGetBasket, ErrorGetCategory, ErrorGetCityes, ErrorGetFavorites, ErrorGetForAge, ErrorGetMyOrder, ErrorGetPadborkiId, ErrorGetPadborkiwhteProducts, ErrorGetProductByCategory, ErrorGetProducts, ErrorGetSearchHistory, ErrorGetSinglChat, ErrorGetSinglPorduct, ErrorGetUser, ErrorGetstoryes, ErrorLogin, ErrorNewOrder, ErrorPaymentType, ErrorUpdateUser, ErrorUpdateUserAvatar, ErrorValidOrder } from "./errorAction";
+import { StartConfrimCode, StartDelivery, StartGetBaners, StartGetBasket, StartGetCategory, StartGetCityes, StartGetFavorites, StartGetForAge, StartGetMyOrder, StartGetPadborkiId, StartGetPadborkiWhiteProducts, StartGetProducets, StartGetProductByCategory, StartGetSearchHistory, StartGetSinglChat, StartGetSinglProduct, StartGetStoryes, StartGetUser, StartLogin, StartNewOrder, StartPaymentType, StartUpdateProfil, StartUpdateUserAvatar, StartValidOrder } from "./startAction";
+import { SetToken, SuccessConfirmCode, SuccessDelivery, SuccessGetBaners, SuccessGetBasket, SuccessGetCategory, SuccessGetCityes, SuccessGetFavorites, SuccessGetFirstBaners, SuccessGetForAge, SuccessGetMyOrder, SuccessGetPadborkiId, SuccessGetPadborkiWhiteProducts, SuccessGetProducets, SuccessGetProductByCateogy, SuccessGetSearchHistory, SuccessGetSinglCaht, SuccessGetSinglProduct, SuccessGetStoryes, SuccessGetUser, SuccessLogin, SuccessNewOrder, SuccessPaymentType, SuccessUpdateUser, SuccessUpdateUserAvatar, SuccessValidOrder } from "./successAction";
 
 let api = 'https://basrarusbackend.justcode.am/api/app'
 let api2 = 'https://basrarusbackend.justcode.am/api'
@@ -137,6 +137,7 @@ export const UpdateUserAvatar = (url, token) => {
         fetch(`${api}/update_user_avatar`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log('23999993', r)
                 if (r.status) {
                     dispatch(GetAuthUser(token))
                     dispatch(SuccessUpdateUserAvatar(r))
@@ -146,6 +147,7 @@ export const UpdateUserAvatar = (url, token) => {
                 }
             })
             .catch((error) => {
+                console.log('22')
                 dispatch(ErrorUpdateUserAvatar())
             });
     }
@@ -179,7 +181,6 @@ export const GetStoryes = (token) => {
 }
 
 export const GetBaners = (type, token) => {
-    console.log(token)
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -201,10 +202,12 @@ export const GetBaners = (type, token) => {
             .then(r => {
                 if (r.status) {
                     if (type === 'first') {
-                        dispatch(SuccessGetFirstBaners(r))
+                        // dispatch(SuccessGetFirstBaners(r))
+                        dispatch(SuccessGetBaners(r))
+
                     }
                     else {
-                        dispatch(SuccessGetBaners(r))
+                        // dispatch(SuccessGetBaners(r))
                     }
                 }
                 else {
@@ -271,7 +274,9 @@ export const GetSearchHistory = (token, page) => {
     }
 }
 
+
 export const GetProductsByCategory = (data, token, page = 1) => {
+    console.log(data)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -835,5 +840,60 @@ export const SortAction = (data) => {
     return {
         type: 'Sort',
         data
+    }
+}
+
+
+export const GetCategory = (id, token) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Authorization', `Bearer ${token}`);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+    return (dispatch) => {
+        dispatch(StartGetCategory())
+        fetch(`'https://basrarusbackend.justcode.am/api/admin/get_category?platform_id=${id}`, requestOptions)
+            .then((r) => r.json())
+            .then(r => {
+                if (r.status) {
+                    dispatch(SuccessGetCategory(r))
+                }
+                else {
+                    dispatch(ErrorGetCategory())
+                }
+            })
+            .catch((error) => {
+                dispatch(ErrorGetCategory())
+            });
+    }
+}
+
+
+export const GetForAge = (token) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Authorization', `Bearer ${token}`);
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+    return (dispatch) => {
+        dispatch(StartGetForAge())
+        fetch(`${api2}/get_for_age`, requestOptions)
+            .then((r) => r.json())
+            .then(r => {
+                if (r.status) {
+                    dispatch(SuccessGetForAge(r))
+                }
+                else {
+                    dispatch(ErrorGetForAge())
+                }
+            })
+            .catch((error) => {
+                dispatch(ErrorGetForAge())
+            });
     }
 }

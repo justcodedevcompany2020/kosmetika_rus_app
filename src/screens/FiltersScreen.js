@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -23,13 +23,19 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import AccIcon from "../icons/AccIcon";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { GetCategory, GetForAge, SortAction } from '../services/action/action'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const FiltersScreen = () => {
   const navigation = useNavigation();
   const [rotation, setRotation] = useState(180);
   const [skinType, setSkinType] = useState("dry");
   const [position, setPosition] = useState(30);
-
+  const { getCategory } = useSelector((st) => st)
+  const { getForAge } = useSelector((st) => st)
+  const [token, setToken] = useState()
+  console.log(getForAge.data?.data, '22')
   function handleOnPress() {
     if (position == 0) {
       setPosition(position + 30);
@@ -37,6 +43,29 @@ export const FiltersScreen = () => {
       setPosition(0);
     }
   }
+
+  const GetUser = async () => {
+    let token = await AsyncStorage.getItem('token')
+    if (token) {
+      setToken(token)
+    }
+  }
+
+  useEffect(() => {
+    GetUser()
+  }, []);
+
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    dispatch(GetCategory(2, token))
+    dispatch(GetForAge(token))
+  }, [])
+
+
+  const [selectedForage, setSelectedForAge] = useState()
+  console.log(getCategory, 'getCategory', '22')
 
   return (
     <LinearGradient
@@ -83,7 +112,32 @@ export const FiltersScreen = () => {
               <AccIcon style={{ transform: [{ rotate: `${rotation}deg` }] }} />
             </CollapseHeader>
             <CollapseBody style={styles.accBody}>
-              <Text>Here you can find a descripton of a category item</Text>
+              {getForAge.data?.data?.map((elm, i) => {
+                return <TouchableOpacity
+                  style={styles.select}
+                  onPress={() => setSkinType("dry")}
+                >
+                  <LinearGradient
+                    colors={
+                      skinType == "dry"
+                        ? ["#C2ECD4", "#9AC6AD"]
+                        : ["#fff", "#f7f7f7"]
+                    }
+                    style={skinType == "dry" ? styles.btn : styles.btnDisabled}
+                  >
+                    <Text
+                      style={
+                        skinType == "dry"
+                          ? styles.btnText
+                          : styles.btnTextDisabled
+                      }
+                    >
+                      {elm.name}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              })}
+              <Text></Text>
             </CollapseBody>
           </Collapse>
           <Collapse
@@ -235,7 +289,7 @@ export const FiltersScreen = () => {
       </ScrollView>
       <View style={styles.btnContainer}>
         <MainButton
-          title="Показать 86 товаров"
+          title="Показать товаров"
           onPress={() => navigation.navigate("SearchResult")}
         />
       </View>

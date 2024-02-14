@@ -51,8 +51,6 @@ export const MainScreen = () => {
     if (token) {
       setToken(token)
       dispatch(GetBaners('first', token))
-      dispatch(GetBaners('last', token))
-      dispatch(GetStoryes(token))
       dispatch(GetPadborkiWhiteProducts(token))
       dispatch(ClearOrderStatus())
       dispatch(ClearGetPadbord())
@@ -64,15 +62,13 @@ export const MainScreen = () => {
   useEffect(() => {
     setCompilations(getPadborki.data)
   }, [getPadborki.data])
+  // useEffect(() => {
+  // }, [getBaner.firstData.data])
   useEffect(() => {
-    setFirstBanner(getBaner.firstData.data)
-  }, [getBaner.firstData.data])
-
-  useEffect(() => {
+    setFirstBanner(getBaner.data.data)
     setSecondBanner(getBaner.data.data)
   }, [getBaner.data])
 
-  console.log(getBaner.data, 'getBaner')
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -113,7 +109,6 @@ export const MainScreen = () => {
                 }
               >
                 {getBaner?.data?.data?.map((elm, i) => {
-                  console.log(elm.file)
                   return <View key={i} style={styles.slide1}>
                     <HeroSlide
                       image={elm.file}

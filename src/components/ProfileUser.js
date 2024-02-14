@@ -1,15 +1,34 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import AvatarEditIcon from "../icons/AvatarEditIcon";
+import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from "react-redux";
+import { UpdateUserAvatar } from "../services/action/action";
 
-export const ProfileUser = (props, { userName }) => {
+
+export const ProfileUser = (props, { userName, token }) => {
+  const dispatch = useDispatch()
+  const changeImg = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      dispatch(UpdateUserAvatar(result.assets[0].uri, props.token))
+    }
+  };
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.avatarFrame}>
-        <Image
-          style={styles.profilePhoto}
-          source={{ uri: `https://basrarusbackend.justcode.am/uploads/${props.userAvatar}` }}
-        />
+        <TouchableOpacity style={{ width: 100, height: 100, borderRadius: 100 }} onPress={() => changeImg()}>
+          <Image
+            style={styles.profilePhoto}
+            source={{ uri: `https://basrarusbackend.justcode.am/uploads/${props.userAvatar}` }}
+          />
+        </TouchableOpacity>
         <AvatarEditIcon style={{ position: "absolute", top: 65, right: 0 }} />
       </View>
       <Text style={styles.profilePhone}>+{props.phone}</Text>
@@ -17,6 +36,7 @@ export const ProfileUser = (props, { userName }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   profilePhoto: {

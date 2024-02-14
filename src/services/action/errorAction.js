@@ -137,3 +137,16 @@ export const ErrorGetMyOrder = () => {
         type: 'ErrorGetMyOrder'
     }
 }
+export const ErrorGetCategory = () => {
+    return {
+        type: 'ErrorGetCategory'
+    }
+}
+
+
+export const ErrorGetForAge = () => {
+    return {
+        type: 'ErrorGetForAge'
+    }
+}
+

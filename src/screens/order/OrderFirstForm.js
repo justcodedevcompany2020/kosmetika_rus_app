@@ -14,18 +14,20 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import MaskInput from "react-native-mask-input";
 import { useDispatch, useSelector } from "react-redux";
-import { DeliveryType, GetCityes, GetMyOrderAction, GetPaymentType } from "../../services/action/action";
+import { DeliveryType, GetAuthUser, GetCityes, GetMyOrderAction, GetPaymentType } from "../../services/action/action";
 
 export const OrderFirstForm = () => {
   const [phone, setPhone] = useState(" ");
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const { token } = useSelector((st) => st.static)
+  const getUser = useSelector((st) => st.getUser)
   useEffect(() => {
     dispatch(GetCityes())
     dispatch(DeliveryType())
     dispatch(GetPaymentType())
     dispatch(GetMyOrderAction(token))
+    dispatch(GetAuthUser(token))
   }, [dispatch])
   const [data, setData] = useState({
     name: '',
@@ -33,6 +35,16 @@ export const OrderFirstForm = () => {
     email: '',
     phone: ''
   })
+
+  useEffect(() => {
+    let item = { ...data }
+    item.name = getUser.data?.user?.name
+    item.email = getUser.data?.user?.email
+    item.surname = getUser.data?.user?.surname
+    item.phone = getUser.data?.user?.phone
+
+    setData(item)
+  }, [getUser])
 
   const [error, setEorrr] = useState({
     name: '',
@@ -134,6 +146,7 @@ export const OrderFirstForm = () => {
             placeholder="Имя"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             onChangeText={(e) => HandelChange(e, 'name')}
+            value={data.name}
             borderColor={error.name != '' && 'red'}
           />
           <TextInput
@@ -142,6 +155,7 @@ export const OrderFirstForm = () => {
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             borderColor={error.surname != '' && 'red'}
             onChangeText={(e) => HandelChange(e, 'surname')}
+            value={data.surname}
           />
           <TextInput
             style={styles.input}
@@ -150,6 +164,7 @@ export const OrderFirstForm = () => {
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             borderColor={error.email != '' && 'red'}
             onChangeText={(e) => HandelChange(e, 'email')}
+            value={data.email}
           />
           <MaskInput
             style={styles.input}

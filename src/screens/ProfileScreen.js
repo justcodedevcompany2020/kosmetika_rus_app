@@ -18,9 +18,11 @@ import { Contacts } from "../components/Contacts";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAuthUser, LogoutAction } from "../services/action/action";
+import { GetAuthUser, LogoutAction, UpdateUserAvatar } from "../services/action/action";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LogoutPopup } from '../components/LogoutPopup'
+import * as ImagePicker from 'expo-image-picker';
+
 
 export const ProfileScreen = (props) => {
   const navigation = useNavigation();
@@ -29,6 +31,7 @@ export const ProfileScreen = (props) => {
   const dispatch = useDispatch()
   const getUser = useSelector((st) => st.getUser)
   const [token, setToken] = useState()
+  const [openLogout, setOpenLogout] = useState(false)
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
     if (token) {
@@ -44,69 +47,36 @@ export const ProfileScreen = (props) => {
     return unsubscribe;
   }, [navigation]);
 
+
+  const changeImg = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      dispatch(UpdateUserAvatar(result.assets[0].uri, token))
+    }
+  };
+
   return (
-    <View style={{ backgroundColor: "#f7f7f7", flex: 1, height: "100%" }}>
-      <LogoutPopup />
+    <View style={{ backgroundColor: "#f7f7f7", position: 'relative' }}>
 
       <ScrollView>
+        {openLogout && <LogoutPopup close={() => setOpenLogout(false)} />}
         <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
-          {/* <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={[styles.centeredView, { zIndex: 10 }]}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Выйти из профиля</Text>
-                <Text style={styles.modalDescr}>
-                  Вы уверены, что хотите выйти?{"\n"}Чтобы использовать
-                  приложение,
-                  {"\n"}необходимо будет заново{"\n"}авторизоваться по номеру
-                  {"\n"}
-                  телефона
-                </Text>
-                <View style={styles.modalBottom}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>Отмена</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <LinearGradient
-                      colors={["#C2ECD4", "#9AC6AD"]}
-                      style={[styles.linearGradient]}
-                    >
-                      <Text style={styles.btnText}>Выйти</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                this.modalVisible
-                  ? [styles.dimBackground, { display: "none" }]
-                  : [styles.dimBackground, { display: "block" }]
-              }
-            ></View>
-          </Modal> */}
           <View style={styles.containerTop}>
             <Text style={styles.title}>Профиль</Text>
             <ProfileUser
+              token={token}
               phone={getUser.data.user?.phone}
               name={getUser.data.user?.name}
               surname={getUser.data.user?.surname}
               userAvatar={getUser.data.user?.avatar}
               style={{ marginBottom: 42 }}
             />
-
             <View style={styles.menu}>
               <TouchableOpacity
                 style={styles.profileMenuItem}
@@ -146,12 +116,7 @@ export const ProfileScreen = (props) => {
                   <LogoutIcon />
                   <Text
                     onPress={() => {
-                      dispatch(LogoutAction(token))
-                      navigation.navigate("RegisterTab", {
-                        screen: "SignUp"
-                      })
-                      // navigation.navigate('SignUp')
-
+                      setOpenLogout(true)
                     }}
                     style={styles.listTextRed}>Выйти из профиля</Text>
                 </View>
@@ -161,10 +126,10 @@ export const ProfileScreen = (props) => {
 
             <Contacts />
           </View>
-        </LinearGradient>
-      </ScrollView>
+        </LinearGradient >
+      </ScrollView >
       <Navbar navigation={navigation} active="Profile" />
-    </View>
+    </View >
   );
 };
 

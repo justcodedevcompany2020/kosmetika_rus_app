@@ -8,11 +8,13 @@ export const OrderItemFinal = ({
   currentPrice,
   prevPrice,
   amount,
+  photo
 }) => {
   return (
     <View style={styles.item}>
       <SummaryBgIcon style={{ position: "absolute", left: 15 }} />
-      <Image style={styles.cartPic} source={require("../img/category1.png")} />
+      <Image style={styles.cartPic}
+        source={{ uri: `https://basrarusbackend.justcode.am/uploads/${photo}` }} />
       <View style={{ ...styles.itemRight, flexShrink: 1 }}>
         <Text style={styles.itemTitle}>{title}</Text>
         <Text style={styles.itemDescr}>{descr}</Text>

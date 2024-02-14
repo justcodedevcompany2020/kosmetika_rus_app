@@ -65,6 +65,13 @@ export const CatalogueItem = ({
     setBasket(!basket)
 
   }
+  const truncateText = (text) => {
+    if (text.length <= 20) {
+      return text;
+    } else {
+      return text.substring(0, 20) + '...';
+    }
+  };
 
   const [basket, setBasket] = useState(isbasket)
   return (
@@ -89,7 +96,7 @@ export const CatalogueItem = ({
           style={styles.image}
           source={{ uri: `https://basrarusbackend.justcode.am/uploads/${image}` }}
         />
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{truncateText(title)}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.currentPrice}>{currentPrice} ₽</Text>
           <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
@@ -159,6 +166,7 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     textAlign: "center",
     color: "#373737",
+    height: 25,
   },
   priceContainer: {
     marginBottom: 14,

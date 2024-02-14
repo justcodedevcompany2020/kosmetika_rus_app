@@ -19,6 +19,8 @@ import { AddNewOrderReducer } from './AddNewOrderReducer';
 import { GetBanersReducer } from './getBanersReducer';
 import { GetPadborkiWhiteProduct } from './getPadborkiWhiteProduct'
 import { GetSinglProductReduer } from './getSinglPorductReducer';
+import { GetCategoryReducer } from './GetCategoryReducer'
+import { GetForAgeReducer } from './GetForAgeReducer';
 
 const rootReducer = combineReducers({
     login: AutReducer,
@@ -41,6 +43,9 @@ const rootReducer = combineReducers({
     getBaner: GetBanersReducer,
     getPadborki: GetPadborkiWhiteProduct,
     getSinglProduct: GetSinglProductReduer,
+    getCategory: GetCategoryReducer,
+    getForAge: GetForAgeReducer,
+
 });
 
 

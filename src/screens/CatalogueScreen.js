@@ -43,7 +43,7 @@ export const CatalogueScreen = (props) => {
                 </Text>
                 {/* <Text style={styles.itemDescr}>Краткое описание категории</Text> */}
                 <LinearGradient
-                  colors={["#DBC3A0", "#EDDFCB"]}
+                  colors={["#EDDFCB", "#DBC3A0"]}
                   locations={[1, 0.99]}
                   style={styles.itemBgTan}
                 ></LinearGradient>
@@ -63,7 +63,7 @@ export const CatalogueScreen = (props) => {
                 >
                   <Text style={styles.itemTitle}>{getProducets?.data[1]?.name}</Text>
                   <LinearGradient
-                    colors={["#E3C3B6", "#F7ECE8"]}
+                    colors={["#F7ECE8", "#E3C3B6"]}
                     locations={[1, 0.99]}
                     style={styles.itemBgPink}
                   ></LinearGradient>
@@ -96,7 +96,7 @@ export const CatalogueScreen = (props) => {
           </View>}
           {getProducets?.data?.map((elm, i) => {
             if (i > 2) {
-              return <TouchableOpacity onPress={() => navigation.navigate("Category", { id: elm?.id, categoryName: elm?.name })}>
+              return <TouchableOpacity key={i} onPress={() => navigation.navigate("Category", { id: elm?.id, categoryName: elm?.name })}>
                 <LinearGradient
                   colors={["#E6B8D6", "#F1DCEA"]}
                   style={styles.itemBottom}
@@ -110,7 +110,6 @@ export const CatalogueScreen = (props) => {
                     {elm?.name}
                   </Text>
                   <Text style={[styles.itemDescr, { textAlign: "left" }]}>
-                    {/* Краткое описание{"\n"}категории */}
                   </Text>
                   <LinearGradient
                     colors={["#F1DCEA", "#E3C3B6"]}
@@ -132,7 +131,7 @@ export const CatalogueScreen = (props) => {
         active="Catalogue"
         activeText="Catalogue"
       />
-    </LinearGradient>
+    </LinearGradient >
   );
 };
 
@@ -221,15 +220,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   itemBottom: {
-    paddingTop: 36,
+    paddingVertical: 36,
+    justifyContent: 'center',
     paddingRight: 30,
-    paddingBottom: 36,
     paddingLeft: 130,
     borderRadius: 25,
   },
   categoryImg4: {
     position: "absolute",
-    top: 8,
+    // top: 8,
     left: 54,
     width: 35,
     height: 114,
@@ -264,7 +263,6 @@ const styles = StyleSheet.create({
   },
   itemBgPurple: {
     position: "absolute",
-    top: 28,
     left: 30,
     width: 80,
     height: 80,

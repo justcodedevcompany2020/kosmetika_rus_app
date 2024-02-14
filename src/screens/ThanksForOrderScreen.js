@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Navbar } from "../components/Navbar";
 import ReturnIcon from "../icons/ReturnIcon";
@@ -6,9 +6,15 @@ import { MainButton } from "../components/MainButton";
 import ThanksForOrderIcon from "../icons/ThanksForOrderIcon";
 import CloseBtnIcon from "../icons/CloseBtnIcon";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 export const ThanksForOrderScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(ClearOrderStatus())
+
+  }, [])
   return (
     <View style={{ ...styles.container, backgroundColor: "#f7f7f7" }}>
       <View style={styles.mainContainer}>

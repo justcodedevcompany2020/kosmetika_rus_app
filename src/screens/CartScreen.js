@@ -9,6 +9,7 @@ import PresentIcon from "../icons/PresentIcon";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RemoveFromBasketAction, AddToBasketAction, GetBasketAction, ClearValidOrder, MinusFromBassket } from '../services/action/action'
+import { EmptyCartScreen } from "./EmptyCartScreen";
 
 export const CartScreen = (props) => {
   const navigation = useNavigation();
@@ -95,7 +96,7 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
-              console.log(product.product.photos, '1')
+
               return <CartItem
                 key={index}
                 image={product?.product?.photos[0]?.photo}
@@ -109,11 +110,14 @@ export const CartScreen = (props) => {
                 prevPrice={product.products_counts_price}
               />
             })}
-            <View style={styles.totalContainer}>
+            {basket?.data?.length == 0 &&
+              <EmptyCartScreen />
+            }
+            {basket?.data?.length != 0 && <View style={styles.totalContainer}>
               <Text style={styles.totalText}>Сумма заказа</Text>
               <Text style={styles.totals}>{totalCost()} ₽</Text>
-            </View>
-            <View style={styles.presentContainer}>
+            </View>}
+            {basket?.data?.length != 0 && <View style={styles.presentContainer}>
               <Text style={styles.presentTitle}>Вам подарок за отзыв!</Text>
               <Text style={styles.presentDescr}>
                 При подтверждении заказа{"\n"}менеджер сообщит подробности
@@ -121,11 +125,11 @@ export const CartScreen = (props) => {
               <PresentIcon
                 style={{ position: "absolute", right: 0, bottom: 0 }}
               />
-            </View>
-            <MainButton
+            </View>}
+            {basket?.data?.length != 0 && <MainButton
               title="Оформить заказ"
               onPress={() => navigation.navigate("FirstStep")}
-            />
+            />}
           </View>
         </View>
       </ScrollView>

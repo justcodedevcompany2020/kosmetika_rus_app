@@ -127,3 +127,13 @@ export const StartGetMyOrder = () => {
         type: 'StartGetMyOrder'
     }
 }
+export const StartGetCategory = () => {
+    return {
+        type: 'StartGetCategory'
+    }
+}
+export const StartGetForAge = () => {
+    return {
+        type: 'StartGetForAge'
+    }
+}

@@ -76,7 +76,7 @@ export const CategoryScreen = (props, { route }) => {
       let order_by_volume = SortAction.type == 'discount' ? true : false
       let order_by_rate = SortAction.type == 'raiting' ? true : false
       dispatch(GetProductsByCategory({
-        category_id: id,
+        parent_category_id: id,
         search: search,
         order_by_volume,
         order_by_rate

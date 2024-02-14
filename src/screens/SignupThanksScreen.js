@@ -16,6 +16,7 @@ export const SignupThanksScreen = () => {
     dispatch(ClearConfirmCode())
     dispatch(ClearLogin())
   }, [])
+
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <CloseBtnIcon

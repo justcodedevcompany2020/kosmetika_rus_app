@@ -11,19 +11,29 @@ import ReturnIcon from "../icons/ReturnIcon";
 import { MainButton } from "../components/MainButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { SortAction } from '../services/action/action'
+import { GetCategory, SortAction } from '../services/action/action'
 
 
 export const SortScreen = (props) => {
   const navigation = useNavigation();
   const [type, setType] = useState("raiting");
   const Sort = useSelector((st) => st.sort)
+  const { getCategory } = useSelector((st) => st)
+
   useEffect(() => {
     if (Sort.type) {
       setType(Sort.type)
     }
   }, [Sort.type])
   const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    dispatch(GetCategory(1))
+  }, [])
+
+  console.log(getCategory, 'getCategory', '22')
+
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>

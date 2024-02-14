@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { OrderItemFinal } from "../../components/OrderItemFinal";
 import { PaymentMethod } from "../../components/PaymentMethod";
 import { useDispatch, useSelector } from "react-redux";
-import { AddNewOrder, ClearValidOrder } from "../../services/action/action";
+import { AddNewOrder, ClearValidOrder, GetBasketAction } from "../../services/action/action";
 
 export const OrderFourthForm = (props) => {
   const [paymentMethod, setPaymentMethod] = useState(2);
@@ -28,6 +28,7 @@ export const OrderFourthForm = (props) => {
   const getBasket = useSelector((st) => st.getBasket)
   const { token } = useSelector((st) => st.static)
 
+
   const [paymentData, setPaymentData] = useState([])
 
   useEffect(() => {
@@ -40,7 +41,6 @@ export const OrderFourthForm = (props) => {
 
   const [data, setData] = useState(props.route?.params?.data)
 
-
   useEffect(() => {
     let item = { ...data }
     item.payment_id = 1
@@ -48,6 +48,7 @@ export const OrderFourthForm = (props) => {
   }, [])
 
   // AddNewOrder
+  console.log(getBasket.data, '22')
 
   const handelPress = () => {
     let item = { ...data }
@@ -64,6 +65,9 @@ export const OrderFourthForm = (props) => {
     }
   }, [addNewOrder])
 
+  useEffect(() => {
+    dispatch(GetBasketAction(token))
+  }, [])
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -131,10 +135,10 @@ export const OrderFourthForm = (props) => {
             <Text style={{ ...styles.detailsTitle, marginTop: 0 }}>
               Получатель
             </Text>
-            <Text style={styles.detailsText}>Екатерина Иванова</Text>
-            <Text style={styles.detailsText}>+7 (938) 228-33-44</Text>
+            <Text style={styles.detailsText}>{data.name}</Text>
+            <Text style={styles.detailsText}>{data.phone}</Text>
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              katty.kat@mail.ru
+              {data.email}
             </Text>
 
             <Text style={styles.detailsTitle}>Способ доставки</Text>
@@ -144,40 +148,46 @@ export const OrderFourthForm = (props) => {
 
             <Text style={styles.detailsTitle}>Адрес доставки</Text>
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              г. Москва, Тверская ул., 39/3, кв. 50
+              {data.city_name} {data.address}{data.home_office}
             </Text>
 
             <Text style={styles.detailsTitle}>Оплачен</Text>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Товаров в заказе</Text>
-              <Text style={styles.detailsText}>1</Text>
+              <Text style={styles.detailsText}>{getBasket.data?.data?.length}</Text>
             </View>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Товары на сумму</Text>
-              <Text style={styles.detailsText}>678 ₽</Text>
+              <Text style={styles.detailsText}>{getBasket.data?.all_basket_sum}</Text>
             </View>
-            <View style={styles.detailsBottomLine}>
+            {/* <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Скидка</Text>
-              <Text style={styles.detailsText}>48 ₽</Text>
-            </View>
+              <Text style={styles.detailsText}>{getBasket.data?.products_counts_price}</Text>
+            </View> */}
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Доставка</Text>
               <Text style={styles.detailsText}>250 ₽</Text>
             </View>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Итого</Text>
-              <Text style={styles.detailsText}>928 ₽</Text>
+              <Text style={styles.detailsText}>{getBasket.data?.all_basket_sum + 250}</Text>
             </View>
           </View>
 
           {/* <View style={{ width: 280 }}> */}
-          <OrderItemFinal
-            title={`Крем лифтинг для лица\nс наносистемой`}
-            descr="Объем: 150 мл"
-            amount="1"
-            currentPrice="678"
-            prevPrice="999"
-          />
+          {getBasket.data?.data?.map((elm, i) => {
+            return <OrderItemFinal
+              photo={elm.product.photos[0].photo}
+              title={elm.product?.name}
+              descr={elm.product.volume}
+              amount={elm.product_count}
+              currentPrice={elm.products_counts_price_with_discount}
+              prevPrice={elm.product.volume.price}
+            />
+          })
+
+          }
+
           {/* </View> */}
           <MainButton
             title="Оформить  заказ"

@@ -19,7 +19,6 @@ export const OrderList = ({ data }) => {
   return (
     <View>
       {data?.map((item, i) => {
-        console.log(item)
         return <OrderItem
           key={i}
           orderStatus={item.status}

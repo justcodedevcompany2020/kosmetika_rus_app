@@ -7,19 +7,31 @@ import LogoutIcon from "../icons/LogoutIcon";
 import ArrowIcon from "../icons/ArrowIcon";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import * as ImagePicker from 'expo-image-picker';
 
 export const ProfileUserMenu = () => {
   const navigation = useNavigation();
 
-  return(
+  const changeImg = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      dispatch(UpdateUserAvatar(result.assets[0].uri, token))
+    }
+  };
+  return (
     <View style={styles.container}>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.profileMenuItem}
         onPress={() => navigation.navigate('PersonalInfo')}
       >
         <View style={styles.profileMuneItemLeft}>
-          <MyProfileIcon/>
+          <MyProfileIcon />
           <Text style={styles.listText}>Личные данные</Text>
         </View>
         <ArrowIcon />
@@ -28,7 +40,7 @@ export const ProfileUserMenu = () => {
         onPress={() => navigation.navigate('Orders')}
       >
         <View style={styles.profileMuneItemLeft}>
-          <MyOrdersIcon/>
+          <MyOrdersIcon />
           <Text style={styles.listText}>Мои заказы</Text>
         </View>
         <ArrowIcon />
@@ -37,20 +49,20 @@ export const ProfileUserMenu = () => {
         onPress={() => navigation.navigate('Info')}
       >
         <View style={styles.profileMuneItemLeft}>
-          <MyInfoIcon/>
+          <MyInfoIcon />
           <Text style={styles.listText}>Информация</Text>
         </View>
         <ArrowIcon />
       </TouchableOpacity>
       <TouchableOpacity style={styles.profileMenuItemLast}
-      onPress={() => setModalVisible(true)}>
+        onPress={() => setModalVisible(true)}>
         <View style={styles.profileMuneItemLeft}>
-          <LogoutIcon/>
+          <LogoutIcon />
           <Text style={styles.listTextRed}>Выйти из профиля</Text>
         </View>
         <View></View>
       </TouchableOpacity>
-      
+
     </View>
   );
 };
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     borderBottomWidth: 1,
     borderStyle: "solid",
-    borderBottomColor: "rgba(55, 55, 55, 0.15)", 
+    borderBottomColor: "rgba(55, 55, 55, 0.15)",
   },
   profileMenuItem: {
     width: "100%",
@@ -93,5 +105,5 @@ const styles = StyleSheet.create({
   profileMuneItemLeft: {
     flexDirection: "row",
   },
-  
+
 });

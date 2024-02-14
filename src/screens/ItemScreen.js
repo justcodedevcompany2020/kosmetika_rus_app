@@ -23,6 +23,7 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { AddDelateFavorite, AddToBasketAction, GetSinglProduct } from "../services/action/action";
+import { Stare2 } from "../icons/stare2";
 
 export const ItemScreen = (props) => {
   const navigation = useNavigation();
@@ -49,7 +50,8 @@ export const ItemScreen = (props) => {
     dispatch(AddToBasketAction({ product_id: productId }, token))
     navigation.navigate("OrderTab", { screen: "Cart" })
   }
-  console.log(product.basket_auth_user, 'getSinglProduct')
+
+  console.log(product.hit_status, 'product')
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -103,24 +105,36 @@ export const ItemScreen = (props) => {
             style={styles.retunIcon}
             onPress={() => navigation.goBack()}
           />
-          <LinearGradient
+          {product.hit_status != 0 && <LinearGradient
             colors={["#DBC3A0", "#DBC3A0"]}
             style={styles.hitBlock}
           >
-            <Text style={styles.hitBlockText}>Хит</Text>
-          </LinearGradient>
+            {<Text style={styles.hitBlockText}>Хит</Text>}
+          </LinearGradient>}
           <View style={styles.mainContainer}>
             <Text style={styles.title}>{product.name}</Text>
-            <View style={styles.rateContainer}>
-              <RatingBigIcon />
-              <RatingBigIcon />
-              <RatingBigIcon />
-              <RatingBigIcon />
-              <RatingBigIcon style={{ marginRight: 12 }} />
-              <TouchableOpacity>
-                <Text style={styles.reviewText}>10 отзывов</Text>
-              </TouchableOpacity>
-            </View>
+            {getSinglProduct.data?.rate?.length != 0 ?
+              <View style={styles.rateContainer}>
+                <RatingBigIcon />
+                <RatingBigIcon />
+                <RatingBigIcon />
+                <RatingBigIcon />
+                <RatingBigIcon />
+                <Text style={{ marginHorizontal: 10 }}>{
+                  getSinglProduct.data?.rate?.length == 0 ? 5 : getSinglProduct.data?.rate
+                }</Text>
+                <TouchableOpacity>
+                  <Text style={styles.reviewText}>10 отзывов</Text>
+                </TouchableOpacity>
+              </View> : <View style={[styles.rateContainer, { gap: 3 }]}>
+                <Stare2 />
+                <Stare2 />
+                <Stare2 />
+                <Stare2 />
+                <Stare2 />
+                <Text style={[styles.reviewText]}>Пока нет отзывов</Text>
+              </View>
+            }
             <View style={styles.paramContainer}>
               <Text style={styles.paramText}>Артикул: </Text>
               <Text style={[styles.paramText, { marginRight: 8 }]}>
@@ -168,7 +182,7 @@ export const ItemScreen = (props) => {
                 />
               </CollapseHeader>
               <CollapseBody style={styles.accBody}>
-                <Text>{product.description}</Text>
+                <Text style={styles.accText}>{product.description}</Text>
               </CollapseBody>
             </Collapse>
             <Collapse
@@ -184,7 +198,7 @@ export const ItemScreen = (props) => {
                 />
               </CollapseHeader>
               <CollapseBody style={styles.accBody}>
-                <Text>{product.compound}</Text>
+                <Text style={styles.accText}>{product.compound}</Text>
               </CollapseBody>
             </Collapse>
           </View>

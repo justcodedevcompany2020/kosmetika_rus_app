@@ -109,8 +109,8 @@ export const OrderSecondForm = (props) => {
   }, [selectedCity])
 
   const HandelClick = () => {
-    let send1 = false
-    let send = false
+    let send1 = true
+    let send = true
     if (!data.city_id) {
       setError('error')
       send1 = false

@@ -14,7 +14,6 @@ import { useDispatch } from "react-redux";
 import { GetBanners } from "../services/action/action";
 
 export const HeroSlide = (props) => {
-  console.log(props.image)
   const navigation = useNavigation();
   const dispatch = useDispatch()
   // useEffect(() => {
