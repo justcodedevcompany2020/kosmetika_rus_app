@@ -32,7 +32,6 @@ export const SortScreen = (props) => {
     dispatch(GetCategory(1))
   }, [])
 
-  console.log(getCategory, 'getCategory', '22')
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>

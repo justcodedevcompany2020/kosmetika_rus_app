@@ -35,7 +35,6 @@ export const FiltersScreen = () => {
   const { getCategory } = useSelector((st) => st)
   const { getForAge } = useSelector((st) => st)
   const [token, setToken] = useState()
-  console.log(getForAge.data?.data, '22')
   function handleOnPress() {
     if (position == 0) {
       setPosition(position + 30);
@@ -65,7 +64,6 @@ export const FiltersScreen = () => {
 
 
   const [selectedForage, setSelectedForAge] = useState()
-  console.log(getCategory, 'getCategory', '22')
 
   return (
     <LinearGradient

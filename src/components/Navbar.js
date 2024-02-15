@@ -67,7 +67,7 @@ export const Navbar = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("CatalogTab")}
+          onPress={() => navigation.navigate("CatalogTab", { screen: 'CatalogueScreen' })}
         >
           <NavCatalogueIcon isActive={props.active == "Catalogue"} />
         </TouchableOpacity>

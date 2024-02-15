@@ -48,7 +48,6 @@ export const OrderFourthForm = (props) => {
   }, [])
 
   // AddNewOrder
-  console.log(getBasket.data, '22')
 
   const handelPress = () => {
     let item = { ...data }

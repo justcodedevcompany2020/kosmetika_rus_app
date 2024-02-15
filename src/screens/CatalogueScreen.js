@@ -11,7 +11,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Navbar } from "../components/Navbar";
 import { SearchInput } from "../components/SearchInput";
 import { useNavigation } from "@react-navigation/native";
-import CategoryBgTan from "../icons/CategoryBgTan";
 import { useDispatch, useSelector } from "react-redux";
 import { GetProducts } from '../services/action/action'
 

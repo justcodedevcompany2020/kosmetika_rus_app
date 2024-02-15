@@ -6,7 +6,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  SafeAreaView,
 } from "react-native";
 import ReturnIcon from "../icons/ReturnIcon";
 import { MainButton } from "../components/MainButton";
@@ -22,7 +21,7 @@ import RatingBigIcon from "../icons/RatingIcon";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { AddDelateFavorite, AddToBasketAction, GetSinglProduct } from "../services/action/action";
+import { AddToBasketAction, GetSinglProduct } from "../services/action/action";
 import { Stare2 } from "../icons/stare2";
 
 export const ItemScreen = (props) => {
@@ -35,8 +34,8 @@ export const ItemScreen = (props) => {
   const { token } = useSelector((st) => st.static)
   const dispatch = useDispatch()
   useEffect(() => {
-    if (getSinglProduct.data) {
-      setProduct(getSinglProduct.data)
+    if (getSinglProduct.data.data) {
+      setProduct(getSinglProduct.data.data)
     }
 
   }, [getSinglProduct]);
@@ -50,8 +49,6 @@ export const ItemScreen = (props) => {
     dispatch(AddToBasketAction({ product_id: productId }, token))
     navigation.navigate("OrderTab", { screen: "Cart" })
   }
-
-  console.log(product.hit_status, 'product')
 
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -94,7 +91,6 @@ export const ItemScreen = (props) => {
                 <Image
                   style={styles.slidePic}
                   source={{ uri: `https://basrarusbackend.justcode.am/uploads/${elm.photo}` }}
-                // source={require("../img/itemPic.png")}
                 ></Image>
               </View>
             })
@@ -121,10 +117,10 @@ export const ItemScreen = (props) => {
                 <RatingBigIcon />
                 <RatingBigIcon />
                 <Text style={{ marginHorizontal: 10 }}>{
-                  getSinglProduct.data?.rate?.length == 0 ? 5 : getSinglProduct.data?.rate
+                  getSinglProduct.data?.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 3)
                 }</Text>
                 <TouchableOpacity>
-                  <Text style={styles.reviewText}>10 отзывов</Text>
+                  <Text onPress={() => navigation.navigate('OdzivScreen', { productId })} style={styles.reviewText}>{getSinglProduct?.data?.comments?.length} отзывов</Text>
                 </TouchableOpacity>
               </View> : <View style={[styles.rateContainer, { gap: 3 }]}>
                 <Stare2 />
@@ -132,7 +128,7 @@ export const ItemScreen = (props) => {
                 <Stare2 />
                 <Stare2 />
                 <Stare2 />
-                <Text style={[styles.reviewText]}>Пока нет отзывов</Text>
+                <Text onPress={() => navigation.navigate('OdzivScreen', { productId })} style={[styles.reviewText]}>Пока нет отзывов</Text>
               </View>
             }
             <View style={styles.paramContainer}>

@@ -137,7 +137,6 @@ export const UpdateUserAvatar = (url, token) => {
         fetch(`${api}/update_user_avatar`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log('23999993', r)
                 if (r.status) {
                     dispatch(GetAuthUser(token))
                     dispatch(SuccessUpdateUserAvatar(r))
@@ -147,7 +146,6 @@ export const UpdateUserAvatar = (url, token) => {
                 }
             })
             .catch((error) => {
-                console.log('22')
                 dispatch(ErrorUpdateUserAvatar())
             });
     }
@@ -276,7 +274,6 @@ export const GetSearchHistory = (token, page) => {
 
 
 export const GetProductsByCategory = (data, token, page = 1) => {
-    console.log(data)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -318,8 +315,9 @@ export const GetSinglProduct = (data, token) => {
         fetch(`${api}/single_page_product`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r)
                 if (r.status) {
-                    dispatch(SuccessGetSinglProduct(r.data))
+                    dispatch(SuccessGetSinglProduct(r))
                 }
                 else {
                     dispatch(ErrorGetSinglPorduct())

@@ -7,12 +7,15 @@ import { FiltersScreen } from "../screens/FiltersScreen";
 import { SortScreen } from "../screens/SortScreen";
 import { SearchScreen } from "../screens/SearchScreen";
 import { SearchResulrScreen } from "../screens/SearchResultScreen";
+import { OdzivScreen } from "../screens/odzivScreen";
+import { AddOdzivinProduct } from "../screens/AddOdzivinProduct";
+import { ThanksScreen } from "../screens/ThanksScreen";
 
 const Stack = createNativeStackNavigator();
 
 export const CatalogTab = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName={'CatalogueScreen'} screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="CatalogueScreen"
         component={CatalogueScreen}
@@ -27,6 +30,13 @@ export const CatalogTab = () => {
       <Stack.Screen name="Filter" component={FiltersScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="SearchResult" component={SearchResulrScreen} />
+      <Stack.Screen name="OdzivScreen" component={OdzivScreen} />
+      <Stack.Screen name="AddOdzivinProduct" component={AddOdzivinProduct} />
+      <Stack.Screen name="ThanksScreen" component={ThanksScreen} />
+
     </Stack.Navigator>
   );
 };
+
+// ThanksScreen
+// AddOdzivinProduct
