@@ -34,6 +34,12 @@ export default function App() {
     MontserratExtraBold: require("./src/fonts/Montserrat-ExtraBold.ttf"),
   });
   const [initialScreen, setInitialScreen] = useState("RegisterTab");
+  const [isSplashVisible, setSplashVisible] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setSplashVisible(false);
+    }, 3000); // Adjust the duration as needed (in milliseconds)
+  }, []);
 
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')

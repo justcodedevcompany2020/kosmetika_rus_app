@@ -407,6 +407,7 @@ export const AddToBasketAction = (data, token) => {
         fetch(`${api}/add_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                dispatch(GetBasketAction(token))
             })
             .catch(error => {
             });
@@ -426,6 +427,7 @@ export const RemoveFromBasketAction = (data, token) => {
         fetch(`${api}/delete_one_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                dispatch(GetBasketAction(token))
             })
             .catch(error => {
             });

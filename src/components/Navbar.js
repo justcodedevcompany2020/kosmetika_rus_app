@@ -76,9 +76,9 @@ export const Navbar = (props) => {
           onPress={() => navigation.navigate("OrderTab")}
         >
           <View style={{ position: 'relative' }}>
-            <View style={{ position: 'absolute', right: 0, top: -10, backgroundColor: '#ff8000', width: 18, height: 18, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
+            {getBasket.data.data?.length > 0 && <View style={{ position: 'absolute', right: 0, top: -10, backgroundColor: '#e0caae', width: 18, height: 18, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ color: "white", fontSize: 11 }}>{getBasket.data.data?.length}</Text>
-            </View>
+            </View>}
             <NavCartIcon isActive={props.active == "Cart"} />
           </View>
         </TouchableOpacity>

@@ -96,7 +96,9 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
-
+              console.log(product.product.price)
+              let price = product.product.price - (product.product.price * product.product.discount / 100)
+              console.log(product, 'product')
               return <CartItem
                 key={index}
                 image={product?.product?.photos[0]?.photo}
@@ -106,8 +108,8 @@ export const CartScreen = (props) => {
                 MinusProductCount={() => MinusProductCount(product.product.id)}
                 title={product.product.name}
                 descr={`Объем: ${product.product.volume} мл`}
-                currentPrice={product.products_counts_price_with_discount}
-                prevPrice={product.products_counts_price}
+                currentPrice={price}
+                prevPrice={product.product.price}
               />
             })}
             {basket?.data?.length == 0 &&

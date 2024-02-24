@@ -22,6 +22,7 @@ import { GetAuthUser, LogoutAction, UpdateUserAvatar } from "../services/action/
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LogoutPopup } from '../components/LogoutPopup'
 import * as ImagePicker from 'expo-image-picker';
+import AvatarEditIcon from "../icons/AvatarEditIcon";
 
 
 export const ProfileScreen = (props) => {
@@ -77,6 +78,7 @@ export const ProfileScreen = (props) => {
               userAvatar={getUser.data.user?.avatar}
               style={{ marginBottom: 42 }}
             />
+
             <View style={styles.menu}>
               <TouchableOpacity
                 style={styles.profileMenuItem}
