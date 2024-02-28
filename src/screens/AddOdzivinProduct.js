@@ -24,13 +24,11 @@ export const AddOdzivinProduct = () => {
     const getSinglProduct = useSelector((st) => st.getSinglProduct)
     const [rate, setRate] = useState(0)
     const [message, setMessage] = useState('')
-    console.log(product?.rate?.length, 'id')
     useEffect(() => {
         dispatch(GetSinglProduct({ product_id: productId }, token))
     }, [productId])
     useEffect(() => {
         if (getSinglProduct.data) {
-            console.log(product)
             setProduct(getSinglProduct.data)
         }
 
@@ -54,7 +52,6 @@ export const AddOdzivinProduct = () => {
             fetch(`${api}/add_comment`, requestOptions)
                 .then(response => response.json())
                 .then(r => {
-                    console.log(r)
                     if (r.status) {
                         navigation.navigate('ThanksScreen')
                     }
@@ -103,7 +100,6 @@ export const AddOdzivinProduct = () => {
                         }
                     >
                         {product?.photos?.map((elm, i) => {
-                            console.log(elm)
                             return <View key={i} style={styles.slide1}>
                                 <Image
                                     style={styles.slidePic}

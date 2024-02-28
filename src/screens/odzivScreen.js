@@ -18,7 +18,6 @@ export const OdzivScreen = () => {
     const { token } = useSelector((st) => st.static)
     const dispatch = useDispatch()
     const getSinglProduct = useSelector((st) => st.getSinglProduct)
-    console.log(getSinglProduct.data.comment_button, 'comment_button')
     useEffect(() => {
         dispatch(GetSinglProduct({ product_id: productId }, token))
     }, [productId])

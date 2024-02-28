@@ -96,9 +96,7 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
-              console.log(product.product.price)
               let price = product.product.price - (product.product.price * product.product.discount / 100)
-              console.log(product, 'product')
               return <CartItem
                 key={index}
                 image={product?.product?.photos[0]?.photo}
@@ -117,7 +115,7 @@ export const CartScreen = (props) => {
             }
             {basket?.data?.length != 0 && <View style={styles.totalContainer}>
               <Text style={styles.totalText}>Сумма заказа</Text>
-              <Text style={styles.totals}>{totalCost()} ₽</Text>
+              <Text style={styles.totals}>{JSON.stringify(totalCost())?.slice(0, 7)} ₽</Text>
             </View>}
             {basket?.data?.length != 0 && <View style={styles.presentContainer}>
               <Text style={styles.presentTitle}>Вам подарок за отзыв!</Text>

@@ -8,6 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMyOrderAction } from "../services/action/action";
 import { EmptyCartScreen } from './EmptyCartScreen'
+import { EmptyOrderScreen } from "./EmptyOrdersScreen";
 
 export const OrdersScreen = (props) => {
   const navigation = useNavigation();
@@ -28,7 +29,7 @@ export const OrdersScreen = (props) => {
               onPress={() => navigation.navigate("Profile")}
             />
             {getMyOrder?.data?.data == 0 &&
-              <EmptyCartScreen />
+              <EmptyOrderScreen />
             }
             <OrderList data={getMyOrder?.data?.data} />
           </View>

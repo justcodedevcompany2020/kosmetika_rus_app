@@ -27,14 +27,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetCategory, GetForAge, SortAction } from '../services/action/action'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const FiltersScreen = () => {
+export const FiltersScreen = (props) => {
   const navigation = useNavigation();
   const [rotation, setRotation] = useState(180);
   const [skinType, setSkinType] = useState("dry");
   const [position, setPosition] = useState(30);
-  const { getCategory } = useSelector((st) => st)
-  const { getForAge } = useSelector((st) => st)
+  const [selectedCategory, setSelectedCateogry] = useState('')
+  const [age, setAge] = useState('')
+  const getCategory = useSelector((st) => st.getCategory)
+  const getForAge = useSelector((st) => st.getForAge)
   const [token, setToken] = useState()
+  const categoryId = props.route.params.id;
+  const categoryName = props.route.params.categoryName;
+  const [category, setCategory] = useState()
   function handleOnPress() {
     if (position == 0) {
       setPosition(position + 30);
@@ -56,11 +61,17 @@ export const FiltersScreen = () => {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (token) {
+      dispatch(GetCategory(token))
+      dispatch(GetForAge(token))
+    }
+  }, [token])
 
   useEffect(() => {
-    dispatch(GetCategory(2, token))
-    dispatch(GetForAge(token))
-  }, [])
+    setCategory(getCategory)
+  }, [getCategory])
+
 
 
   const [selectedForage, setSelectedForAge] = useState()
@@ -96,7 +107,32 @@ export const FiltersScreen = () => {
               <AccIcon style={{ transform: [{ rotate: `${rotation}deg` }] }} />
             </CollapseHeader>
             <CollapseBody style={styles.accBody}>
-              <Text>Here you can find a descripton of a category item</Text>
+              {category?.data?.data?.map((elm, i) => {
+                return <TouchableOpacity
+                  key={i}
+                  style={styles.select}
+                  onPress={() => setSelectedCateogry(elm.id)}
+                >
+                  <LinearGradient
+                    colors={
+                      selectedCategory == elm.id
+                        ? ["#C2ECD4", "#9AC6AD"]
+                        : ["#fff", "#f7f7f7"]
+                    }
+                    style={selectedCategory == elm.id ? styles.btn : styles.btnDisabled}
+                  >
+                    <Text
+                      style={
+                        selectedCategory == elm.id
+                          ? styles.btnText
+                          : styles.btnTextDisabled
+                      }
+                    >
+                      {elm.name}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              })}
             </CollapseBody>
           </Collapse>
           <Collapse
@@ -112,12 +148,13 @@ export const FiltersScreen = () => {
             <CollapseBody style={styles.accBody}>
               {getForAge.data?.data?.map((elm, i) => {
                 return <TouchableOpacity
+                  key={i}
                   style={styles.select}
-                  onPress={() => setSkinType("dry")}
+                  onPress={() => setAge(elm.id)}
                 >
                   <LinearGradient
                     colors={
-                      skinType == "dry"
+                      age == elm.id
                         ? ["#C2ECD4", "#9AC6AD"]
                         : ["#fff", "#f7f7f7"]
                     }
@@ -125,7 +162,7 @@ export const FiltersScreen = () => {
                   >
                     <Text
                       style={
-                        skinType == "dry"
+                        age == elm.id
                           ? styles.btnText
                           : styles.btnTextDisabled
                       }
@@ -288,7 +325,14 @@ export const FiltersScreen = () => {
       <View style={styles.btnContainer}>
         <MainButton
           title="Показать товаров"
-          onPress={() => navigation.navigate("SearchResult")}
+          onPress={() =>
+            navigation.navigate('Category', {
+              age_id: age,
+              category_id: selectedCategory,
+              categoryName: categoryName,
+              categoryId: categoryName
+            })
+          }
         />
       </View>
     </LinearGradient>

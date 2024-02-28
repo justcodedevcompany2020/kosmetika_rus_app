@@ -20,9 +20,9 @@ export const CategoryScreen = (props, { route }) => {
 
   const categoryId = props.route.params.id;
   const categoryName = props.route.params.categoryName;
-
+  const age_id = props.route.params.age_id;
+  const category_id = props.route.params.category_id
   const search = props.route.params?.search
-
   const [id, setId] = useState()
 
   const SetCategory = async () => {
@@ -56,7 +56,7 @@ export const CategoryScreen = (props, { route }) => {
 
 
   const loadMoreData = () => {
-    if (getPorduct?.data?.data.next_page_url) {
+    if (getPorduct?.data?.data?.next_page_url) {
       setPage(page + 1)
     }
   };
@@ -79,7 +79,7 @@ export const CategoryScreen = (props, { route }) => {
         parent_category_id: id,
         search: search,
         order_by_volume,
-        order_by_rate
+        order_by_rate,
       }, token, page))
     }
   }, [page, search, SortAction.type])
@@ -117,6 +117,9 @@ export const CategoryScreen = (props, { route }) => {
             />
           </View>
           <FilterContainer
+            categoryId={categoryId}
+            categoryName={categoryName}
+
             style={{ marginBottom: 23, backgroundColor: "fff" }}
           />
           <Text style={styles.amountText}>Найдено товаров: {getPorduct.data?.count}</Text>

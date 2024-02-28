@@ -6,7 +6,9 @@ export const MainButton = (props) => {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <LinearGradient
-        colors={["#C2ECD4", "#9AC6AD"]}
+        colors={props.basket ?
+          ["#DBC3A0", "#DBC3A0"] :
+          ["#C2ECD4", "#9AC6AD"]}
         style={[styles.linearGradient]}
       >
         <Text style={styles.buttonText}>{props.title}</Text>

@@ -7,20 +7,24 @@ import { MainButton } from "../components/MainButton";
 import EmptyCartIcon from "../icons/EmptyCartIcon";
 
 export const EmptyOrderScreen = () => {
-  return(
-    <LinearGradient colors={['f7f7f7', 'fff']} style={styles.container}>
+  return (
+    <View style={styles.container}>
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>Мои заказы</Text>
-        <ReturnIcon style={{left: 20,}}/>
-        <EmptyCartIcon style={{marginBottom: 44,}}/>
+        {/* <Text style={styles.title}>Корзина</Text> */}
+        {/* <ReturnIcon style={{ left: 20, }} /> */}
+        <EmptyCartIcon style={{ marginBottom: 44, }} />
         <Text style={styles.subTitle}>У вас пока нет заказов</Text>
-        <Text style={styles.descr}>Перейдите в каталог и добавьте в корзину понравившиеся товары</Text>
+        <Text style={styles.descr}>
+          Перейдите в каталог и добавьте в корзину понравившиеся товары
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <MainButton title="Перейти в каталог"/>
+        <MainButton onPress={() =>
+          navigation.navigate("CatalogTab", { screen: "CatalogueScreen" })
+        } title="Перейти в каталог" />
       </View>
-      <Navbar/>
-    </LinearGradient>
+      {/* <Navbar active="Cart" activeText="Cart"/> */}
+    </View>
   );
 };
 
@@ -29,12 +33,14 @@ const styles = StyleSheet.create({
     paddingTop: 64,
     flex: 1,
     width: "100%",
+    height: '100%'
   },
   mainContainer: {
     flex: 1,
     alignItems: "center",
     paddingHorizontal: 20,
     width: "100%",
+    height: '100%'
   },
   title: {
     marginBottom: 105,
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     color: "#373737",
   },
   descr: {
-    maxWidth: "66%",
+    maxWidth: "100%",
     fontFamily: "MontserratRegular",
     fontSize: 15,
     lineHeight: 18,
@@ -61,7 +67,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 80,
+    bottom: -100,
     width: "100%",
     paddingHorizontal: 20,
   },

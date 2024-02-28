@@ -5,19 +5,22 @@ import { useNavigation } from "@react-navigation/native";
 
 export const FilterContainer = (props) => {
   const navigation = useNavigation();
-  return(
+  return (
     <View style={[styles.filterContainer, props.style]}>
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => navigation.navigate('Sort')}
         style={styles.filter}>
         <Text style={styles.filterText}>Сортировать</Text>
-        <MoreIcon/>
+        <MoreIcon />
       </TouchableOpacity>
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('Filter')}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Filter', {
+          categoryName: props.categoryName,
+          categoryId: props.categoryId
+        })}
         style={styles.filter}>
         <Text style={styles.filterText}>Фильтр</Text>
-        <MoreIcon/>
+        <MoreIcon />
       </TouchableOpacity>
     </View>
   );

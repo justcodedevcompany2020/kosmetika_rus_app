@@ -32,13 +32,18 @@ export const ItemScreen = (props) => {
   const productId = props.route.params.productId;
   const getSinglProduct = useSelector((st) => st.getSinglProduct)
   const { token } = useSelector((st) => st.static)
+  const [addTobasket, setAddTobasket] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
     if (getSinglProduct.data.data) {
       setProduct(getSinglProduct.data.data)
     }
-
+    console.log(getSinglProduct.data?.data?.basket_auth_user.length)
+    setAddTobasket(getSinglProduct.data?.data?.basket_auth_user.length)
   }, [getSinglProduct]);
+
+
+  console.log(getSinglProduct.data?.data?.basket_auth_user, '22')
 
   useEffect(() => {
     dispatch(GetSinglProduct({ product_id: productId }, token))
@@ -47,7 +52,8 @@ export const ItemScreen = (props) => {
 
   const AddRevoeBasket = () => {
     dispatch(AddToBasketAction({ product_id: productId }, token))
-    navigation.navigate("OrderTab", { screen: "Cart" })
+    // setAddTobasket(!addTobasket)
+    // navigation.navigate("OrderTab", { screen: "Cart" })
   }
 
   return (
@@ -200,7 +206,10 @@ export const ItemScreen = (props) => {
           </View>
           <View style={{ paddingHorizontal: 20 }}>
             <MainButton
-              title={`В корзину ${product.price - (product.price * product.discount / 100)} ₽`}
+              basket={addTobasket}
+              title={
+                ` В корзину  ${product.price - (product.price * product.discount / 100)} ₽`
+              }
               onPress={() =>
                 AddRevoeBasket()
               }

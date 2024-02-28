@@ -3,15 +3,17 @@ import { StyleSheet, View, TextInput } from "react-native";
 import SearchIcon from "../icons/SearchIcon";
 
 export const SearchInput = (props) => {
-  return(
+  return (
     <View style={[styles.searchContainer, props.style]}>
       <TextInput
         style={styles.input}
         placeholder={props.title}
         placeholderColor="rgba(55, 55, 55, 0.5)"
         inputMode="search"
+        onSubmitEditing={(e) => props.handleKeyPress(e)}
+        onChangeText={(e) => props.onChangeText(e)}
       />
-      <SearchIcon style={{position: "absolute", top: 17, left: 17,}}/>
+      <SearchIcon style={{ position: "absolute", top: 17, left: 17, }} />
     </View>
   );
 };

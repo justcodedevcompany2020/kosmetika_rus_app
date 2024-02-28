@@ -30,6 +30,7 @@ export const MainScreen = () => {
   const [token, setToken] = useState('')
 
 
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       GetUser()
@@ -69,6 +70,15 @@ export const MainScreen = () => {
     setSecondBanner(getBaner.data.data)
   }, [getBaner.data])
 
+  const handleKeyPress = ({ nativeEvent }) => {
+    navigation.navigate("CatalogTab", {
+      screen: "Category", params: {
+        search: search
+      },
+    })
+
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -80,7 +90,12 @@ export const MainScreen = () => {
         >
           <View style={styles.mainContainer}>
             <View style={{ paddingHorizontal: 20 }}>
-              <SearchInput style={{ marginBottom: 11 }} title="Что вы ищите?" />
+              <SearchInput
+                handleKeyPress={(e) => handleKeyPress(e)}
+                onChangeText={(e) => setSearch(e)}
+                style={{ marginBottom: 11 }} title="Что вы ищите?" />
+
+
               {getBaner?.data?.data?.length && <Swiper
                 style={{ height: 250 }}
                 showsPagination={true}

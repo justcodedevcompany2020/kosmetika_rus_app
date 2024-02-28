@@ -315,7 +315,6 @@ export const GetSinglProduct = (data, token) => {
         fetch(`${api}/single_page_product`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r)
                 if (r.status) {
                     dispatch(SuccessGetSinglProduct(r))
                 }
@@ -407,6 +406,8 @@ export const AddToBasketAction = (data, token) => {
         fetch(`${api}/add_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r)
+                dispatch(GetSinglProduct({ product_id: data.product_id }, token))
                 dispatch(GetBasketAction(token))
             })
             .catch(error => {
@@ -844,7 +845,7 @@ export const SortAction = (data) => {
 }
 
 
-export const GetCategory = (id, token) => {
+export const GetCategory = (token) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append('Authorization', `Bearer ${token}`);
@@ -855,7 +856,7 @@ export const GetCategory = (id, token) => {
     };
     return (dispatch) => {
         dispatch(StartGetCategory())
-        fetch(`'https://basrarusbackend.justcode.am/api/admin/get_category?platform_id=${id}`, requestOptions)
+        fetch(`https://basrarusbackend.justcode.am/api/admin/get_category?platform_id=2`, requestOptions)
             .then((r) => r.json())
             .then(r => {
                 if (r.status) {

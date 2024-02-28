@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, ScrollView, TextInput } from "react-native";
+import { StyleSheet, View, Text, ScrollView, TextInput, Button, TouchableOpacity } from "react-native";
 import { Navbar } from "../components/Navbar";
 import { MainButton } from "../components/MainButton";
 import { UserPrivateForm } from "../components/UserPrivateForm";
@@ -9,6 +9,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { UpdateData } from "../services/action/action";
 
+import { format } from 'date-fns';
+import DateTimePicker from "@react-native-community/datetimepicker";
+
 export const UserPrivateFormScreen = (props) => {
   const navigation = useNavigation();
   const getUser = useSelector((st) => st.getUser)
@@ -16,9 +19,10 @@ export const UserPrivateFormScreen = (props) => {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
-  const updateUser = useSelector((st) => st.updateUser)
   const dispatch = useDispatch()
   const { token } = useSelector((st) => st.static)
+
+
 
   useEffect(() => {
     setName(getUser.data?.user?.name)
@@ -26,6 +30,17 @@ export const UserPrivateFormScreen = (props) => {
     setSurname(getUser.data?.user?.surname)
     setBirthday(getUser.data?.user?.date_of_birth)
   }, [getUser?.data?.user])
+
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const handleDateChange = (event, date) => {
+    setSelectedDate(date);
+    setBirthday(format(event.nativeEvent.timestamp, 'yyyy-MM-dd'))
+    setShowPicker(false)
+    setShowPicker(Platform.OS === 'ios'); // Close the picker for iOS immediately after selection
+  };
+
 
   function ValidateEmail(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -47,7 +62,7 @@ export const UserPrivateFormScreen = (props) => {
         dispatch(UpdateData({
           name,
           email,
-          birthday,
+          date_of_birth: birthday,
           surname
         },
           token
@@ -56,7 +71,7 @@ export const UserPrivateFormScreen = (props) => {
       else {
         dispatch(UpdateData({
           name,
-          birthday,
+          date_of_birth: birthday,
           surname
         },
           token
@@ -64,6 +79,12 @@ export const UserPrivateFormScreen = (props) => {
       }
     }
   }
+  const handleConfirm = () => {
+    // Handle the selected date here
+    Alert.alert('Selected Date', format(selectedDate, 'dd.MM.yyyy'));
+    // Close the picker
+    setShowPicker(false);
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -108,16 +129,23 @@ export const UserPrivateFormScreen = (props) => {
                 onChangeText={(text) => setEmail(text)}
 
               />
-              <TextInput
-                value={birthday}
-                placeholder="Дата рождения"
-                style={styles.input}
-                placeholderTextColor="rgba(55, 55, 55, 0.5)"
-                keyboardType="default"
-                inputMode="text"
-                cursorColor="#9AC6AD"
-                onChangeText={(text) => setBirthday(text)}
-              />
+              <TouchableOpacity style={[styles.input, { justifyContent: 'center', }]} onPress={() => setShowPicker(true)}>
+
+
+                <Text>{birthday ? birthday : 'Дата рождения'}</Text>
+              </TouchableOpacity>
+              <View>
+                <View>
+                  {showPicker && (
+                    <DateTimePicker
+                      value={selectedDate}
+                      mode="date"
+                      display="default"
+                      onChange={handleDateChange}
+                    />
+                  )}
+                </View>
+              </View>
               <ReturnIcon
                 style={{ top: -3 }}
                 onPress={() => navigation.goBack()}

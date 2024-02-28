@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -18,16 +18,29 @@ export const CatalogueScreen = (props) => {
   const dispatch = useDispatch()
   const { token } = useSelector((st) => st.static)
   const getProducets = useSelector((st) => st.getProducets)
+  const [search, setSearch] = useState('')
+
   useEffect(() => {
     dispatch(GetProducts(token))
   }, [])
   const navigation = useNavigation();
+  const handleKeyPress = ({ nativeEvent }) => {
+    navigation.navigate("CatalogTab", {
+      screen: "Category", params: {
+        search: search
+      },
+    })
+
+  };
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView>
         <View style={styles.mainContainer}>
           <Text style={styles.title}>Каталог</Text>
-          <SearchInput style={{ marginBottom: 20 }} title="Что вы ищите?" />
+          <SearchInput
+            handleKeyPress={(e) => handleKeyPress(e)}
+            onChangeText={(e) => setSearch(e)}
+            style={{ marginBottom: 20 }} title="Что вы ищите?" />
           {getProducets?.data[0]?.name && <View style={styles.scrollTopContainer}>
             <TouchableOpacity
               style={{ width: "48.5%" }}
