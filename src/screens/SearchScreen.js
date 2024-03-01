@@ -1,5 +1,4 @@
-import React from "react";
-import SearchIcon from "../icons/SearchIcon";
+import React, { useState } from "react";
 import ReturnIcon from "../icons/ReturnIcon";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,8 +6,19 @@ import { QuickSearch } from "../components/QuickSearch";
 import { SearchInput } from "../components/SearchInput";
 import { useNavigation } from "@react-navigation/native";
 
-export const SearchScreen = () => {
+export const SearchScreen = (props) => {
   const navigation = useNavigation();
+  const [search, setSearch] = useState('')
+  const categoryId = props.route.params.id;
+  const handleKeyPress = ({ nativeEvent }) => {
+    navigation.navigate("CatalogTab", {
+      screen: "Category", params: {
+        search: search,
+        id: categoryId
+      },
+    })
+
+  };
 
   return (
     <LinearGradient
@@ -22,7 +32,11 @@ export const SearchScreen = () => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.title}>Поиск в каталоге</Text>
-        <SearchInput style={{ marginBottom: 30 }} title="Что вы ищите?" />
+        <SearchInput
+          handleKeyPress={(e) => handleKeyPress(e)}
+          onChangeText={(e) => setSearch(e)}
+          style={{ marginBottom: 30 }}
+          title="Что вы ищите?" />
         <QuickSearch />
       </View>
     </LinearGradient>

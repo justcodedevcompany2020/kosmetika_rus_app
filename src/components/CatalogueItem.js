@@ -102,7 +102,7 @@ export const CatalogueItem = ({
           <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
         </View>
       </View>
-      <CartButton onPress={() => AddRevoeBasket()} title={basket ? 'удалить из корзины' : ' В корзину'} />
+      <CartButton basket={basket} onPress={() => AddRevoeBasket()} title={basket ? 'Удалить из корзины' : ' В корзину'} />
     </TouchableOpacity>
   );
 };

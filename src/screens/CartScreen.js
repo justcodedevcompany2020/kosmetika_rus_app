@@ -27,7 +27,11 @@ export const CartScreen = (props) => {
         product.product.price - product.product.price * (product.product.discount / 100);
       sum += product.product_count * productPrice;
     });
-    return sum;
+    let sum1 = JSON.stringify(sum)
+
+    let index = sum1.indexOf('.');
+    let sum2 = sum1.split(0, index + 1)
+    return sum2;
   }
 
   const addProductCount = (id) => {
@@ -115,7 +119,7 @@ export const CartScreen = (props) => {
             }
             {basket?.data?.length != 0 && <View style={styles.totalContainer}>
               <Text style={styles.totalText}>Сумма заказа</Text>
-              <Text style={styles.totals}>{JSON.stringify(totalCost())?.slice(0, 7)} ₽</Text>
+              <Text style={styles.totals}>{totalCost()} ₽</Text>
             </View>}
             {basket?.data?.length != 0 && <View style={styles.presentContainer}>
               <Text style={styles.presentTitle}>Вам подарок за отзыв!</Text>

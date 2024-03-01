@@ -21,7 +21,7 @@ import RatingBigIcon from "../icons/RatingIcon";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { AddToBasketAction, GetSinglProduct } from "../services/action/action";
+import { AddToBasketAction, GetSinglProduct, RemoveFromBasketAction } from "../services/action/action";
 import { Stare2 } from "../icons/stare2";
 
 export const ItemScreen = (props) => {
@@ -38,12 +38,12 @@ export const ItemScreen = (props) => {
     if (getSinglProduct.data.data) {
       setProduct(getSinglProduct.data.data)
     }
-    console.log(getSinglProduct.data?.data?.basket_auth_user.length)
-    setAddTobasket(getSinglProduct.data?.data?.basket_auth_user.length)
+    if (getSinglProduct.data?.data?.basket_auth_user.length == 0) {
+      setAddTobasket(getSinglProduct.data?.data?.basket_auth_user.length > 0)
+    }
   }, [getSinglProduct]);
 
 
-  console.log(getSinglProduct.data?.data?.basket_auth_user, '22')
 
   useEffect(() => {
     dispatch(GetSinglProduct({ product_id: productId }, token))
@@ -51,7 +51,14 @@ export const ItemScreen = (props) => {
 
 
   const AddRevoeBasket = () => {
-    dispatch(AddToBasketAction({ product_id: productId }, token))
+    if (addTobasket == 0) {
+      setAddTobasket(true)
+      dispatch(AddToBasketAction({ product_id: productId }, token))
+    }
+    else {
+      setAddTobasket(false)
+      dispatch(RemoveFromBasketAction({ product_id: productId }, token))
+    }
     // setAddTobasket(!addTobasket)
     // navigation.navigate("OrderTab", { screen: "Cart" })
   }
@@ -61,6 +68,7 @@ export const ItemScreen = (props) => {
       <ScrollView style={styles.scroll}>
         <View style={styles.inner}>
           {product?.photos?.length > 0 && <Swiper
+            index={1}
             style={{
               height: 320,
               paddingTop: 20,
@@ -149,9 +157,9 @@ export const ItemScreen = (props) => {
             <View style={styles.priceContainer}>
               <Text style={styles.currentPrice}>{product.price - (product.price * product.discount / 100)} ₽</Text>
               <Text style={styles.prevPrice}>{product.price} ₽</Text>
-              <View style={styles.discount}>
-                <Text style={styles.discountText}>{product.discount}</Text>
-              </View>
+              {product.discount > 0 && <View style={styles.discount}>
+                <Text style={styles.discountText}>{product.discount} %</Text>
+              </View>}
             </View>
             <Collapse
               style={{ marginBottom: 20 }}
@@ -208,7 +216,8 @@ export const ItemScreen = (props) => {
             <MainButton
               basket={addTobasket}
               title={
-                ` В корзину  ${product.price - (product.price * product.discount / 100)} ₽`
+                !addTobasket ? `В корзину  ${product.price - (product.price * product.discount / 100)} ₽` :
+                  `в корзине ✓`
               }
               onPress={() =>
                 AddRevoeBasket()
@@ -330,6 +339,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18,
     color: "#FFFFFF",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   accHead: {
     flexDirection: "row",

@@ -28,7 +28,6 @@ import AvatarEditIcon from "../icons/AvatarEditIcon";
 export const ProfileScreen = (props) => {
   const navigation = useNavigation();
 
-  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
   const getUser = useSelector((st) => st.getUser)
   const [token, setToken] = useState()
@@ -112,7 +111,6 @@ export const ProfileScreen = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.profileMenuItemLast}
-                onPress={() => setModalVisible(true)}
               >
                 <View style={styles.profileMuneItemLeft}>
                   <LogoutIcon />

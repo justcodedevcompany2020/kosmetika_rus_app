@@ -33,7 +33,6 @@ export const Bestsellers = (props) => {
         <ScrollView
           style={{ ...styles.list, paddingHorizontal: 20 }}
           horizontal={true}
-          // scrollEnabled="true"
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => {
             return <View style={{ height: "100%", width: 11 }} />;

@@ -113,7 +113,9 @@ export const CategoryScreen = (props, { route }) => {
             />
             <Text style={styles.title}>{categoryName}</Text>
             <SearchSmallIcon
-              onPress={() => navigation.navigate("SearchScreen")}
+              onPress={() => navigation.navigate("SearchScreen", {
+                id: categoryId
+              })}
             />
           </View>
           <FilterContainer

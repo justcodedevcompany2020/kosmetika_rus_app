@@ -195,24 +195,18 @@ export const GetBaners = (type, token) => {
     };
     return (dispatch) => {
         dispatch(StartGetBaners())
-        fetch(`https://basrarusbackend.justcode.am/api/app/get_banner`, requestOptions)
+        fetch(`https://basrarusbackend.justcode.am/api/app/get_slider?slider=${type}`, requestOptions)
             .then(response => response.json())
             .then(r => {
                 if (r.status) {
-                    if (type === 'first') {
-                        // dispatch(SuccessGetFirstBaners(r))
-                        dispatch(SuccessGetBaners(r))
-
-                    }
-                    else {
-                        // dispatch(SuccessGetBaners(r))
-                    }
+                    dispatch(SuccessGetBaners(r))
                 }
                 else {
                     dispatch(ErrorGetBaners())
                 }
             })
             .catch(error => {
+                console.log(error)
                 dispatch(ErrorGetBaners())
             });
     }
@@ -406,7 +400,6 @@ export const AddToBasketAction = (data, token) => {
         fetch(`${api}/add_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r)
                 dispatch(GetSinglProduct({ product_id: data.product_id }, token))
                 dispatch(GetBasketAction(token))
             })

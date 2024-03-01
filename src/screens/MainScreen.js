@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Navbar } from "../components/Navbar";
 import { SearchInput } from "../components/SearchInput";
 import { HeroSlide } from "../components/HeroSlide";
 import { Bestsellers } from "../components/Bestsellers";
-import { Recomended } from "../components/Recomended";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,43 +13,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const MainScreen = () => {
   const navigation = useNavigation();
-  const video = useRef(null);
-  const [compilations, setCompilations] = useState([]);
   const dispatch = useDispatch()
-  const [chatVisible, setChatVisible] = useState(false);
 
-  const getStorys = useSelector((st) => st.getStoryes)
-  const [storiesVisible, setStoriesVisible] = useState(false);
-  const [firstBanner, setFirstBanner] = useState([])
-  const [secondBanner, setSecondBanner] = useState([])
-
-  const [showStoryes, setShowStoryes] = useState([])
   const [search, setSearch] = useState('')
-  const [activeStory, setActiveStory] = useState(0)
-  const [token, setToken] = useState('')
-
-
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       GetUser()
-      setCompilations([])
     });
     return unsubscribe;
   }, [navigation]);
 
-  const ShowStory = (i) => {
-    setStoriesVisible(true)
-    setShowStoryes(getStorys.data.data[i])
-    setActiveStory(i)
-  }
 
 
 
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
     if (token) {
-      setToken(token)
       dispatch(GetBaners('first', token))
       dispatch(GetPadborkiWhiteProducts(token))
       dispatch(ClearOrderStatus())
@@ -60,15 +39,6 @@ export const MainScreen = () => {
 
   const getBaner = useSelector((st) => st.getBaner)
   const getPadborki = useSelector((st) => st.getPadborki)
-  useEffect(() => {
-    setCompilations(getPadborki.data)
-  }, [getPadborki.data])
-  // useEffect(() => {
-  // }, [getBaner.firstData.data])
-  useEffect(() => {
-    setFirstBanner(getBaner.data.data)
-    setSecondBanner(getBaner.data.data)
-  }, [getBaner.data])
 
   const handleKeyPress = ({ nativeEvent }) => {
     navigation.navigate("CatalogTab", {
@@ -131,14 +101,8 @@ export const MainScreen = () => {
                     />
                   </View>
                 })}
-
-                {/* <View style={styles.slide2}>
-                  <HeroSlide />
-                </View> */}
-
               </Swiper>}
             </View>
-            {/* <Bestsellers style={{ marginBottom: 30 }} /> */}
             {getPadborki.data.map((elm, i) => {
               return <Bestsellers
                 name={elm.name}

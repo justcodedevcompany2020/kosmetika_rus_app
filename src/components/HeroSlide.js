@@ -1,51 +1,26 @@
 import React, { useEffect } from "react";
 import {
   StyleSheet,
-  ImageBackground,
   View,
-  Text,
   Image,
-  Pressable,
-  TouchableOpacity,
+
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { GetBanners } from "../services/action/action";
 
 export const HeroSlide = (props) => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(GetBanners())
-  // }, [])
+  console.log(props.image)
   return (
-    <ImageBackground
+    <View
       style={[styles.hero, props.style]}
-      source={require("../img/hero2.png")}
       resizeMode="cover"
     >
-      <View style={styles.heroLeft}>
-        <Text style={styles.heroTitle}>Крема{"\n"}с наносистемой</Text>
-        <Text style={styles.descr}>
-          Уникальная косметическая{"\n"}серия в линейке Plazan
-        </Text>
-        {/* <TouchableOpacity
-          style={styles.heroBtn}
-          onPress={() =>
-            navigation.navigate("CatalogTab", { screen: "Category" })
-          }
-        >
-          <Text style={styles.heroBtnText}>Узнать больше</Text>
-        </TouchableOpacity> */}
-      </View>
       <View style={styles.heroRight}>
         <Image
           source={{ uri: `https://basrarusbackend.justcode.am/uploads/${props.image}` }}
           style={styles.heroPic}
+          resizeMode="cover"
         />
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -55,10 +30,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingBottom: 7,
     borderRadius: 15,
-    overflow: "hidden",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   heroTitle: {
     alignSelf: "flex-start",
@@ -91,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   heroPic: {
-    width: 105,
+    width: '100%',
     height: 199,
   },
 });
