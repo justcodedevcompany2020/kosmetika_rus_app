@@ -7,6 +7,7 @@ import ThanksForOrderIcon from "../icons/ThanksForOrderIcon";
 import CloseBtnIcon from "../icons/CloseBtnIcon";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
+import { ClearOrderStatus } from "../services/action/action";
 
 export const ThanksForOrderScreen = () => {
   const navigation = useNavigation();

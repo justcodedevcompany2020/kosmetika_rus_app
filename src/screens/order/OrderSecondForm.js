@@ -3,81 +3,50 @@ import {
   View,
   ScrollView,
   Text,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { MainButton } from "../../components/MainButton";
 import { LinearGradient } from "expo-linear-gradient";
 import ReturnIcon from "../../icons/ReturnIcon";
-import SelectDropdown from "react-native-select-dropdown";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { RadioSelect } from "../../components/RadioSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { AddNewOrder, ClearValidOrder } from "../../services/action/action";
-import { CityModal } from "../../components/CityModal";
-
-// const cities = [
-//   "г. Москва",
-//   "г. Санкт-Петербург",
-//   "г. Казань",
-//   "г. Новосибирск",
-//   "г. Екатеринбург",
-//   "г. Уфа",
-// ];
+import { ClearValidOrder } from "../../services/action/action";
 
 export const OrderSecondForm = (props) => {
-  const cities = useSelector((st) => st.getCityes)
-  const [error, setError] = useState('')
-  const [openModal, setOpenModal] = useState(false)
   const [deliveryMethod, setDeliveryMethod] = useState(1);
   const [deliveryType, setDeliveryType] = useState([])
   const navigation = useNavigation();
-  const [paymentMethod, setPaymentMethod] = useState(2);
-  const [selectedCity, setSelectedCity] = useState({})
-  const [errorC, setErrorC] = useState('')
   const getDelivery = useSelector((st) => st.getDelivery)
 
   const dispatch = useDispatch()
-  const getUser = useSelector((st) => st.getUser)
-  const getMyOrder = useSelector((st) => st.getMyOrder)
 
   const addNewOrder = useSelector((st) => st.addNewOrder)
 
   const getPaymentType = useSelector((st) => st.getPaymentType)
-  const getBasket = useSelector((st) => st.getBasket)
-  const { token } = useSelector((st) => st.static)
 
   const [paymentData, setPaymentData] = useState([])
+
 
   useEffect(() => {
     dispatch(ClearValidOrder())
   }, [])
 
-  useEffect(() => {
-    setPaymentData(getPaymentType?.data)
-  }, [getPaymentType?.data])
+  // useEffect(() => {
+  //   setPaymentData(getPaymentType?.data)
+  // }, [getPaymentType?.data])
 
   const [data, setData] = useState(props.route?.params?.data)
 
 
-  useEffect(() => {
-    let item = { ...data }
-    item.payment_id = 1
-    setData(item)
-  }, [])
+  // useEffect(() => {
+  //   let item = { ...data }
+  //   item.payment_id = 1
+  //   setData(item)
+  // }, [])
 
-  // AddNewOrder
 
-  const handelPress = () => {
-    let item = { ...data }
-    item.payment_id = 2
-    item.platform_id = 1
-    item.phone = getUser.data?.user?.phone
-    dispatch(AddNewOrder(item, token))
-    // navigation.navigate("Success")
-  }
 
   useEffect(() => {
     if (addNewOrder.status) {
@@ -100,35 +69,13 @@ export const OrderSecondForm = (props) => {
     setData(item)
   }, [getDelivery.data])
 
-
-  useEffect(() => {
-    let item = { ...data }
-    item.city_id = selectedCity.id
-    item.city_name = selectedCity.name
-    setData(item)
-  }, [selectedCity])
-
   const HandelClick = () => {
-    let send1 = true
-    let send = true
-    if (!data.city_id) {
-      setError('error')
-      send1 = false
+    console.log(deliveryMethod)
+    if (deliveryMethod == 2) {
+      console.log('qqqq')
+      navigation.navigate("FourthStep", { data })
     }
     else {
-      send1 = true
-      setError('')
-    }
-    if (!data.delivery_id) {
-      send = false
-      setErrorC('error')
-    }
-    else {
-      send = true
-      setErrorC('')
-    }
-
-    if (send && send1) {
       navigation.navigate("ThirdStep", { data })
     }
   }
@@ -179,30 +126,21 @@ export const OrderSecondForm = (props) => {
             </Text>
           </View>
           <Text style={[styles.subTitle, { marginBottom: 25 }]}>
-            Населенный пункт
-          </Text>
-          <TouchableOpacity onPress={() => { setOpenModal(true) }} style={[styles.input, { marginBottom: 48, borderColor: error ? 'red' : 'rgba(31, 32, 36, 0.15)' }]} >
-            <Text style={styles.inputText}> {selectedCity.name ? selectedCity.name : ''}</Text>
-          </TouchableOpacity>
-          <CityModal onPress={(e) => setSelectedCity(e)} close={() => setOpenModal(false)} visible={openModal} />
-          <Text style={[styles.subTitle, { marginBottom: 25 }]}>
             Способ доставки
           </Text>
-          {paymentData?.map((elm, i) => {
+          {deliveryType.map((elm, i) => {
             return <RadioSelect
-              key={i}
               title={elm.name}
-              // text="Доставка по Москве (в пределах МКАД) – 250 ₽"
+              text={elm.text}
               onPress={() => {
                 setData({ ...data, delevery_name: elm.name, delivery_id: elm.id })
-                setDeliveryMethod(1)
+                setDeliveryMethod(elm.id)
               }}
-              active={deliveryMethod == 1}
+              active={deliveryMethod == elm.id}
             />
           })}
           <MainButton
             onPress={() => HandelClick()}
-            // onPress={() => navigation.navigate("ThirdStep")}
             title="Далее"
           />
         </View>

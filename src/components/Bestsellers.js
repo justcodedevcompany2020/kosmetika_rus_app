@@ -13,7 +13,6 @@ import { CatalogueItem } from "./CatalogueItem";
 
 export const Bestsellers = (props) => {
   const navigation = useNavigation();
-
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.containerTop}>
@@ -22,7 +21,9 @@ export const Bestsellers = (props) => {
 
           style={styles.btn}
           onPress={() => navigation.navigate("CatalogTab", {
-            screen: "CatalogueScreen", params: {
+            screen: "Category", params: {
+              podborka_id: props.id,
+              categoryName: props.name
             },
           })}
         >

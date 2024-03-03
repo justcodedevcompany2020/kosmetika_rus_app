@@ -40,7 +40,7 @@ export const MainScreen = () => {
   const getBaner = useSelector((st) => st.getBaner)
   const getPadborki = useSelector((st) => st.getPadborki)
 
-  const handleKeyPress = ({ nativeEvent }) => {
+  const handleKeyPress = () => {
     navigation.navigate("CatalogTab", {
       screen: "Category", params: {
         search: search
@@ -105,6 +105,7 @@ export const MainScreen = () => {
             </View>
             {getPadborki.data.map((elm, i) => {
               return <Bestsellers
+                id={elm.id}
                 name={elm.name}
                 product={elm.products}
                 key={i}

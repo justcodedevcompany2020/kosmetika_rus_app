@@ -23,6 +23,7 @@ export const CategoryScreen = (props, { route }) => {
   const age_id = props.route.params.age_id;
   const category_id = props.route.params.category_id
   const search = props.route.params?.search
+  const podborka_id = props.route.params?.podborka_id
   const [id, setId] = useState()
 
   const SetCategory = async () => {
@@ -80,6 +81,7 @@ export const CategoryScreen = (props, { route }) => {
         search: search,
         order_by_volume,
         order_by_rate,
+        podborka_id
       }, token, page))
     }
   }, [page, search, SortAction.type])
@@ -87,12 +89,13 @@ export const CategoryScreen = (props, { route }) => {
 
   useEffect(() => {
     if (getPorduct.data?.data?.data) {
-      let item = [...products]
-      // let combinedArray = item
-      // combinedArray = item.concat(getPorduct.data.data.data);
-      setProducts(getPorduct.data.data.data)
+      console.log(getPorduct.data.data.data.length, 'lengt')
+      let temp = [...products]
+      let combinedArray = temp.concat(getPorduct.data.data.data);
+      console.log(combinedArray.length, '22')
+      setProducts(combinedArray)
     }
-  }, [getPorduct])
+  }, [getPorduct.data])
 
   return (
     <LinearGradient

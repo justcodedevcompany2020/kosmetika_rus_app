@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 export const OrderThirdForm = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.route?.params?.data)
-  const [error, setError] = useState({ address: "", home: "", description: '' })
+  const [error, setError] = useState({ address: "", home: "", description: '', posht: '', city: '' })
   useEffect(() => {
     let item = { ...data }
     item.address = ''
@@ -50,15 +50,15 @@ export const OrderThirdForm = (props) => {
       item.home = ''
       send = true
     }
-    if (!data.description) {
-      item.description = 'error'
-      send = false
-    }
-    else {
-      item.description = ''
-      send = true
-    }
-    if (!item.address && !item.home && !item.description) {
+    // if (!data.description) {
+    //   item.description = 'error'
+    //   send = false
+    // }
+    // else {
+    //   item.description = ''
+    //   send = true
+    // }
+    if (!item.address && !item.home) {
       // navigation.navigate("Payment", { data })
       navigation.navigate("FourthStep", { data })
     }
@@ -107,6 +107,13 @@ export const OrderThirdForm = (props) => {
         </View>
         <Text style={[styles.subTitle, { marginBottom: 25 }]}>Адрес</Text>
         <View style={styles.form}>
+          {data.delivery_id == 3 && <TextInput
+            style={styles.input}
+            placeholder="Город"
+            placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'City')}
+            borderColor={error.address && 'red'}
+          />}
           <TextInput
             style={styles.input}
             placeholder="Улица, дом"
@@ -129,6 +136,14 @@ export const OrderThirdForm = (props) => {
             onChangeText={(e) => HandelChange(e, 'description')}
             borderColor={error.description && 'red'}
           />
+          {data.delivery_id == 3 && <TextInput
+            style={[styles.input, { minHeight: 103, paddingTop: 18 }]}
+            placeholder="Индекс"
+            multiline
+            placeholderTextColor="rgba(55, 55, 55, 0.5)"
+            onChangeText={(e) => HandelChange(e, 'posht')}
+            borderColor={error.description && 'red'}
+          />}
         </View>
       </ScrollView>
       <View style={styles.btnContainer}>
@@ -147,12 +162,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingBottom: 40,
+    paddingTop: 30,
   },
   scroll: {
     width: "100%",
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 30,
   },
   title: {
     marginBottom: 35,

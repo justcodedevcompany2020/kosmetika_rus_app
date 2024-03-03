@@ -195,7 +195,7 @@ export const GetBaners = (type, token) => {
     };
     return (dispatch) => {
         dispatch(StartGetBaners())
-        fetch(`https://basrarusbackend.justcode.am/api/app/get_slider?slider=${type}`, requestOptions)
+        fetch(`https://basrarusbackend.justcode.am/api/admin/get_slider?slider=${type}`, requestOptions)
             .then(response => response.json())
             .then(r => {
                 if (r.status) {
@@ -206,7 +206,6 @@ export const GetBaners = (type, token) => {
                 }
             })
             .catch(error => {
-                console.log(error)
                 dispatch(ErrorGetBaners())
             });
     }
@@ -555,10 +554,12 @@ export const DeliveryType = (token) => {
                     dispatch(SuccessDelivery(r.data))
                 }
                 else {
+                    console.log(r)
                     dispatch(ErrorDelivery())
                 }
             })
             .catch((error) => {
+                console.log(error, 'error')
                 dispatch(ErrorDelivery())
             });
     }
@@ -650,6 +651,7 @@ export const AddNewOrder = (data, token) => {
         fetch(`${api}/add_new_order`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r)
                 if (r.status) {
                     dispatch(SuccessNewOrder(r))
                 }

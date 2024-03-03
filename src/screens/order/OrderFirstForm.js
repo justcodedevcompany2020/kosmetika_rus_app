@@ -200,6 +200,8 @@ export const OrderFirstForm = () => {
             ]}
           />
         </View>
+      </ScrollView>
+      <View style={{ paddingHorizontal: 20 }}>
         <MainButton
           title="Выбрать способ доставки"
 
@@ -207,7 +209,7 @@ export const OrderFirstForm = () => {
             HandelPress()
           }
         />
-      </ScrollView>
+      </View>
     </LinearGradient>
   );
 };
@@ -217,12 +219,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingBottom: 40,
+    paddingTop: 30
   },
   scroll: {
-    flex: 1,
+    // flex: 1,
     width: "100%",
     paddingHorizontal: 20,
-    paddingTop: 30,
+    height: '100%',
   },
   title: {
     marginBottom: 35,

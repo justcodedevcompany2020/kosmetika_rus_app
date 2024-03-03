@@ -7,7 +7,6 @@ import {
 } from "react-native";
 
 export const HeroSlide = (props) => {
-  console.log(props.image)
   return (
     <View
       style={[styles.hero, props.style]}
