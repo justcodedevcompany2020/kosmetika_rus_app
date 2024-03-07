@@ -48,19 +48,6 @@ export const ProfileScreen = (props) => {
   }, [navigation]);
 
 
-  const changeImg = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      dispatch(UpdateUserAvatar(result.assets[0].uri, token))
-    }
-  };
-
   return (
     <View style={{ backgroundColor: "#f7f7f7", position: 'relative', flex: 1 }}>
 

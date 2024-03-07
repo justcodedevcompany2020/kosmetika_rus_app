@@ -74,8 +74,6 @@ export const FiltersScreen = (props) => {
 
 
 
-  const [selectedForage, setSelectedForAge] = useState()
-
   return (
     <LinearGradient
       colors={["#f7f7f7", "#fff"]}
@@ -186,6 +184,8 @@ export const FiltersScreen = (props) => {
               <AccIcon style={{ transform: [{ rotate: `${rotation}deg` }] }} />
             </CollapseHeader>
             <CollapseBody style={styles.accBody}>
+
+
               <TouchableOpacity
                 style={styles.select}
                 skinType="normal"
@@ -210,6 +210,7 @@ export const FiltersScreen = (props) => {
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={styles.select}
                 skinType="dry"
@@ -234,6 +235,8 @@ export const FiltersScreen = (props) => {
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
+
+
               <TouchableOpacity
                 style={styles.select}
                 skinType="wet"
@@ -420,6 +423,7 @@ const styles = StyleSheet.create({
   select: {
     alignItems: "flex-start",
     marginBottom: 10,
+    borderRadius: 10,
   },
   btn: {
     alignItems: "flex-start",

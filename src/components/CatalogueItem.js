@@ -42,6 +42,7 @@ export const CatalogueItem = ({
       left: 0,
       width: 0,
       height: 0,
+      zIndex: 999,
     };
   } else {
     styles.saleBox = {
@@ -54,6 +55,7 @@ export const CatalogueItem = ({
       backgroundColor: "#DBC3A0",
       borderBottomRightRadius: 10,
       borderTopLeftRadius: 10,
+      zIndex: 999,
     };
   }
   const AddRevoeBasket = () => {
@@ -85,9 +87,10 @@ export const CatalogueItem = ({
         },
       })}
     >
-      {sale > 0 && <View style={styles.saleBox}>
-        <Text style={styles.saleText}>{sale}%</Text>
-      </View>}
+      {sale > 0 &&
+        <View style={styles.saleBox}>
+          <Text style={styles.saleText}>{sale}%</Text>
+        </View>}
       <View style={styles.rating}>
         <RatingIcon />
         <Text style={styles.ratingText}>{TruncatedText(rate)}</Text>
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
     width: 58,
     height: 116,
     right: 3,
+    zIndex: 1,
   },
   title: {
     marginBottom: 7,

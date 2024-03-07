@@ -45,7 +45,7 @@ export default function App() {
     let token = await AsyncStorage.getItem('token')
     if (token) {
       // setToken(token)
-      setInitialScreen('ProfileTab')
+      setInitialScreen('Main')
     }
   }
 

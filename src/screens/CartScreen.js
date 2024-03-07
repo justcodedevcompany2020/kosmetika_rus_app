@@ -27,7 +27,6 @@ export const CartScreen = (props) => {
       const productPrice = Math.round(product.product.price - product.product.price * (product.product.discount / 100));
       sum += (product.product_count * productPrice);
     });
-    console.log(sum)
     return sum;
   }
 

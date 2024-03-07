@@ -44,6 +44,7 @@ export const Bestsellers = (props) => {
               return <CatalogueItem
                 style={{}}
                 id={elm.id}
+                sale={elm.discount}
                 main={props.main}
                 isbasket={elm?.basket_auth_user?.length}
                 image={elm.photos[0].photo}

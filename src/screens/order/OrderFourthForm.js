@@ -48,25 +48,31 @@ export const OrderFourthForm = (props) => {
   }, [])
 
   const GetCount = (data) => {
-    console.log(data?.length)
-    // console.log(e.length, '22')
     let count = 0
     data?.map((elm, i) => {
       count += +elm.product_count
-      // console.log(elm.product_count)
     })
     return count
   }
 
-  const GetPrice = (data) => {
+  const GetPrice = (data1, end) => {
     let price = 0
-    data?.map((elm, i) => {
+    data1?.map((elm, i) => {
       price += (+elm.product_count * Math.round(elm.product.price - (elm.product.price * elm.product.discount / 100)))
     })
-    return Math.round(price)
+    if (!end) {
+      return Math.round(price)
+    }
+    else {
+      if (data.delivery_id == 2) {
+        return Math.round(price)
+      }
+      return Math.round(price) + 250
+    }
   }
 
   // AddNewOrder
+  console.log(data)
 
   const handelPress = () => {
     let item = { ...data }
@@ -160,7 +166,8 @@ export const OrderFourthForm = (props) => {
 
             <Text style={styles.detailsTitle}>Способ доставки</Text>
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              Доставка курьером
+              {data.delevery_name ? data.delevery_name : 'Доставка курьером'}
+
             </Text>
 
             <Text style={styles.detailsTitle}>Адрес доставки</Text>
@@ -177,19 +184,23 @@ export const OrderFourthForm = (props) => {
               <Text style={styles.detailsText}>Товары на сумму</Text>
               <Text style={styles.detailsText}>{GetPrice(getBasket.data.data)} ₽</Text>
             </View>
-            <View style={styles.detailsBottomLine}>
-              <Text style={styles.detailsText}>Доставка</Text>
-              <Text style={styles.detailsText}>250 ₽</Text>
-            </View>
+            {data.delivery_id == 2 ?
+              <View style={styles.detailsBottomLine}>
+                <Text style={styles.detailsText}>Доставка</Text>
+                <Text style={styles.detailsText}>бесплатная доставка</Text>
+              </View> :
+              <View style={styles.detailsBottomLine}>
+                <Text style={styles.detailsText}>Доставка</Text>
+                <Text style={styles.detailsText}> 250 ₽</Text>
+              </View>}
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Итого</Text>
-              <Text style={styles.detailsText}>{(GetPrice(getBasket.data.data) + 250)} ₽</Text>
+              <Text style={styles.detailsText}>{GetPrice(getBasket.data.data, true)} ₽</Text>
             </View>
           </View>
 
           {/* <View style={{ width: 280 }}> */}
           {getBasket.data?.data?.map((elm, i) => {
-            console.log(elm)
             return <OrderItemFinal
               photo={elm.product.photos[0].photo}
               title={elm.product?.name}

@@ -33,19 +33,8 @@ export const OrderSecondForm = (props) => {
     dispatch(ClearValidOrder())
   }, [])
 
-  // useEffect(() => {
-  //   setPaymentData(getPaymentType?.data)
-  // }, [getPaymentType?.data])
 
   const [data, setData] = useState(props.route?.params?.data)
-
-
-  // useEffect(() => {
-  //   let item = { ...data }
-  //   item.payment_id = 1
-  //   setData(item)
-  // }, [])
-
 
 
   useEffect(() => {
@@ -127,7 +116,9 @@ export const OrderSecondForm = (props) => {
             Способ доставки
           </Text>
           {deliveryType.map((elm, i) => {
+            console.log(elm.name)
             return <RadioSelect
+              key={i}
               title={elm.name}
               text={elm.description}
               onPress={() => {

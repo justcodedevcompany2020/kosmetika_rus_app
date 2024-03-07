@@ -53,7 +53,6 @@ export const CatalogueScreen = (props) => {
                 <Text style={[styles.itemTitle, { marginBottom: 7 }]}>
                   {getProducets?.data[0]?.name}
                 </Text>
-                {/* <Text style={styles.itemDescr}>Краткое описание категории</Text> */}
                 <LinearGradient
                   colors={["#EDDFCB", "#DBC3A0"]}
                   locations={[1, 0.99]}

@@ -143,7 +143,6 @@ export const OrderThirdForm = (props) => {
         <MainButton
           title="Выбрать способ оплаты"
           onPress={() => handelClick()}
-        // onPress={() => navigation.navigate("FourthStep")}
         />
       </View>
     </LinearGradient>

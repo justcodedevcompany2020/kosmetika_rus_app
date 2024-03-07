@@ -61,7 +61,6 @@ export const ItemScreen = (props) => {
       dispatch(RemoveFromBasketAction({ product_id: productId }, token))
     }
   }
-
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -164,7 +163,7 @@ export const ItemScreen = (props) => {
             </View>
             <View style={styles.priceContainer}>
               <Text style={styles.currentPrice}>{Math.round(product.price - (product.price * product.discount / 100))} ₽</Text>
-              <Text style={styles.prevPrice}>{product.price} ₽</Text>
+              {product.discount > 0 && <Text style={styles.prevPrice}>{product.price} ₽</Text>}
               {product.discount > 0 && <View style={styles.discount}>
                 <Text style={styles.discountText}>{product.discount} %</Text>
               </View>}

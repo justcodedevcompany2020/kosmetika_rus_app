@@ -443,7 +443,6 @@ export const GetBasketAction = (token, page = 1) => {
         fetch(`${api}/get_basket?page=${page}`, requestOptions)
             .then((r) => r.json())
             .then(r => {
-                console.log(r, '221')
                 if (r.status) {
                     dispatch(SuccessGetBasket(r))
                 }
