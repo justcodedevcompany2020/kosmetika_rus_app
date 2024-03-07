@@ -23,15 +23,12 @@ export const CartScreen = (props) => {
   function totalCost() {
     let sum = 0;
     basket?.data?.forEach((product) => {
-      const productPrice =
-        product.product.price - product.product.price * (product.product.discount / 100);
-      sum += product.product_count * productPrice;
-    });
-    let sum1 = JSON.stringify(sum)
 
-    let index = sum1.indexOf('.');
-    let sum2 = sum1.split(0, index + 1)
-    return sum2;
+      const productPrice = Math.round(product.product.price - product.product.price * (product.product.discount / 100));
+      sum += (product.product_count * productPrice);
+    });
+    console.log(sum)
+    return sum;
   }
 
   const addProductCount = (id) => {
@@ -100,7 +97,7 @@ export const CartScreen = (props) => {
               onPress={() => navigation.navigate("Main")}
             />
             {basket?.data?.map((product, index) => {
-              let price = product.product.price - (product.product.price * product.product.discount / 100)
+              let price = Math.round(product.product.price - (product.product.price * product.product.discount / 100))
               return <CartItem
                 key={index}
                 image={product?.product?.photos[0]?.photo}
@@ -111,7 +108,7 @@ export const CartScreen = (props) => {
                 title={product.product.name}
                 descr={`Объем: ${product.product.volume} мл`}
                 currentPrice={price}
-                prevPrice={product.product.price}
+                prevPrice={product.product.discount > 0 && product.product.price}
               />
             })}
             {basket?.data?.length == 0 &&

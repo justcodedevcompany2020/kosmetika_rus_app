@@ -22,7 +22,7 @@ export const OrderItemFinal = ({
           <Text style={styles.amount}>{amount} шт.</Text>
           <View style={styles.bottomWrapper}>
             <Text style={styles.currentPrice}>{currentPrice} ₽</Text>
-            <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
+            {prevPrice && <Text style={styles.prevPrice}>{prevPrice} ₽</Text>}
           </View>
         </View>
       </View>

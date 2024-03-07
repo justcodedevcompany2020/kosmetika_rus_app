@@ -62,7 +62,7 @@ export const ProfileScreen = (props) => {
   };
 
   return (
-    <View style={{ backgroundColor: "#f7f7f7", position: 'relative' }}>
+    <View style={{ backgroundColor: "#f7f7f7", position: 'relative', flex: 1 }}>
 
       <ScrollView>
         {openLogout && <LogoutPopup close={() => setOpenLogout(false)} />}

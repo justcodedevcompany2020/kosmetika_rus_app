@@ -47,6 +47,25 @@ export const OrderFourthForm = (props) => {
     setData(item)
   }, [])
 
+  const GetCount = (data) => {
+    console.log(data?.length)
+    // console.log(e.length, '22')
+    let count = 0
+    data?.map((elm, i) => {
+      count += +elm.product_count
+      // console.log(elm.product_count)
+    })
+    return count
+  }
+
+  const GetPrice = (data) => {
+    let price = 0
+    data?.map((elm, i) => {
+      price += (+elm.product_count * Math.round(elm.product.price - (elm.product.price * elm.product.discount / 100)))
+    })
+    return Math.round(price)
+  }
+
   // AddNewOrder
 
   const handelPress = () => {
@@ -55,7 +74,6 @@ export const OrderFourthForm = (props) => {
     item.platform_id = 1
     item.phone = getUser.data.user?.phone
     dispatch(AddNewOrder(item, token))
-    // navigation.navigate("Success")
   }
 
   useEffect(() => {
@@ -120,7 +138,7 @@ export const OrderFourthForm = (props) => {
           {paymentData?.map((elm, i) => {
             return <PaymentMethod
               title={elm.name}
-              text="Оплатите заказ в течение 30 минут после оформления"
+              text={elm.description}
               onPress={() => setPaymentMethod(elm.id)}
               active={paymentMethod == elm.id}
             />
@@ -153,35 +171,32 @@ export const OrderFourthForm = (props) => {
             <Text style={styles.detailsTitle}>Оплачен</Text>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Товаров в заказе</Text>
-              <Text style={styles.detailsText}>{getBasket.data?.data?.length}</Text>
+              <Text style={styles.detailsText}>{GetCount(getBasket.data?.data)}</Text>
             </View>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Товары на сумму</Text>
-              <Text style={styles.detailsText}>{getBasket.data?.all_basket_sum}</Text>
+              <Text style={styles.detailsText}>{GetPrice(getBasket.data.data)} ₽</Text>
             </View>
-            {/* <View style={styles.detailsBottomLine}>
-              <Text style={styles.detailsText}>Скидка</Text>
-              <Text style={styles.detailsText}>{getBasket.data?.products_counts_price}</Text>
-            </View> */}
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Доставка</Text>
               <Text style={styles.detailsText}>250 ₽</Text>
             </View>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Итого</Text>
-              <Text style={styles.detailsText}>{getBasket.data?.all_basket_sum + 250}</Text>
+              <Text style={styles.detailsText}>{(GetPrice(getBasket.data.data) + 250)} ₽</Text>
             </View>
           </View>
 
           {/* <View style={{ width: 280 }}> */}
           {getBasket.data?.data?.map((elm, i) => {
+            console.log(elm)
             return <OrderItemFinal
               photo={elm.product.photos[0].photo}
               title={elm.product?.name}
               descr={elm.product.volume}
               amount={elm.product_count}
-              currentPrice={elm.products_counts_price_with_discount}
-              prevPrice={elm.product.volume.price}
+              currentPrice={Math.round(Math.round(elm.product.price - (elm.product.price * elm.product.discount / 100)))}
+              prevPrice={elm.product.discount > 0 && elm.product?.price}
             />
           })
 

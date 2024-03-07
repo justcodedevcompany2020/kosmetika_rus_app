@@ -44,12 +44,13 @@ export const Bestsellers = (props) => {
               return <CatalogueItem
                 style={{}}
                 id={elm.id}
+                main={props.main}
                 isbasket={elm?.basket_auth_user?.length}
                 image={elm.photos[0].photo}
                 key={i}
                 rate={elm.rate?.length == 0 ? 5 : elm.rate}
                 title={elm.name}
-                currentPrice={elm.price}
+                currentPrice={Math.round(elm.price - (elm.price * elm.discount / 100))}
                 prevPrice={elm.price}
               />
             })}

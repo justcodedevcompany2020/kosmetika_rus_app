@@ -66,13 +66,16 @@ export const CategoryScreen = (props, { route }) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       setPage(1)
       dispatch(ClearOrderStatus())
-      setProducts([])
       GetItem()
+
     });
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
+    if (page == 1) {
+      setProducts([])
+    }
     if (page > 0) {
       let order_by_volume = SortAction.type == 'discount' ? true : false
       let order_by_rate = SortAction.type == 'raiting' ? true : false
@@ -89,10 +92,8 @@ export const CategoryScreen = (props, { route }) => {
 
   useEffect(() => {
     if (getPorduct.data?.data?.data) {
-      console.log(getPorduct.data.data.data.length, 'lengt')
       let temp = [...products]
       let combinedArray = temp.concat(getPorduct.data.data.data);
-      console.log(combinedArray.length, '22')
       setProducts(combinedArray)
     }
   }, [getPorduct.data])

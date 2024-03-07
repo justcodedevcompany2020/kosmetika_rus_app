@@ -23,7 +23,8 @@ export const CatalogueItem = ({
   style,
   image,
   isbasket,
-  id
+  id,
+  main
 }) => {
   const dispatch = useDispatch()
   const navigation = useNavigation();
@@ -66,10 +67,10 @@ export const CatalogueItem = ({
 
   }
   const truncateText = (text) => {
-    if (text.length <= 20) {
+    if (text.length <= 45) {
       return text;
     } else {
-      return text.substring(0, 20) + '...';
+      return text.substring(0, 45) + '...';
     }
   };
 
@@ -79,13 +80,14 @@ export const CatalogueItem = ({
       style={[styles.item, style]}
       onPress={() => navigation.navigate("CatalogTab", {
         screen: "Item", params: {
+          screen: main,
           productId: id
         },
       })}
     >
-      <View style={styles.saleBox}>
+      {sale > 0 && <View style={styles.saleBox}>
         <Text style={styles.saleText}>{sale}%</Text>
-      </View>
+      </View>}
       <View style={styles.rating}>
         <RatingIcon />
         <Text style={styles.ratingText}>{TruncatedText(rate)}</Text>
@@ -99,7 +101,7 @@ export const CatalogueItem = ({
         <Text style={styles.title}>{truncateText(title)}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.currentPrice}>{currentPrice} ₽</Text>
-          <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
+          {sale > 0 && <Text style={styles.prevPrice}>{prevPrice} ₽</Text>}
         </View>
       </View>
       <CartButton basket={basket} onPress={() => AddRevoeBasket()} title={basket ? 'Удалить из корзины' : ' В корзину'} />

@@ -70,9 +70,7 @@ export const OrderSecondForm = (props) => {
   }, [getDelivery.data])
 
   const HandelClick = () => {
-    console.log(deliveryMethod)
     if (deliveryMethod == 2) {
-      console.log('qqqq')
       navigation.navigate("FourthStep", { data })
     }
     else {
@@ -131,7 +129,7 @@ export const OrderSecondForm = (props) => {
           {deliveryType.map((elm, i) => {
             return <RadioSelect
               title={elm.name}
-              text={elm.text}
+              text={elm.description}
               onPress={() => {
                 setData({ ...data, delevery_name: elm.name, delivery_id: elm.id })
                 setDeliveryMethod(elm.id)
@@ -139,12 +137,14 @@ export const OrderSecondForm = (props) => {
               active={deliveryMethod == elm.id}
             />
           })}
-          <MainButton
-            onPress={() => HandelClick()}
-            title="Далее"
-          />
         </View>
       </ScrollView>
+      <View style={{ paddingHorizontal: 20, width: '100%' }}>
+        <MainButton
+          onPress={() => HandelClick()}
+          title="Далее"
+        />
+      </View>
     </LinearGradient>
   );
 };
@@ -207,6 +207,8 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: "center",
     color: "#373737",
+    fontFamily: "MontserratBold",
+
   },
   container: {
     paddingHorizontal: 15,

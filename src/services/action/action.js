@@ -443,8 +443,8 @@ export const GetBasketAction = (token, page = 1) => {
         fetch(`${api}/get_basket?page=${page}`, requestOptions)
             .then((r) => r.json())
             .then(r => {
+                console.log(r, '221')
                 if (r.status) {
-
                     dispatch(SuccessGetBasket(r))
                 }
                 else {
@@ -554,12 +554,10 @@ export const DeliveryType = (token) => {
                     dispatch(SuccessDelivery(r.data))
                 }
                 else {
-                    console.log(r)
                     dispatch(ErrorDelivery())
                 }
             })
             .catch((error) => {
-                console.log(error, 'error')
                 dispatch(ErrorDelivery())
             });
     }
@@ -651,8 +649,8 @@ export const AddNewOrder = (data, token) => {
         fetch(`${api}/add_new_order`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r)
                 if (r.status) {
+                    dispatch(GetBasketAction(token, 1))
                     dispatch(SuccessNewOrder(r))
                 }
                 else {

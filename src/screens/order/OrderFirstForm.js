@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { DeliveryType, GetAuthUser, GetCityes, GetMyOrderAction, GetPaymentType } from "../../services/action/action";
 
 export const OrderFirstForm = () => {
-  const [phone, setPhone] = useState(" ");
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const { token } = useSelector((st) => st.static)
@@ -204,7 +203,6 @@ export const OrderFirstForm = () => {
       <View style={{ paddingHorizontal: 20 }}>
         <MainButton
           title="Выбрать способ доставки"
-
           onPress={() =>
             HandelPress()
           }

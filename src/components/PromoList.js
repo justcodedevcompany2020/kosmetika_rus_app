@@ -3,12 +3,6 @@ import { StyleSheet, View, } from "react-native";
 import { CatalogueItem } from "./CatalogueItem";
 
 export const PromoList = ({ data }) => {
-  const TruncatedText = (texts) => {
-    let text = JSON.stringify(texts)
-    const truncatedText = text.length > 5 ? `${text.substring(0, 5)}` : text;
-    return truncatedText
-  };
-
 
   const [DATA, setDATA] = useState(data)
   useEffect(() => {
@@ -26,8 +20,8 @@ export const PromoList = ({ data }) => {
           rate={item.rate == 0 ? 5 : +item.rate_avg_star}
           sale={item.discount}
           currentPrice={
-            TruncatedText(item.price -
-              item.price * (item.discount / 100))
+            Math.round((item.price -
+              item.price * (item.discount / 100)))
           }
           prevPrice={item.price}
           key={i}

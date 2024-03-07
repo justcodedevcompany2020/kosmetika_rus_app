@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Navbar } from "../components/Navbar";
 import { SearchInput } from "../components/SearchInput";
 import { HeroSlide } from "../components/HeroSlide";
@@ -94,12 +94,20 @@ export const MainScreen = () => {
                 }
               >
                 {getBaner?.data?.data?.map((elm, i) => {
-                  return <View key={i} style={styles.slide1}>
+                  return <TouchableOpacity
+                    key={i}
+                    style={styles.slide1}
+                    onPress={() => navigation.navigate("CatalogTab", {
+                      screen: "Category", params: {
+                        podborka_id: elm.podborki.id,
+                        categoryName: elm.podborki.name
+                      },
+                    })}
+                  >
                     <HeroSlide
                       image={elm.file}
-
                     />
-                  </View>
+                  </TouchableOpacity>
                 })}
               </Swiper>}
             </View>
@@ -108,6 +116,7 @@ export const MainScreen = () => {
                 id={elm.id}
                 name={elm.name}
                 product={elm.products}
+                main={'main'}
                 key={i}
                 image={elm.image}
                 style={{ marginBottom: 30 }}

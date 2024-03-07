@@ -12,6 +12,7 @@ import { MainButton } from "../components/MainButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCategory, SortAction } from '../services/action/action'
+import { Radio } from "../icons/Radio";
 
 
 export const SortScreen = (props) => {
@@ -50,16 +51,7 @@ export const SortScreen = (props) => {
               type={"raiting"}
               onPress={() => setType("raiting")}
             >
-              <LinearGradient
-                colors={
-                  type == "raiting"
-                    ? ["#C2ECD4", "#9AC6AD"]
-                    : ["#f7f7f7", "#f7f7f7"]
-                }
-                style={
-                  type == "raiting" ? styles.select : styles.selectDisabled
-                }
-              ></LinearGradient>
+              <Radio type={type != 'raiting'} />
               <Text
                 style={
                   type == "raiting"
@@ -75,16 +67,8 @@ export const SortScreen = (props) => {
               type={"discount"}
               onPress={() => setType("discount")}
             >
-              <LinearGradient
-                colors={
-                  type == "discount"
-                    ? ["#C2ECD4", "#9AC6AD"]
-                    : ["#f7f7f7", "#f7f7f7"]
-                }
-                style={
-                  type == "discount" ? styles.select : styles.selectDisabled
-                }
-              ></LinearGradient>
+              <Radio type={type == 'raiting'} />
+
               <Text
                 style={
                   type == "discount"
@@ -168,11 +152,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 20,
     color: "#373737",
+    paddingLeft: 20
   },
   selectTextActive: {
     fontFamily: "MontserratSemiBold",
     fontSize: 18,
     lineHeight: 20,
     color: "#373737",
+    paddingLeft: 20
   },
 });

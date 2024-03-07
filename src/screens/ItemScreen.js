@@ -30,6 +30,7 @@ export const ItemScreen = (props) => {
   const [product, setProduct] = useState({});
 
   const productId = props.route.params.productId;
+  const screen = props.route.params.screen;
   const getSinglProduct = useSelector((st) => st.getSinglProduct)
   const { token } = useSelector((st) => st.static)
   const [addTobasket, setAddTobasket] = useState(false)
@@ -59,8 +60,6 @@ export const ItemScreen = (props) => {
       setAddTobasket(false)
       dispatch(RemoveFromBasketAction({ product_id: productId }, token))
     }
-    // setAddTobasket(!addTobasket)
-    // navigation.navigate("OrderTab", { screen: "Cart" })
   }
 
   return (
@@ -113,7 +112,16 @@ export const ItemScreen = (props) => {
           </Swiper>}
           <ReturnIcon
             style={styles.retunIcon}
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              if (screen == 'main') {
+                navigation.navigate("Main")
+              }
+              else {
+                navigation.goBack()
+              }
+            }
+
+            }
           />
           {product.hit_status != 0 && <LinearGradient
             colors={["#DBC3A0", "#DBC3A0"]}
@@ -155,7 +163,7 @@ export const ItemScreen = (props) => {
               <Text style={styles.paramText}>{product.volume} мл</Text>
             </View>
             <View style={styles.priceContainer}>
-              <Text style={styles.currentPrice}>{product.price - (product.price * product.discount / 100)} ₽</Text>
+              <Text style={styles.currentPrice}>{Math.round(product.price - (product.price * product.discount / 100))} ₽</Text>
               <Text style={styles.prevPrice}>{product.price} ₽</Text>
               {product.discount > 0 && <View style={styles.discount}>
                 <Text style={styles.discountText}>{product.discount} %</Text>
@@ -216,7 +224,7 @@ export const ItemScreen = (props) => {
             <MainButton
               basket={addTobasket}
               title={
-                !addTobasket ? `В корзину  ${product.price - (product.price * product.discount / 100)} ₽` :
+                !addTobasket ? `В корзину  ${Math.round(product.price - (product.price * product.discount / 100))} ₽` :
                   `в корзине ✓`
               }
               onPress={() =>

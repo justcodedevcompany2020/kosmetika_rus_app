@@ -103,11 +103,6 @@ export default function App() {
                     component={CatalogTab}
                     options={{ tabBarStyle: { display: "none" } }}
                   />
-                  {/* <Tab.Screen
-                  name="Promo"
-                  component={PromoScreen}
-                  options={{ tabBarStyle: { display: "none" } }}
-                /> */}
                   <Tab.Screen
                     name="ThanksForOrder"
                     options={{ tabBarStyle: { display: "none" } }}

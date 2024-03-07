@@ -73,7 +73,7 @@ export const Navbar = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("OrderTab")}
+          onPress={() => navigation.navigate("OrderTab", { screen: 'Cart' })}
         >
           <View style={{ position: 'relative' }}>
             {getBasket.data.data?.length > 0 && <View style={{ position: 'absolute', right: 0, top: -10, backgroundColor: '#e0caae', width: 18, height: 18, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>

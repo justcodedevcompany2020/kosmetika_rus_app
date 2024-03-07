@@ -16,6 +16,8 @@ export const OrderThirdForm = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.route?.params?.data)
   const [error, setError] = useState({ address: "", home: "", description: '', posht: '', city: '' })
+
+
   useEffect(() => {
     let item = { ...data }
     item.address = ''
@@ -50,16 +52,7 @@ export const OrderThirdForm = (props) => {
       item.home = ''
       send = true
     }
-    // if (!data.description) {
-    //   item.description = 'error'
-    //   send = false
-    // }
-    // else {
-    //   item.description = ''
-    //   send = true
-    // }
     if (!item.address && !item.home) {
-      // navigation.navigate("Payment", { data })
       navigation.navigate("FourthStep", { data })
     }
     setError(item)

@@ -27,7 +27,7 @@ export const CartItem = ({ image, RemoveFromBasket, count, title, descr, current
         <View style={styles.itemBottom}>
           <View style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.currentPrice}>{currentPrice} ₽</Text>
-            <Text style={styles.prevPrice}>{prevPrice} ₽</Text>
+            {prevPrice && <Text style={styles.prevPrice}>{prevPrice} ₽</Text>}
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity style={styles.minusBtn} onPress={MinusProductCount}>
