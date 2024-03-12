@@ -129,7 +129,7 @@ export const CategoryScreen = (props, { route }) => {
             style={{ marginBottom: 23, backgroundColor: "fff" }}
           />
           <Text style={styles.amountText}>Найдено товаров: {getPorduct.data?.count}</Text>
-          <PromoList data={products} />
+          <PromoList categoryName={categoryName} data={products} />
         </View>
       </ScrollView>
       <Navbar active="Catalogue" activeText="Catalogue" />

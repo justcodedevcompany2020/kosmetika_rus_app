@@ -116,7 +116,6 @@ export const OrderSecondForm = (props) => {
             Способ доставки
           </Text>
           {deliveryType.map((elm, i) => {
-            console.log(elm.name)
             return <RadioSelect
               key={i}
               title={elm.name}

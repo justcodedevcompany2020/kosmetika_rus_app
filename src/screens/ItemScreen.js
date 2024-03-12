@@ -30,6 +30,8 @@ export const ItemScreen = (props) => {
   const [product, setProduct] = useState({});
 
   const productId = props.route.params.productId;
+  const categoryName = props.route.params.categoryName;
+
   const screen = props.route.params.screen;
   const getSinglProduct = useSelector((st) => st.getSinglProduct)
   const { token } = useSelector((st) => st.static)
@@ -116,7 +118,7 @@ export const ItemScreen = (props) => {
                 navigation.navigate("Main")
               }
               else {
-                navigation.goBack()
+                navigation.navigate("CatalogTab", { screen: 'Category', params: { id: productId, categoryName: categoryName } })
               }
             }
 

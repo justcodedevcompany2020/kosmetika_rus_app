@@ -71,9 +71,6 @@ export const OrderFourthForm = (props) => {
     }
   }
 
-  // AddNewOrder
-  console.log(data)
-
   const handelPress = () => {
     let item = { ...data }
     item.payment_id = 2
@@ -84,6 +81,7 @@ export const OrderFourthForm = (props) => {
 
   useEffect(() => {
     if (addNewOrder?.status) {
+      console.log(addNewOrder, 'addNewOrder')
       navigation.navigate("ThanksForOrder")
     }
   }, [addNewOrder])

@@ -6,15 +6,16 @@ import { MainButton } from "../components/MainButton";
 import ThanksForOrderIcon from "../icons/ThanksForOrderIcon";
 import CloseBtnIcon from "../icons/CloseBtnIcon";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ClearOrderStatus } from "../services/action/action";
 
 export const ThanksForOrderScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
+  const addNewOrder = useSelector((st) => st.addNewOrder)
+  console.log(addNewOrder.data.order_id, 'addNewOrder')
   useEffect(() => {
     dispatch(ClearOrderStatus())
-
   }, [])
   return (
     <View style={{ ...styles.container, backgroundColor: "#f7f7f7" }}>
@@ -29,7 +30,7 @@ export const ThanksForOrderScreen = () => {
           Вскоре с вами свяжется наш менеджер для подтверждения заказа
         </Text>
         <View style={styles.orederContainer}>
-          <Text style={styles.orederNum}>0097746</Text>
+          <Text style={styles.orederNum}>{addNewOrder.data.order_id}</Text>
           <Text style={styles.orederNumText}>номер заказа</Text>
         </View>
       </View>

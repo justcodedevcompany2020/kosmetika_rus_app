@@ -24,7 +24,8 @@ export const CatalogueItem = ({
   image,
   isbasket,
   id,
-  main
+  main,
+  categoryName
 }) => {
   const dispatch = useDispatch()
   const navigation = useNavigation();
@@ -83,7 +84,8 @@ export const CatalogueItem = ({
       onPress={() => navigation.navigate("CatalogTab", {
         screen: "Item", params: {
           screen: main,
-          productId: id
+          productId: id,
+          categoryName: categoryName
         },
       })}
     >

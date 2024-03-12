@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, } from "react-native";
 import { CatalogueItem } from "./CatalogueItem";
 
-export const PromoList = ({ data }) => {
+export const PromoList = ({ data, categoryName }) => {
 
   const [DATA, setDATA] = useState(data)
   useEffect(() => {
@@ -13,6 +13,7 @@ export const PromoList = ({ data }) => {
       {DATA?.map((item, i) => {
         return <CatalogueItem
           id={item.id}
+          categoryName={categoryName}
           isbasket={item.basket_auth_user?.length}
           style={{ marginRight: 0, width: "48.5%", backgroundColor: "#fff" }}
           title={item.name}

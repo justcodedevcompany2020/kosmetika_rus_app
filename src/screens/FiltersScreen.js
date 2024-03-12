@@ -40,6 +40,13 @@ export const FiltersScreen = (props) => {
   const categoryId = props.route.params.id;
   const categoryName = props.route.params.categoryName;
   const [category, setCategory] = useState()
+  const [data, setData] = useState([
+    { skinType: 'normal', title: 'Нормальная' },
+    { skinType: 'dry', title: 'Сухая' },
+    { skinType: 'wet', title: 'Жирная' },
+    { skinType: 'combined', title: 'Комбинированная' },
+
+  ])
   function handleOnPress() {
     if (position == 0) {
       setPosition(position + 30);
@@ -184,109 +191,33 @@ export const FiltersScreen = (props) => {
               <AccIcon style={{ transform: [{ rotate: `${rotation}deg` }] }} />
             </CollapseHeader>
             <CollapseBody style={styles.accBody}>
-
-
-              <TouchableOpacity
-                style={styles.select}
-                skinType="normal"
-                onPress={() => setSkinType("normal")}
-              >
-                <LinearGradient
-                  colors={
-                    skinType == "normal"
-                      ? ["#C2ECD4", "#9AC6AD"]
-                      : ["#fff", "#f7f7f7"]
-                  }
-                  style={skinType == "normal" ? styles.btn : styles.btnDisabled}
+              {data.map((elm, i) => {
+                return <TouchableOpacity
+                  key={i}
+                  style={styles.select}
+                  skinType={elm.skinType}
+                  onPress={() => setSkinType(elm.skinType)}
                 >
-                  <Text
-                    style={
-                      skinType == "normal"
-                        ? styles.btnText
-                        : styles.btnTextDisabled
+                  <LinearGradient
+                    colors={
+                      skinType == elm.skinType
+                        ? ["#C2ECD4", "#9AC6AD"]
+                        : ["#fff", "#f7f7f7"]
                     }
+                    style={skinType == elm.skinType ? styles.btn : styles.btnDisabled}
                   >
-                    Нормальная
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.select}
-                skinType="dry"
-                onPress={() => setSkinType("dry")}
-              >
-                <LinearGradient
-                  colors={
-                    skinType == "dry"
-                      ? ["#C2ECD4", "#9AC6AD"]
-                      : ["#fff", "#f7f7f7"]
-                  }
-                  style={skinType == "dry" ? styles.btn : styles.btnDisabled}
-                >
-                  <Text
-                    style={
-                      skinType == "dry"
-                        ? styles.btnText
-                        : styles.btnTextDisabled
-                    }
-                  >
-                    Сухая
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-
-
-              <TouchableOpacity
-                style={styles.select}
-                skinType="wet"
-                onPress={() => setSkinType("wet")}
-              >
-                <LinearGradient
-                  colors={
-                    skinType == "wet"
-                      ? ["#C2ECD4", "#9AC6AD"]
-                      : ["#fff", "#f7f7f7"]
-                  }
-                  style={skinType == "wet" ? styles.btn : styles.btnDisabled}
-                >
-                  <Text
-                    style={
-                      skinType == "wet"
-                        ? styles.btnText
-                        : styles.btnTextDisabled
-                    }
-                  >
-                    Жирная
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.select}
-                skinType="combined"
-                onPress={() => setSkinType("combined")}
-              >
-                <LinearGradient
-                  colors={
-                    skinType == "combined"
-                      ? ["#C2ECD4", "#9AC6AD"]
-                      : ["#fff", "#f7f7f7"]
-                  }
-                  style={
-                    skinType == "combined" ? styles.btn : styles.btnDisabled
-                  }
-                >
-                  <Text
-                    style={
-                      skinType == "combined"
-                        ? styles.btnText
-                        : styles.btnTextDisabled
-                    }
-                  >
-                    Комбинированная
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
+                    <Text
+                      style={
+                        skinType == elm.skinType
+                          ? styles.btnText
+                          : styles.btnTextDisabled
+                      }
+                    >
+                      {elm.title}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              })}
             </CollapseBody>
           </Collapse>
           <View style={[styles.bottomContainer, { marginBottom: 36 }]}>
