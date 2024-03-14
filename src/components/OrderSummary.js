@@ -5,37 +5,42 @@ export const OrderSummary = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.user}>
-        <Text style={styles.subTitle}>Екатерина Иванова</Text>
-        <Text style={styles.subDescr}>+7 (938) 228-33-44</Text>
-        <Text style={styles.subDescr}>katty.kat@mail.ru</Text>
+        <Text style={styles.subTitle}>{props.data.name}</Text>
+        <Text style={styles.subDescr}>{props.data.phone}</Text>
+        <Text style={styles.subDescr}>{props.data.email}</Text>
       </View>
       <View style={styles.deliveryMet}>
         <Text style={styles.subTitle}>Способ доставки</Text>
-        <Text style={styles.subDescr}>Доставка курьером</Text>
+        <Text style={styles.subDescr}>{props.data.deliver?.name}</Text>
       </View>
       <View style={styles.deliveryAddress}>
         <Text style={styles.subTitle}>Адрес доставки</Text>
         <Text style={styles.subDescr}>
-          г. Москва, Тверская ул., 39/3, кв. 50
+          {props.data.city} {props.data.address} {props.data?.home_office}
         </Text>
       </View>
       <View style={styles.payment}>
         <Text style={styles.subTitle}>Оплачен</Text>
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Товаров в заказе</Text>
-          <Text style={styles.subDescr}>1</Text>
+          <Text style={styles.subDescr}>{props.data?.products?.length}</Text>
         </View>
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Товары на сумму</Text>
-          <Text style={styles.subDescr}>678 ₽</Text>
+          <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
         </View>
-        <View style={styles.subItem}>
-          <Text style={styles.subDescr}>Доставка</Text>
-          <Text style={styles.subDescr}>250 ₽</Text>
-        </View>
+        {props.data?.deliver?.id != 2 &&
+          <View style={styles.subItem}>
+            <Text style={styles.subDescr}>Доставка</Text>
+            <Text style={styles.subDescr}>250 ₽</Text>
+          </View>
+        }
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Итого</Text>
-          <Text style={styles.subDescr}>928 ₽</Text>
+          {props.data?.deliver?.id != 2 ?
+            <Text style={styles.subDescr}>{Math.round(props.data.order_sum) + 250}</Text> :
+            <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
+          }
         </View>
       </View>
     </View>

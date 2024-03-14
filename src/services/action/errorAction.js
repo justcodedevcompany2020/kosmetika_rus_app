@@ -150,3 +150,10 @@ export const ErrorGetForAge = () => {
     }
 }
 
+
+
+export const ErrorGetOrder = () => {
+    return {
+        type: 'ErrorGetOrder'
+    }
+}

@@ -13,7 +13,6 @@ export const ThanksForOrderScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addNewOrder = useSelector((st) => st.addNewOrder)
-  console.log(addNewOrder.data.order_id, 'addNewOrder')
   useEffect(() => {
     dispatch(ClearOrderStatus())
   }, [])

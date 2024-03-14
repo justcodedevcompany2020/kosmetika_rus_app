@@ -174,3 +174,10 @@ export const SuccessGetForAge = (data) => {
         data
     }
 }
+
+export const SuccessGetOrder = (data) => {
+    return {
+        type: 'SuccessGetOrder',
+        data
+    }
+}

@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export const OrderItem = ({orderStatus, orderNum, orderAmount, orderSum, orderDate, orderId}) => {
+export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderDate, orderId }) => {
   const navigation = useNavigation();
   let orderItem = orderAmount > "1" ? "товара" : "товар";
 
-  if(orderStatus === "Отменен") {
+  if (orderStatus === "Отменен") {
     styles.status = {
       paddingHorizontal: 8,
       paddingTop: 2,
@@ -19,7 +19,7 @@ export const OrderItem = ({orderStatus, orderNum, orderAmount, orderSum, orderDa
       fontFamily: "MontserratMedium",
       color: "#fff",
     }
-  } else if(orderStatus === "Доставлен"){
+  } else if (orderStatus === "Доставлен") {
     styles.status = {
       backgroundColor: "#9AC6AD",
       paddingHorizontal: 8,
@@ -45,11 +45,10 @@ export const OrderItem = ({orderStatus, orderNum, orderAmount, orderSum, orderDa
       textAlign: "right",
     }
   }
-
-  return(
-    <TouchableOpacity 
+  return (
+    <TouchableOpacity
       style={styles.orederItem}
-      onPress={() => navigation.navigate('OrderedItem')}
+      onPress={() => navigation.navigate('OrderedItem', { id: orderNum })}
     >
       <View style={styles.left}>
         <Text style={styles.title}>Заказ №{orderNum}</Text>

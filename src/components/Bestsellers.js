@@ -41,8 +41,10 @@ export const Bestsellers = (props) => {
         >
           {
             props.product.map((elm, i) => {
+              console.log(elm.product_count)
               return <CatalogueItem
                 style={{}}
+                count={elm.product_count}
                 id={elm.id}
                 sale={elm.discount}
                 main={props.main}

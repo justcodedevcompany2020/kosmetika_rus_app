@@ -2,20 +2,27 @@ import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 
-export const OrderSummaryItem = () => {
-  return(
+export const OrderSummaryItem = ({ data }) => {
+  console.log(data.product?.photos[0]?.photo, 'data')
+  return (
     <View style={styles.item}>
-      <SummaryBgIcon style={{position: "absolute", left: 27, top: 37,}}/>
-      <Image style={styles.image} 
-        source={require('../img/summary-item-pic.png')}
-      />
-      <Text style={styles.posTitle}>Крем лифтинг для лица с наносистемой</Text>
-      <Text style={styles.posDescr}>Объем: 150 мл</Text>
+      <View style={{ position: "absolute", left: 27, top: 27, }}>
+        <SummaryBgIcon />
+        <Image
+          style={styles.image}
+          source={{ uri: `https://basrarusbackend.justcode.am/uploads/${data.product?.photos[0]?.photo}` }}
+        />
+      </View>
+      <Text style={styles.posTitle}>{data.product.name}</Text>
+      <Text style={styles.posDescr}>Объем: {data.product.volume} мл</Text>
       <View style={styles.itemWrapper}>
-        <Text style={styles.posSubDescr}>1 шт.</Text>
+        <Text style={styles.posSubDescr}>{data.product_count} шт.</Text>
         <View style={styles.itemBottomRight}>
-          <Text style={styles.posPrice}>678 ₽</Text>
-          <Text style={styles.posPrevPrice}>999 ₽</Text>
+          <Text style={styles.posPrice}>{Math.round(data.product_price_in_order_moment)} ₽</Text>
+          {Math.round(data.product_price_in_order_moment) != Math.round(data.product_price) &&
+
+            <Text style={styles.posPrevPrice}>{Math.round(data.product_price)} ₽</Text>
+          }
         </View>
       </View>
     </View>
@@ -36,11 +43,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   image: {
-    maxWidth: 58,
-    maxHeight: 116,
+    // maxWidth: 58,
+    width: 58,
+    height: 90,
+    // maxHeight: 116,
     position: "absolute",
-    left: 30,
-    top: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 5,
+    top: -10,
+    zIndex: 999
   },
   posTitle: {
     marginBottom: 6,

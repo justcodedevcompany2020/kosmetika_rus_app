@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ErrorConfirmCode, ErrorDelivery, ErrorGetBaners, ErrorGetBasket, ErrorGetCategory, ErrorGetCityes, ErrorGetFavorites, ErrorGetForAge, ErrorGetMyOrder, ErrorGetPadborkiId, ErrorGetPadborkiwhteProducts, ErrorGetProductByCategory, ErrorGetProducts, ErrorGetSearchHistory, ErrorGetSinglChat, ErrorGetSinglPorduct, ErrorGetUser, ErrorGetstoryes, ErrorLogin, ErrorNewOrder, ErrorPaymentType, ErrorUpdateUser, ErrorUpdateUserAvatar, ErrorValidOrder } from "./errorAction";
-import { StartConfrimCode, StartDelivery, StartGetBaners, StartGetBasket, StartGetCategory, StartGetCityes, StartGetFavorites, StartGetForAge, StartGetMyOrder, StartGetPadborkiId, StartGetPadborkiWhiteProducts, StartGetProducets, StartGetProductByCategory, StartGetSearchHistory, StartGetSinglChat, StartGetSinglProduct, StartGetStoryes, StartGetUser, StartLogin, StartNewOrder, StartPaymentType, StartUpdateProfil, StartUpdateUserAvatar, StartValidOrder } from "./startAction";
-import { SetToken, SuccessConfirmCode, SuccessDelivery, SuccessGetBaners, SuccessGetBasket, SuccessGetCategory, SuccessGetCityes, SuccessGetFavorites, SuccessGetFirstBaners, SuccessGetForAge, SuccessGetMyOrder, SuccessGetPadborkiId, SuccessGetPadborkiWhiteProducts, SuccessGetProducets, SuccessGetProductByCateogy, SuccessGetSearchHistory, SuccessGetSinglCaht, SuccessGetSinglProduct, SuccessGetStoryes, SuccessGetUser, SuccessLogin, SuccessNewOrder, SuccessPaymentType, SuccessUpdateUser, SuccessUpdateUserAvatar, SuccessValidOrder } from "./successAction";
+import { ErrorConfirmCode, ErrorDelivery, ErrorGetBaners, ErrorGetBasket, ErrorGetCategory, ErrorGetCityes, ErrorGetFavorites, ErrorGetForAge, ErrorGetMyOrder, ErrorGetOrder, ErrorGetPadborkiId, ErrorGetPadborkiwhteProducts, ErrorGetProductByCategory, ErrorGetProducts, ErrorGetSearchHistory, ErrorGetSinglChat, ErrorGetSinglPorduct, ErrorGetUser, ErrorGetstoryes, ErrorLogin, ErrorNewOrder, ErrorPaymentType, ErrorUpdateUser, ErrorUpdateUserAvatar, ErrorValidOrder } from "./errorAction";
+import { StartConfrimCode, StartDelivery, StartGetBaners, StartGetBasket, StartGetCategory, StartGetCityes, StartGetFavorites, StartGetForAge, StartGetMyOrder, StartGetOrder, StartGetPadborkiId, StartGetPadborkiWhiteProducts, StartGetProducets, StartGetProductByCategory, StartGetSearchHistory, StartGetSinglChat, StartGetSinglProduct, StartGetStoryes, StartGetUser, StartLogin, StartNewOrder, StartPaymentType, StartUpdateProfil, StartUpdateUserAvatar, StartValidOrder } from "./startAction";
+import { SetToken, SuccessConfirmCode, SuccessDelivery, SuccessGetBaners, SuccessGetBasket, SuccessGetCategory, SuccessGetCityes, SuccessGetFavorites, SuccessGetFirstBaners, SuccessGetForAge, SuccessGetMyOrder, SuccessGetOrder, SuccessGetPadborkiId, SuccessGetPadborkiWhiteProducts, SuccessGetProducets, SuccessGetProductByCateogy, SuccessGetSearchHistory, SuccessGetSinglCaht, SuccessGetSinglProduct, SuccessGetStoryes, SuccessGetUser, SuccessLogin, SuccessNewOrder, SuccessPaymentType, SuccessUpdateUser, SuccessUpdateUserAvatar, SuccessValidOrder } from "./successAction";
 
 let api = 'https://basrarusbackend.justcode.am/api/app'
 let api2 = 'https://basrarusbackend.justcode.am/api'
@@ -399,6 +399,7 @@ export const AddToBasketAction = (data, token) => {
         fetch(`${api}/add_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r)
                 dispatch(GetSinglProduct({ product_id: data.product_id }, token))
                 dispatch(GetBasketAction(token))
             })
@@ -887,6 +888,32 @@ export const GetForAge = (token) => {
             })
             .catch((error) => {
                 dispatch(ErrorGetForAge())
+            });
+    }
+}
+
+export const GetSinglOrder = (token, id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+    return (dispatch) => {
+        dispatch(StartGetOrder())
+        fetch(`${api}/single_page_order?order_id=${id}`, requestOptions)
+            .then(response => response.json())
+            .then(r => {
+                if (r.status) {
+                    dispatch(SuccessGetOrder(r.data))
+                }
+                else {
+                    dispatch(ErrorGetOrder())
+                }
+            })
+            .catch(error => {
+                dispatch(ErrorGetOrder())
             });
     }
 }

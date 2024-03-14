@@ -7,7 +7,7 @@ import { Bestsellers } from "../components/Bestsellers";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { ClearGetPadbord, ClearOrderStatus, GetAuthUser, GetBaners, GetPadborkiWhiteProducts, GetStoryes } from "../services/action/action";
+import { ClearGetPadbord, ClearOrderStatus, GetAuthUser, GetBaners, GetBasketAction, GetPadborkiWhiteProducts, GetStoryes } from "../services/action/action";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SetToken } from "../services/action/successAction";
@@ -21,22 +21,24 @@ export const MainScreen = () => {
   const [search, setSearch] = useState('')
 
 
-  useEffect(() => {
-    SetTokens()
-  }, [])
-  const SetTokens = async () => {
-    let token = await AsyncStorage.getItem('token')
-    if (token) {
-      dispatch(SetToken(token))
-    }
-  }
+  // useEffect(() => {
+  //   SetTokens()
+  // }, [])
+  // const SetTokens = async () => {
+  //   let token = await AsyncStorage.getItem('token')
+  //   if (token) {
+  //     dispatch(SetToken(token))
+  //   }
+  // }
 
 
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
     if (token) {
       setToken(token)
+      dispatch(SetToken(token))
       dispatch(GetBaners('first', token))
+      dispatch(GetBasketAction(token))
       dispatch(GetAuthUser(token))
       dispatch(GetPadborkiWhiteProducts(token))
       dispatch(ClearOrderStatus())

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { Navbar } from "../components/Navbar";
 import ReturnIcon from "../icons/ReturnIcon";
@@ -7,9 +7,29 @@ import { OrderSummary } from "../components/OrderSummary";
 import { LinearGradient } from "expo-linear-gradient";
 import { OrderSummaryItem } from "../components/OrderSummaryItem";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { GetSinglOrder } from "../services/action/action";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const OrderSummaryScreen = (props) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const id = props.route.params.id;
+  const [token, setToken] = useState()
+  const getSinglOrder = useSelector((st) => st.getSinglOrder)
+  const GetUser = async () => {
+    let token = await AsyncStorage.getItem('token')
+    if (token) {
+      setToken(token)
+    }
+  }
+
+  useEffect(() => {
+    GetUser()
+  }, []);
+  useEffect(() => {
+    dispatch(GetSinglOrder(token, id))
+  }, [token])
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -18,7 +38,7 @@ export const OrderSummaryScreen = (props) => {
             style={{ top: 15, position: "absolute", left: 0 }}
             onPress={() => navigation.navigate("Orders")}
           />
-          <Text style={styles.title}>Заказ #00493</Text>
+          <Text style={styles.title}>Заказ #{getSinglOrder.data.id}</Text>
           <LinearGradient
             colors={["#EDDFCB", "#DBC3A0"]}
             style={styles.linearGradient}
@@ -26,13 +46,17 @@ export const OrderSummaryScreen = (props) => {
             <Text style={styles.buttonText}>Доставлен</Text>
           </LinearGradient>
           <Text style={styles.descr}>Информация о заказе</Text>
-          <OrderSummary />
-          <OrderSummaryItem />
+          <OrderSummary data={getSinglOrder.data} />
+          {getSinglOrder.data?.products?.map((elm, i) => {
+            return <OrderSummaryItem key={i} data={elm} />
+          })
+
+          }
         </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <MainButton title="Повторить заказ" />
-      </View>
+      </View> */}
       <Navbar active="Profile" />
     </LinearGradient>
   );

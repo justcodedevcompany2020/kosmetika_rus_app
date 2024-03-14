@@ -21,6 +21,7 @@ import { GetPadborkiWhiteProduct } from './getPadborkiWhiteProduct'
 import { GetSinglProductReduer } from './getSinglPorductReducer';
 import { GetCategoryReducer } from './GetCategoryReducer'
 import { GetForAgeReducer } from './GetForAgeReducer';
+import { GetSinglOrderReducer } from './GetSinglOrderReducer';
 
 const rootReducer = combineReducers({
     login: AutReducer,
@@ -45,7 +46,7 @@ const rootReducer = combineReducers({
     getSinglProduct: GetSinglProductReduer,
     getCategory: GetCategoryReducer,
     getForAge: GetForAgeReducer,
-
+    getSinglOrder: GetSinglOrderReducer
 });
 
 

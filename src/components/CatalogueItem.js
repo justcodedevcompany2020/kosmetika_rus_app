@@ -25,7 +25,8 @@ export const CatalogueItem = ({
   isbasket,
   id,
   main,
-  categoryName
+  categoryName,
+  count
 }) => {
   const dispatch = useDispatch()
   const navigation = useNavigation();
@@ -109,7 +110,10 @@ export const CatalogueItem = ({
           {sale > 0 && <Text style={styles.prevPrice}>{prevPrice} ₽</Text>}
         </View>
       </View>
-      <CartButton basket={basket} onPress={() => AddRevoeBasket()} title={basket ? 'Удалить из корзины' : ' В корзину'} />
+      {count == 0 ?
+        <Text style={styles.NoButton}>Нет в наличии</Text> :
+        <CartButton basket={basket} onPress={() => AddRevoeBasket()} title={basket ? 'Удалить из корзины' : ' В корзину'} />
+      }
     </TouchableOpacity>
   );
 };
@@ -197,4 +201,12 @@ const styles = StyleSheet.create({
     color: "#373737",
     opacity: 0.35,
   },
+  NoButton: {
+    fontFamily: "MontserratSemiBold",
+    fontSize: 14,
+    lineHeight: 15,
+    marginTop: 15,
+    textAlign: "center",
+    color: "#373737",
+  }
 });

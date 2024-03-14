@@ -137,3 +137,9 @@ export const StartGetForAge = () => {
         type: 'StartGetForAge'
     }
 }
+
+export const StartGetOrder = () => {
+    return {
+        type: 'StartGetOrder'
+    }
+}

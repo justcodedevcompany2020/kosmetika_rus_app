@@ -81,7 +81,6 @@ export const OrderFourthForm = (props) => {
 
   useEffect(() => {
     if (addNewOrder?.status) {
-      console.log(addNewOrder, 'addNewOrder')
       navigation.navigate("ThanksForOrder")
     }
   }, [addNewOrder])
