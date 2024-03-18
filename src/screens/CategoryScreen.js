@@ -17,6 +17,7 @@ export const CategoryScreen = (props, { route }) => {
   const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch()
+  const screen = props.route.params.screen;
 
   const categoryId = props.route.params.id;
   const categoryName = props.route.params.categoryName;
@@ -113,7 +114,16 @@ export const CategoryScreen = (props, { route }) => {
           <View style={styles.topContainer}>
             <ReturnIcon
               style={{ position: "relative", top: -1 }}
-              onPress={() => navigation.goBack()}
+              onPress={() => {
+                if (screen == 'main') {
+                  navigation.navigate("Main")
+                }
+                else {
+                  navigation.goBack()
+                }
+              }
+              }
+
             />
             <Text style={styles.title}>{categoryName}</Text>
             <SearchSmallIcon

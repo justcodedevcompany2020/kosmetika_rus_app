@@ -13,7 +13,7 @@ import SummaryBgIcon from "../icons/SummaryBgIcon";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { AddToBasketAction, RemoveFromBasketAction } from "../services/action/action";
-
+import { Notavailable } from './Notavailable'
 export const CatalogueItem = ({
   rate,
   title,
@@ -33,7 +33,7 @@ export const CatalogueItem = ({
   const { token } = useSelector((st) => st.static)
   const TruncatedText = (texts) => {
     let text = JSON.stringify(texts)
-    const truncatedText = text.length > 5 ? `${text.substring(0, 5)}` : text;
+    const truncatedText = text?.length > 5 ? `${text?.substring(1, 4)}` : text;
     return truncatedText
   };
   if (!sale) {
@@ -111,7 +111,8 @@ export const CatalogueItem = ({
         </View>
       </View>
       {count == 0 ?
-        <Text style={styles.NoButton}>Нет в наличии</Text> :
+        <Notavailable />
+        :
         <CartButton basket={basket} onPress={() => AddRevoeBasket()} title={basket ? 'Удалить из корзины' : ' В корзину'} />
       }
     </TouchableOpacity>
@@ -208,5 +209,22 @@ const styles = StyleSheet.create({
     marginTop: 15,
     textAlign: "center",
     color: "#373737",
-  }
+  },
+  linearGradient: {
+    backgroundColor: "rgb(191,191,191)",
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    textAlign: "center",
+    fontFamily: "MontserratSemiBold",
+    fontSize: 12,
+    color: "#fff",
+    marginLeft: 10,
+  },
 });

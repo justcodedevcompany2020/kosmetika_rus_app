@@ -222,16 +222,26 @@ export const ItemScreen = (props) => {
             </Collapse>
           </View>
           <View style={{ paddingHorizontal: 20 }}>
-            <MainButton
-              basket={addTobasket}
-              title={
-                !addTobasket ? `В корзину  ${Math.round(product.price - (product.price * product.discount / 100))} ₽` :
-                  `в корзине ✓`
-              }
-              onPress={() =>
-                AddRevoeBasket()
-              }
-            />
+            {product.product_count == 0 ?
+              <View onPress={props.onPress}>
+                <LinearGradient
+                  colors={["#bfbfbf", "#bfbfbf"]}
+                  style={[styles.linearGradient]}
+                >
+                  <Text style={styles.buttonText}>Нет в наличии</Text>
+                </LinearGradient>
+              </View> :
+              <MainButton
+                basket={addTobasket}
+                title={
+                  !addTobasket ? `В корзину  ${Math.round(product.price - (product.price * product.discount / 100))} ₽` :
+                    `в корзине ✓`
+                }
+                onPress={() =>
+                  AddRevoeBasket()
+                }
+              />
+            }
           </View>
         </View>
       </ScrollView>
@@ -399,5 +409,17 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textTransform: "uppercase",
     color: "#FFFFFF",
+  },
+  linearGradient: {
+    width: "100%",
+    paddingVertical: 18,
+    borderRadius: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    fontFamily: "MontserratBold",
+    fontSize: 18,
+    lineHeight: 20,
+    color: "#fff",
   },
 });

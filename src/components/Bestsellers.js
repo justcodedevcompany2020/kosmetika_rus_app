@@ -23,7 +23,8 @@ export const Bestsellers = (props) => {
           onPress={() => navigation.navigate("CatalogTab", {
             screen: "Category", params: {
               podborka_id: props.id,
-              categoryName: props.name
+              categoryName: props.name,
+              screen: 'main',
             },
           })}
         >
@@ -41,7 +42,7 @@ export const Bestsellers = (props) => {
         >
           {
             props.product.map((elm, i) => {
-              console.log(elm.product_count)
+              console.log(elm.rate_avg_star, '22')
               return <CatalogueItem
                 style={{}}
                 count={elm.product_count}
@@ -51,7 +52,7 @@ export const Bestsellers = (props) => {
                 isbasket={elm?.basket_auth_user?.length}
                 image={elm.photos[0].photo}
                 key={i}
-                rate={elm.rate?.length == 0 ? 5 : elm.rate}
+                rate={elm.rate?.length == 0 ? 5 : elm.rate_avg_star}
                 title={elm.name}
                 currentPrice={Math.round(elm.price - (elm.price * elm.discount / 100))}
                 prevPrice={elm.price}

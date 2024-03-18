@@ -20,6 +20,7 @@ export const PromoList = ({ data, categoryName }) => {
           image={item.photos[0].photo}
           rate={item.rate == 0 ? 5 : +item.rate_avg_star}
           sale={item.discount}
+          count={item.product_count}
           currentPrice={
             Math.round((item.price -
               item.price * (item.discount / 100)))
