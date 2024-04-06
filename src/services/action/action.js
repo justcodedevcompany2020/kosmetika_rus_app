@@ -905,6 +905,7 @@ export const GetSinglOrder = (token, id) => {
         fetch(`${api}/single_page_order?order_id=${id}`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r, '2')
                 if (r.status) {
                     dispatch(SuccessGetOrder(r.data))
                 }

@@ -68,7 +68,7 @@ export const ItemScreen = (props) => {
       <ScrollView style={styles.scroll}>
         <View style={styles.inner}>
           {product?.photos?.length > 0 && <Swiper
-            index={1}
+            index={0}
             style={{
               height: 320,
               paddingTop: 20,

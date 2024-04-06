@@ -76,6 +76,7 @@ export const OrderFourthForm = (props) => {
     item.payment_id = 2
     item.platform_id = 1
     item.phone = getUser.data.user?.phone
+    item.order_sum = GetPrice(getBasket.data.data, true)
     dispatch(AddNewOrder(item, token))
   }
 
@@ -88,7 +89,7 @@ export const OrderFourthForm = (props) => {
   useEffect(() => {
     dispatch(GetBasketAction(token))
   }, [])
-
+  console.log(data, 'data')
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
@@ -139,12 +140,24 @@ export const OrderFourthForm = (props) => {
             Выберите способ оплаты
           </Text>
           {paymentData?.map((elm, i) => {
-            return <PaymentMethod
-              title={elm.name}
-              text={elm.description}
-              onPress={() => setPaymentMethod(elm.id)}
-              active={paymentMethod == elm.id}
-            />
+            console.log(data.delivery_id == 3)
+            if (data.delivery_id == 3) {
+              if (elm.id != 2)
+                return <PaymentMethod
+                  title={elm.name}
+                  text={elm.description}
+                  onPress={() => setPaymentMethod(elm.id)}
+                  active={paymentMethod == 2}
+                />
+            }
+            else {
+              return <PaymentMethod
+                title={elm.name}
+                text={elm.description}
+                onPress={() => setPaymentMethod(elm.id)}
+                active={paymentMethod == elm.id}
+              />
+            }
 
           })}
 
@@ -169,7 +182,7 @@ export const OrderFourthForm = (props) => {
 
             <Text style={styles.detailsTitle}>Адрес доставки</Text>
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              {data.city_name} {data.address}{data.home_office}
+              {data.city_name} {data.address}, {data.home_office}  {data.posht}
             </Text>
 
             <Text style={styles.detailsTitle}>Оплачен</Text>
@@ -207,7 +220,6 @@ export const OrderFourthForm = (props) => {
               prevPrice={elm.product.discount > 0 && elm.product?.price}
             />
           })
-
           }
 
           {/* </View> */}

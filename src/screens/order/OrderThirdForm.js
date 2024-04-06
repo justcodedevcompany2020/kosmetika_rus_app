@@ -104,7 +104,7 @@ export const OrderThirdForm = (props) => {
             style={styles.input}
             placeholder="Город"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
-            onChangeText={(e) => HandelChange(e, 'City')}
+            onChangeText={(e) => HandelChange(e, 'city')}
             borderColor={error.address && 'red'}
           />}
           <TextInput

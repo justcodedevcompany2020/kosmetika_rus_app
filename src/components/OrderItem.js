@@ -6,7 +6,7 @@ export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderD
   const navigation = useNavigation();
   let orderItem = orderAmount > "1" ? "товара" : "товар";
 
-  if (orderStatus === "Отменен") {
+  if (orderStatus == 3) {
     styles.status = {
       paddingHorizontal: 8,
       paddingTop: 2,
@@ -19,7 +19,7 @@ export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderD
       fontFamily: "MontserratMedium",
       color: "#fff",
     }
-  } else if (orderStatus === "Доставлен") {
+  } else if (orderStatus == 4) {
     styles.status = {
       backgroundColor: "#9AC6AD",
       paddingHorizontal: 8,
@@ -62,7 +62,19 @@ export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderD
         </View>
       </View>
       <View style={styles.right}>
-        <View style={styles.status}><Text style={styles.statusText}>{orderStatus}</Text></View>
+        {(orderStatus + 1 == 1 || orderStatus == 1) &&
+          <View style={styles.status}><Text style={styles.statusText}>Новый</Text></View>
+        }
+        {orderStatus == 2 &&
+          <View style={styles.status}><Text style={styles.statusText}>Подтвержден</Text></View>
+        }
+
+        {orderStatus == 3 &&
+          <View style={styles.status}><Text style={styles.statusText}>Отменен</Text></View>
+        }
+        {orderStatus == 4 &&
+          <View style={styles.status}><Text style={styles.statusText}>Доставлен</Text></View>
+        }
         <Text style={styles.date}>{orderDate}</Text>
       </View>
     </TouchableOpacity>
