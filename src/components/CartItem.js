@@ -7,10 +7,6 @@ import PlusIcon from "../icons/PlusIcon";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 
 export const CartItem = ({ image, RemoveFromBasket, count, title, descr, currentPrice, prevPrice, addProductCount, MinusProductCount }) => {
-  // const [count, setCount] = useState(1);
-  // const onPressMinus = () =>
-  //   setCount((prevCount) => (prevCount == 0 ? (prevCount = 0) : prevCount - 1));
-  // const onPressPlus = () => setCount((prevCount) => prevCount + 1);
 
   return (
     <View style={styles.cartItem}>

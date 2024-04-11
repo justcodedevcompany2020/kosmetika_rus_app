@@ -42,7 +42,6 @@ export const Bestsellers = (props) => {
         >
           {
             props.product.map((elm, i) => {
-              console.log(elm.rate_avg_star, '22')
               return <CatalogueItem
                 style={{}}
                 count={elm.product_count}

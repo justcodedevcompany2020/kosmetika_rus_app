@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import SummaryBgIcon from "../icons/SummaryBgIcon";
 
 export const OrderSummaryItem = ({ data }) => {
-  console.log(data.product?.photos[0]?.photo, 'data')
   return (
     <View style={styles.item}>
       <View style={{ position: "absolute", left: 27, top: 27, }}>

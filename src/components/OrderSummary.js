@@ -27,7 +27,10 @@ export const OrderSummary = (props) => {
         </View>
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Товары на сумму</Text>
-          <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
+          {props.data?.deliver?.id != 2 ?
+            <Text style={styles.subDescr}>{Math.round(props.data.order_sum - 250)}</Text> :
+            <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
+          }
         </View>
         {props.data?.deliver?.id != 2 &&
           <View style={styles.subItem}>
@@ -37,10 +40,7 @@ export const OrderSummary = (props) => {
         }
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Итого</Text>
-          {props.data?.deliver?.id != 2 ?
-            <Text style={styles.subDescr}>{Math.round(props.data.order_sum) + 250}</Text> :
-            <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
-          }
+          <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}</Text>
         </View>
       </View>
     </View>

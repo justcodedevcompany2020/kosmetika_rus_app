@@ -10,6 +10,9 @@ import RatingBigIcon from "../icons/RatingIcon";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { MainButton } from "../components/MainButton";
+import Stars from 'react-native-stars';
+import { EmptyStar2 } from "../icons/EmptyStar2";
+
 
 export const OdzivScreen = () => {
     const navigation = useNavigation();
@@ -35,12 +38,17 @@ export const OdzivScreen = () => {
                     <View>
                         <Text style={styles.title}>{getSinglProduct.data?.data?.name}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                            <RatingBigIcon />
-                            <RatingBigIcon />
-                            <RatingBigIcon />
-                            <RatingBigIcon />
-                            <RatingBigIcon />
-                            <Text style={{ marginHorizontal: 3, fontWeight: "600" }}>{
+                            <Stars
+                                half={false}
+                                default={getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 1)}
+                                disabled={true}
+                                spacing={1}
+                                count={5}
+                                fullStar={<RatingBigIcon />}
+                                emptyStar={<EmptyStar2 />}
+                                halfStar={<RatingBigIcon />}
+                            />
+                            <Text style={{ marginHorizontal: 10, fontWeight: "600" }}>{
                                 getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 3)
                             }</Text>
                         </View>
@@ -49,11 +57,16 @@ export const OdzivScreen = () => {
                                 <View style={{ flexDirection: 'row', gap: 10 }}>
                                     <Text style={{ fontSize: 16, color: '#37377' }}>{elm.user.name}</Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <RatingBigIcon />
-                                        <RatingBigIcon />
-                                        <RatingBigIcon />
-                                        <RatingBigIcon />
-                                        <RatingBigIcon />
+                                        <Stars
+                                            half={false}
+                                            default={elm.star}
+                                            disabled={true}
+                                            spacing={1}
+                                            count={5}
+                                            fullStar={<RatingBigIcon />}
+                                            emptyStar={<EmptyStar2 />}
+                                            halfStar={<RatingBigIcon />}
+                                        />
                                         <Text style={{ marginHorizontal: 3, fontWeight: "600" }}>{
                                             elm.star
                                         }</Text>
@@ -72,7 +85,7 @@ export const OdzivScreen = () => {
 
                 </View>
             </ScrollView>
-            {getSinglProduct.data.comment_button && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
+            {(getSinglProduct.data.comment_button && !getSinglProduct.auth_user_comment) && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
                 <MainButton onPress={() => navigation.navigate('AddOdzivinProduct', { productId })} title="Оставить отзыв" />
             </View>}
             <Navbar navigation={navigation} active="Profile" />

@@ -1,7 +1,7 @@
 const initialState = {
+    loading: true,
     data: [],
     status: false,
-    loading: true,
     error: ""
 };
 export const GetPadborkiWhiteProduct = (state = initialState, action) => {

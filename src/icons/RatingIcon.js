@@ -4,7 +4,7 @@ import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg"
 function RatingIcon(props) {
   return (
     <Svg
-      style={{ marginRight: 4 }}
+      style={{ marginRight: 2 }}
       width={14}
       height={14}
       viewBox="0 0 14 14"

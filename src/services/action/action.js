@@ -308,6 +308,7 @@ export const GetSinglProduct = (data, token) => {
         fetch(`${api}/single_page_product`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r, '21')
                 if (r.status) {
                     dispatch(SuccessGetSinglProduct(r))
                 }
@@ -316,6 +317,8 @@ export const GetSinglProduct = (data, token) => {
                 }
             })
             .catch(error => {
+                console.log(error, '21')
+
                 dispatch(ErrorGetSinglPorduct())
             });
     }
@@ -399,7 +402,6 @@ export const AddToBasketAction = (data, token) => {
         fetch(`${api}/add_product_in_basket`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r)
                 dispatch(GetSinglProduct({ product_id: data.product_id }, token))
                 dispatch(GetBasketAction(token))
             })
@@ -905,7 +907,6 @@ export const GetSinglOrder = (token, id) => {
         fetch(`${api}/single_page_order?order_id=${id}`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r, '2')
                 if (r.status) {
                     dispatch(SuccessGetOrder(r.data))
                 }

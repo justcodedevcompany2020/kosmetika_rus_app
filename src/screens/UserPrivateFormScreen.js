@@ -36,9 +36,9 @@ export const UserPrivateFormScreen = (props) => {
   const [showPicker, setShowPicker] = useState(false);
   const handleDateChange = (event, date) => {
     setSelectedDate(date);
-    setBirthday(format(event.nativeEvent.timestamp, 'yyyy-MM-dd'))
+    setBirthday(format(event.nativeEvent.timestamp, 'dd-MM-yyyy').split("-").join("."))
     setShowPicker(false)
-    setShowPicker(Platform.OS === 'ios'); // Close the picker for iOS immediately after selection
+    setShowPicker(Platform.OS === 'ios');
   };
 
 

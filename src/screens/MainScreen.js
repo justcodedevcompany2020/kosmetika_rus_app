@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Navbar } from "../components/Navbar";
 import { SearchInput } from "../components/SearchInput";
 import { HeroSlide } from "../components/HeroSlide";
@@ -20,20 +20,11 @@ export const MainScreen = () => {
 
   const [search, setSearch] = useState('')
 
-
-  // useEffect(() => {
-  //   SetTokens()
-  // }, [])
-  // const SetTokens = async () => {
-  //   let token = await AsyncStorage.getItem('token')
-  //   if (token) {
-  //     dispatch(SetToken(token))
-  //   }
-  // }
-
+  const [loading, setLoadng] = useState(true)
 
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
+    setLoadng(true)
     if (token) {
       setToken(token)
       dispatch(SetToken(token))
@@ -42,10 +33,8 @@ export const MainScreen = () => {
       dispatch(GetAuthUser(token))
       dispatch(GetPadborkiWhiteProducts(token))
       dispatch(ClearOrderStatus())
-      dispatch(ClearGetPadbord())
     }
   }
-
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -54,18 +43,19 @@ export const MainScreen = () => {
     return unsubscribe;
   }, [navigation]);
 
-
   const getBaner = useSelector((st) => st.getBaner)
   const getPadborki = useSelector((st) => st.getPadborki)
-
   const handleKeyPress = () => {
     navigation.navigate("CatalogTab", {
       screen: "Category", params: {
         search: search
       },
     })
-
   };
+
+  useEffect(() => {
+    setLoadng(getPadborki.loading)
+  }, [getPadborki])
 
   return (
     <View style={{ flex: 1 }}>
@@ -87,7 +77,6 @@ export const MainScreen = () => {
               {getBaner?.data?.data?.length && <Swiper
                 style={{ height: 250 }}
                 showsPagination={true}
-
                 dot={
                   <View
                     style={{
@@ -129,17 +118,22 @@ export const MainScreen = () => {
                 })}
               </Swiper>}
             </View>
-            {getPadborki.data.map((elm, i) => {
-              return <Bestsellers
-                id={elm.id}
-                name={elm.name}
-                product={elm.products}
-                main={'main'}
-                key={i}
-                image={elm.image}
-                style={{ marginBottom: 30 }}
-              />
-            })}
+            {
+              loading ?
+                <ActivityIndicator size='large' color="#dbc3a0" /> :
+
+                getPadborki.data.map((elm, i) => {
+                  return <Bestsellers
+                    id={elm.id}
+                    name={elm.name}
+                    product={elm.products}
+                    main={'main'}
+                    key={i}
+                    image={elm.image}
+                    style={{ marginBottom: 30 }}
+                  />
+                })
+            }
           </View>
         </ScrollView>
       </LinearGradient>

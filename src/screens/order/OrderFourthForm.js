@@ -89,7 +89,6 @@ export const OrderFourthForm = (props) => {
   useEffect(() => {
     dispatch(GetBasketAction(token))
   }, [])
-  console.log(data, 'data')
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
@@ -140,7 +139,6 @@ export const OrderFourthForm = (props) => {
             Выберите способ оплаты
           </Text>
           {paymentData?.map((elm, i) => {
-            console.log(data.delivery_id == 3)
             if (data.delivery_id == 3) {
               if (elm.id != 2)
                 return <PaymentMethod
@@ -180,12 +178,12 @@ export const OrderFourthForm = (props) => {
 
             </Text>
 
-            <Text style={styles.detailsTitle}>Адрес доставки</Text>
+            {(data.city_name || data.address || data.home_office) && <Text style={styles.detailsTitle}>Детали заказа</Text>}
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              {data.city_name} {data.address}, {data.home_office}  {data.posht}
+              {data.city_name} {data.address} {data.home_office}  {data.posht}
             </Text>
 
-            <Text style={styles.detailsTitle}>Оплачен</Text>
+            <Text style={styles.detailsTitle}>Сумма заказа</Text>
             <View style={styles.detailsBottomLine}>
               <Text style={styles.detailsText}>Товаров в заказе</Text>
               <Text style={styles.detailsText}>{GetCount(getBasket.data?.data)}</Text>

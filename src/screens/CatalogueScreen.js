@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   bigItem: {
     flexGrow: 1,
     width: "100%",
-    paddingHorizontal: 23,
+    // paddingHorizontal: 23,
     paddingTop: 287,
     paddingBottom: 48,
     borderRadius: 25,
@@ -297,8 +297,11 @@ const styles = StyleSheet.create({
     paddingTop: 150,
     paddingBottom: 17,
     width: "100%",
-    paddingHorizontal: 33,
-    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // paddingHorizontal: 33,
+    // flexGrow: 1,
+    flexDirection: 'column',
     borderRadius: 25,
     alignItems: "center",
   },
@@ -312,15 +315,15 @@ const styles = StyleSheet.create({
   categoryImg2: {
     position: "absolute",
     top: 28,
-    left: "50%",
+    // left: "50%",
     transform: [{ translateX: 4 }],
-    width: 57,
+    width: 50,
     height: 118,
   },
   categoryImg3: {
     position: "absolute",
     top: 15,
-    left: "50%",
+    left: "34%",
     width: 34,
     height: 139,
     transform: [{ translateX: 13 }],
@@ -349,6 +352,7 @@ const styles = StyleSheet.create({
   },
   categoryImg4: {
     position: "absolute",
+
     // top: 8,
     left: 54,
     width: 35,
@@ -358,7 +362,7 @@ const styles = StyleSheet.create({
   itemBgTan: {
     position: "absolute",
     top: 115,
-    left: "50%",
+    left: "36%",
     width: 115,
     height: 115,
     borderRadius: 100,
@@ -367,7 +371,7 @@ const styles = StyleSheet.create({
   itemBgPink: {
     position: "absolute",
     top: 50,
-    left: "50%",
+    left: "34%",
     width: 80,
     height: 80,
     borderRadius: 100,
@@ -376,7 +380,7 @@ const styles = StyleSheet.create({
   itemBgGreen: {
     position: "absolute",
     top: 45,
-    left: "50%",
+    left: "34%",
     width: 80,
     height: 80,
     borderRadius: 100,

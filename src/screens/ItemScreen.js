@@ -23,6 +23,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { AddToBasketAction, GetSinglProduct, RemoveFromBasketAction } from "../services/action/action";
 import { Stare2 } from "../icons/stare2";
+import Stars from 'react-native-stars';
+import { EmptyStar2 } from "../icons/EmptyStar2";
+
 
 export const ItemScreen = (props) => {
   const navigation = useNavigation();
@@ -134,11 +137,16 @@ export const ItemScreen = (props) => {
             <Text style={styles.title}>{product.name}</Text>
             {getSinglProduct.data?.rate?.length != 0 ?
               <View style={styles.rateContainer}>
-                <RatingBigIcon />
-                <RatingBigIcon />
-                <RatingBigIcon />
-                <RatingBigIcon />
-                <RatingBigIcon />
+                <Stars
+                  half={false}
+                  default={getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 1)}
+                  disabled={true}
+                  spacing={1}
+                  count={5}
+                  fullStar={<RatingBigIcon />}
+                  emptyStar={<EmptyStar2 />}
+                  halfStar={<RatingBigIcon />}
+                />
                 <Text style={{ marginHorizontal: 10 }}>{
                   getSinglProduct.data?.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 3)
                 }</Text>

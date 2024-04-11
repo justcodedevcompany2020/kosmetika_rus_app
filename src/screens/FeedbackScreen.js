@@ -14,7 +14,9 @@ export const FeedbackScreen = () => {
       <View style={styles.mainContainer}>
         <ReturnIcon
           style={{ top: -3, left: 10 }}
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() =>
+            navigation.navigate("Info")
+          }
         />
         <Text style={styles.title}>Оставить отзыв</Text>
         <Text style={styles.subTitle}>Вам нравится приложение?</Text>

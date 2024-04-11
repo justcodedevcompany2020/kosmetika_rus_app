@@ -16,6 +16,8 @@ export const OrderSummaryScreen = (props) => {
   const dispatch = useDispatch()
   const id = props.route.params.id;
   const [token, setToken] = useState()
+  console.log(token)
+  const [status, setStatus] = useState('')
   const getSinglOrder = useSelector((st) => st.getSinglOrder)
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -27,6 +29,7 @@ export const OrderSummaryScreen = (props) => {
   useEffect(() => {
     GetUser()
   }, []);
+
   useEffect(() => {
     dispatch(GetSinglOrder(token, id))
   }, [token])
@@ -39,12 +42,12 @@ export const OrderSummaryScreen = (props) => {
             onPress={() => navigation.navigate("Orders")}
           />
           <Text style={styles.title}>Заказ #{getSinglOrder.data.id}</Text>
-          <LinearGradient
+          {getSinglOrder.data?.order_status && <LinearGradient
             colors={["#EDDFCB", "#DBC3A0"]}
             style={styles.linearGradient}
           >
-            <Text style={styles.buttonText}>Доставлен</Text>
-          </LinearGradient>
+            <Text style={styles.buttonText}>{getSinglOrder.data.order_status.name_ru}</Text>
+          </LinearGradient>}
           <Text style={styles.descr}>Информация о заказе</Text>
           <OrderSummary data={getSinglOrder.data} />
           {getSinglOrder.data?.products?.map((elm, i) => {

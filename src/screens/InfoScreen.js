@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 import { Navbar } from "../components/Navbar";
 import ArrowIcon from "../icons/ArrowIcon";
@@ -13,6 +14,9 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const InfoScreen = (props) => {
+  const openLink = () => {
+    Linking.openURL('https://docs.google.com/document/d/1ckFf2uoO565ULPbZ-Z_D95NGSnbA7O1g/edit');
+  };
   const navigation = useNavigation();
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
@@ -33,7 +37,7 @@ export const InfoScreen = (props) => {
             <Text style={styles.infoItemText}>Договор оферты</Text>
             <ArrowIcon />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.infoItem}>
+          <TouchableOpacity onPress={() => openLink()} style={styles.infoItem}>
             <Text style={styles.infoItemText}>Политика конфиденциальности</Text>
             <ArrowIcon />
           </TouchableOpacity>

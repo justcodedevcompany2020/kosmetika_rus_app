@@ -52,7 +52,15 @@ export const OrderThirdForm = (props) => {
       item.home = ''
       send = true
     }
-    if (!item.address && !item.home) {
+    if (!data.city && data.delivery_id == 3) {
+      item.home = 'error'
+      send = false
+    }
+    else {
+      item.city = ''
+      send = true
+    }
+    if (!item.address && !item.home && !item.city) {
       navigation.navigate("FourthStep", { data })
     }
     setError(item)
