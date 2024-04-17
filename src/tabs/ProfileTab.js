@@ -10,6 +10,9 @@ import { InfoScreen } from "../screens/InfoScreen";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SetToken } from "../services/action/successAction";
+import { Politics } from "../screens/Politics";
+import { PaymentScree } from "../screens/PaymentScree";
+import { OfertyScree } from "../screens/OfertyScree";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,8 +34,12 @@ export const ProfileTab = () => {
       <Stack.Screen name="PersonalInfo" component={UserPrivateFormScreen} />
       <Stack.Screen name="Orders" component={OrdersScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
+      <Stack.Screen name="Politics" component={Politics} />
+      <Stack.Screen name="PaymentScreen" component={PaymentScree} />
       <Stack.Screen name="OrderedItem" component={OrderSummaryScreen} />
       <Stack.Screen name="Feedback" component={FeedbackScreen} />
+      <Stack.Screen name="OfertyScreen" component={OfertyScree} />
+
     </Stack.Navigator>
   );
 };

@@ -14,10 +14,16 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const InfoScreen = (props) => {
-  const openLink = () => {
-    Linking.openURL('https://docs.google.com/document/d/1ckFf2uoO565ULPbZ-Z_D95NGSnbA7O1g/edit');
-  };
   const navigation = useNavigation();
+  const openLink = () => {
+    navigation.navigate('Politics')
+  };
+  const openLink1 = () => {
+    navigation.navigate('PaymentScreen')
+  };
+  const openLink2 = () => {
+    navigation.navigate('OfertyScreen')
+  };
   return (
     <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -29,11 +35,11 @@ export const InfoScreen = (props) => {
               onPress={() => navigation.navigate("Profile")}
             />
           </View>
-          <TouchableOpacity style={styles.infoItem}>
+          <TouchableOpacity onPress={() => openLink1()} style={styles.infoItem}>
             <Text style={styles.infoItemText}>Доставка и оплата</Text>
             <ArrowIcon />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.infoItem}>
+          <TouchableOpacity onPress={() => openLink2()} style={styles.infoItem}>
             <Text style={styles.infoItemText}>Договор оферты</Text>
             <ArrowIcon />
           </TouchableOpacity>
