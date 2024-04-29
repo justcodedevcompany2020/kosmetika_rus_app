@@ -16,7 +16,6 @@ export const OrderSummaryScreen = (props) => {
   const dispatch = useDispatch()
   const id = props.route.params.id;
   const [token, setToken] = useState()
-  console.log(token)
   const [status, setStatus] = useState('')
   const getSinglOrder = useSelector((st) => st.getSinglOrder)
   const GetUser = async () => {

@@ -308,7 +308,6 @@ export const GetSinglProduct = (data, token) => {
         fetch(`${api}/single_page_product`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r, '21')
                 if (r.status) {
                     dispatch(SuccessGetSinglProduct(r))
                 }
@@ -317,8 +316,6 @@ export const GetSinglProduct = (data, token) => {
                 }
             })
             .catch(error => {
-                console.log(error, '21')
-
                 dispatch(ErrorGetSinglPorduct())
             });
     }
@@ -651,6 +648,7 @@ export const AddNewOrder = (data, token) => {
         fetch(`${api}/add_new_order`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r)
                 if (r.status) {
                     dispatch(GetBasketAction(token, 1))
                     dispatch(SuccessNewOrder(r))

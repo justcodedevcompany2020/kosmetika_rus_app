@@ -19,7 +19,6 @@ export const CatalogueScreen = (props) => {
   const { token } = useSelector((st) => st.static)
   const getProducets = useSelector((st) => st.getProducets)
   const [search, setSearch] = useState('')
-
   useEffect(() => {
     dispatch(GetProducts(token))
   }, [])

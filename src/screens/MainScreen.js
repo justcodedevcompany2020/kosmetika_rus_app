@@ -74,49 +74,49 @@ export const MainScreen = () => {
                 style={{ marginBottom: 11 }} title="Что вы ищите?" />
 
 
-              {getBaner?.data?.data?.length && <Swiper
-                style={{ height: 250 }}
-                showsPagination={true}
-                dot={
-                  <View
-                    style={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: 24,
-                      backgroundColor: "rgba(105, 105, 105, 0.13)",
-                      marginHorizontal: 6,
-                    }}
-                  ></View>
-                }
-                activeDot={
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      backgroundColor: "#373737",
-                      borderRadius: 24,
-                      marginHorizontal: 6,
-                    }}
-                  ></View>
-                }
-              >
-                {getBaner?.data?.data?.map((elm, i) => {
-                  return <TouchableOpacity
-                    key={i}
-                    style={styles.slide1}
-                    onPress={() => navigation.navigate("CatalogTab", {
-                      screen: "Category", params: {
-                        podborka_id: elm.podborki.id,
-                        categoryName: elm.podborki.name
-                      },
-                    })}
-                  >
-                    <HeroSlide
-                      image={elm.file}
-                    />
-                  </TouchableOpacity>
-                })}
-              </Swiper>}
+              {getBaner?.data?.data?.length &&
+                <Swiper
+                  style={{ height: 250 }}
+
+                  showsPagination={true}
+                  dot={
+                    <View
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: 24,
+                        backgroundColor: "rgba(105, 105, 105, 0.13)",
+                        marginHorizontal: 6,
+                      }}
+                    ></View>
+                  }
+                  activeDot={
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        backgroundColor: "#373737",
+                        borderRadius: 24,
+                        marginHorizontal: 6,
+                      }}
+                    ></View>
+                  }
+                >
+                  {getBaner?.data?.data?.map((elm, i) => {
+                    return <TouchableOpacity
+                      key={i}
+                      style={{ width: '100%' }}
+                      onPress={() => navigation.navigate("CatalogTab", {
+                        screen: "Category", params: {
+                          podborka_id: elm.podborki.id,
+                          categoryName: elm.podborki.name
+                        },
+                      })}
+                    >
+                      <HeroSlide image={elm.file} />
+                    </TouchableOpacity>
+                  })}
+                </Swiper>}
             </View>
             {
               loading ?

@@ -85,7 +85,8 @@ export const OdzivScreen = () => {
 
                 </View>
             </ScrollView>
-            {(getSinglProduct.data.comment_button && !getSinglProduct.auth_user_comment) && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
+            {console.log(getSinglProduct.data.auth_user_comment, '11')}
+            {(getSinglProduct.data.comment_button && !getSinglProduct.data.auth_user_comment) && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
                 <MainButton onPress={() => navigation.navigate('AddOdzivinProduct', { productId })} title="Оставить отзыв" />
             </View>}
             <Navbar navigation={navigation} active="Profile" />

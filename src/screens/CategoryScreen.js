@@ -119,7 +119,7 @@ export const CategoryScreen = (props, { route }) => {
                   navigation.navigate("Main")
                 }
                 else {
-                  navigation.goBack()
+                  navigation.navigate("CatalogueScreen")
                 }
               }
               }

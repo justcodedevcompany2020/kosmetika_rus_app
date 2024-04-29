@@ -34,13 +34,16 @@ export const OrderThirdForm = (props) => {
   }
 
   const handelClick = () => {
+    console.log(error.city == "", '22')
     let send = true
     let item = { ...error }
-    if (!data.address) {
+    // console.log(data.address.length, 'data', data.delivery_id == 3)
+    if (data.address.length == 0) {
       item.address = 'error'
       send = false
     }
     else {
+      console.log('iten.adress')
       item.address = ''
       send = true
     }
@@ -52,17 +55,19 @@ export const OrderThirdForm = (props) => {
       item.home = ''
       send = true
     }
-    if (!data.city && data.delivery_id == 3) {
-      item.home = 'error'
+    if (data.city?.length == 0 && data.delivery_id == 3) {
+      item.city = 'error'
       send = false
     }
     else {
+      console.log(item.city, 'iten.city')
       item.city = ''
       send = true
     }
     if (!item.address && !item.home && !item.city) {
       navigation.navigate("FourthStep", { data })
     }
+    // console.log(item)
     setError(item)
   }
   return (
@@ -106,6 +111,7 @@ export const OrderThirdForm = (props) => {
             Оплата
           </Text>
         </View>
+
         <Text style={[styles.subTitle, { marginBottom: 25 }]}>Адрес</Text>
         <View style={styles.form}>
           {data.delivery_id == 3 && <TextInput
@@ -113,21 +119,21 @@ export const OrderThirdForm = (props) => {
             placeholder="Город"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             onChangeText={(e) => HandelChange(e, 'city')}
-            borderColor={error.address && 'red'}
+            borderColor={error.city != "" ? 'red' : 'black'}
           />}
           <TextInput
             style={styles.input}
             placeholder="Улица, дом"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             onChangeText={(e) => HandelChange(e, 'address')}
-            borderColor={error.address && 'red'}
+            borderColor={error.address ? 'red' : "black"}
           />
           <TextInput
             style={styles.input}
             placeholder="Квартира/офис"
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             onChangeText={(e) => HandelChange(e, 'home_office')}
-            borderColor={error.home && 'red'}
+            borderColor={error.home ? 'red' : "black"}
           />
           <TextInput
             style={[styles.input, { minHeight: 103, paddingTop: 18 }]}

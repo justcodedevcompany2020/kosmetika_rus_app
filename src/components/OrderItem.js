@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderDate, orderId }) => {
   const navigation = useNavigation();
   let orderItem = orderAmount > "1" ? "товара" : "товар";
-
+  console.log(orderDate?.split('-'), 'orderDate')
   if (orderStatus == 3) {
     styles.status = {
       paddingHorizontal: 8,
@@ -75,7 +75,7 @@ export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderD
         {orderStatus == 4 &&
           <View style={styles.status}><Text style={styles.statusText}>Доставлен</Text></View>
         }
-        <Text style={styles.date}>{orderDate}</Text>
+        <Text style={styles.date}>{orderDate?.split('-')[2]}-{orderDate?.split('-')[1]}-{orderDate?.split('-')[0]}</Text>
       </View>
     </TouchableOpacity>
   );

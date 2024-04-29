@@ -178,9 +178,9 @@ export const OrderFourthForm = (props) => {
 
             </Text>
 
-            {(data.city_name || data.address || data.home_office) && <Text style={styles.detailsTitle}>Детали заказа</Text>}
+            {(data.city || data.address || data.home_office) && <Text style={styles.detailsTitle}>Детали заказа</Text>}
             <Text style={{ ...styles.detailsText, marginBottom: 0 }}>
-              {data.city_name} {data.address} {data.home_office}  {data.posht}
+              {data.city} {data.address} {data.home_office}  {data.posht}
             </Text>
 
             <Text style={styles.detailsTitle}>Сумма заказа</Text>
