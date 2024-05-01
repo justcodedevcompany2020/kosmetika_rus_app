@@ -20,7 +20,7 @@ export const OrderSummary = (props) => {
         </Text>
       </View>
       <View style={styles.payment}>
-        <Text style={styles.subTitle}>Оплачен</Text>
+        <Text style={styles.subTitle}>Детали заказа</Text>
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Товаров в заказе</Text>
           <Text style={styles.subDescr}>{props.data?.products?.length}</Text>

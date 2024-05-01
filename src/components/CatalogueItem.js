@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   image: {
     width: 58,
     height: 116,
-    right: 3,
+    right: 0,
     zIndex: 1,
   },
   title: {

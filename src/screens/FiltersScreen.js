@@ -258,7 +258,7 @@ export const FiltersScreen = (props) => {
       </ScrollView>
       <View style={styles.btnContainer}>
         <MainButton
-          title="Показать товаров"
+          title="Применить"
           onPress={() =>
             navigation.navigate('Category', {
               age_id: age,

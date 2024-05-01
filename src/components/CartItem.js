@@ -13,7 +13,7 @@ export const CartItem = ({ image, RemoveFromBasket, count, title, descr, current
       <TouchableOpacity onPress={() => { RemoveFromBasket() }} style={{ position: "absolute", bottom: 17, right: 15 }}>
         <RemoveFromCartIcon />
       </TouchableOpacity>
-      <SummaryBgIcon style={{ position: "absolute", left: 15 }} />
+      <SummaryBgIcon style={{ position: "absolute", left: 21 }} />
       <Image style={styles.cartPic}
         source={{ uri: `https://basrarusbackend.justcode.am/uploads/${image}` }}
       />

@@ -28,7 +28,7 @@ export const UserPrivateFormScreen = (props) => {
     setName(getUser.data?.user?.name)
     setEmail(getUser.data?.user?.email)
     setSurname(getUser.data?.user?.surname)
-    setBirthday(getUser.data?.user?.date_of_birth)
+    setBirthday(`${getUser.data?.user?.date_of_birth.split("-")[2]}-${getUser.data?.user?.date_of_birth.split("-")[1]}-${getUser.data?.user?.date_of_birth.split("-")[0]}`)
   }, [getUser?.data?.user])
 
 

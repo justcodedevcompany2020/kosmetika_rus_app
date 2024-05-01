@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderDate, orderId }) => {
   const navigation = useNavigation();
   let orderItem = orderAmount > "1" ? "товара" : "товар";
-  console.log(orderDate?.split('-'), 'orderDate')
   if (orderStatus == 3) {
     styles.status = {
       paddingHorizontal: 8,

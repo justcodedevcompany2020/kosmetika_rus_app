@@ -24,6 +24,7 @@ export const OdzivScreen = () => {
     useEffect(() => {
         dispatch(GetSinglProduct({ product_id: productId }, token))
     }, [productId])
+
     return (
         <LinearGradient colors={["#f7f7f7", "#fff"]} style={styles.container}>
             <ScrollView style={styles.scroll}>
@@ -85,8 +86,7 @@ export const OdzivScreen = () => {
 
                 </View>
             </ScrollView>
-            {console.log(getSinglProduct.data.auth_user_comment, '11')}
-            {(getSinglProduct.data.comment_button && !getSinglProduct.data.auth_user_comment) && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
+            {(!getSinglProduct.data.auth_user_comment) && <View style={{ position: 'absolute', bottom: 100, width: '50%' }}>
                 <MainButton onPress={() => navigation.navigate('AddOdzivinProduct', { productId })} title="Оставить отзыв" />
             </View>}
             <Navbar navigation={navigation} active="Profile" />
