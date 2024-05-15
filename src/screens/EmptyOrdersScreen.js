@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Navbar } from "../components/Navbar";
-import ReturnIcon from "../icons/ReturnIcon";
 import { MainButton } from "../components/MainButton";
 import EmptyCartIcon from "../icons/EmptyCartIcon";
+import { useNavigation } from "@react-navigation/native";
 
 export const EmptyOrderScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>

@@ -50,7 +50,7 @@ export const CatalogueScreen = (props) => {
           {
             chunkArray(getProducets?.data)?.map((elm, i) => {
               if (i % 2 == 0) {
-                return <View style={{ marginBottom: 10 }}>
+                return <View key={i} style={{ marginBottom: 10 }}>
                   <View style={styles.scrollTopContainer}>
                     <TouchableOpacity
                       style={{ width: "48.5%" }}
@@ -146,7 +146,7 @@ export const CatalogueScreen = (props) => {
                 </View>
               }
               else {
-                return <View style={{ marginBottom: 10 }}>
+                return <View key={i} style={{ marginBottom: 10 }}>
                   <View style={styles.scrollTopContainer}>
 
 

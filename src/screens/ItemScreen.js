@@ -137,7 +137,7 @@ export const ItemScreen = (props) => {
             <Text style={styles.title}>{product.name}</Text>
             {getSinglProduct.data?.rate?.length != 0 ?
               <View style={styles.rateContainer}>
-                <Stars
+                {getSinglProduct?.data?.comments?.length != 0 && <Stars
                   half={false}
                   default={getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 1)}
                   disabled={true}
@@ -146,12 +146,17 @@ export const ItemScreen = (props) => {
                   fullStar={<RatingBigIcon />}
                   emptyStar={<EmptyStar2 />}
                   halfStar={<RatingBigIcon />}
-                />
-                <Text style={{ marginHorizontal: 10 }}>{
+                />}
+
+                {getSinglProduct?.data?.comments?.length != 0 && <Text style={{ marginHorizontal: 10 }}>{
                   getSinglProduct.data?.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 3)
-                }</Text>
+                }</Text>}
                 <TouchableOpacity>
-                  <Text onPress={() => navigation.navigate('OdzivScreen', { productId })} style={styles.reviewText}>{getSinglProduct?.data?.comments?.length} отзывов</Text>
+                  {getSinglProduct?.data?.comments?.length != 0 ?
+
+                    <Text onPress={() => navigation.navigate('OdzivScreen', { productId })} style={styles.reviewText}>{getSinglProduct?.data?.comments?.length} отзывов</Text> :
+                    <Text onPress={() => navigation.navigate('OdzivScreen', { productId })} style={styles.reviewText}>Пока нет отзывов</Text>
+                  }
                 </TouchableOpacity>
               </View> : <View style={[styles.rateContainer, { gap: 3 }]}>
                 <Stare2 />

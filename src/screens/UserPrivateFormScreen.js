@@ -28,7 +28,9 @@ export const UserPrivateFormScreen = (props) => {
     setName(getUser.data?.user?.name)
     setEmail(getUser.data?.user?.email)
     setSurname(getUser.data?.user?.surname)
-    setBirthday(`${getUser.data?.user?.date_of_birth.split("-")[2]}-${getUser.data?.user?.date_of_birth.split("-")[1]}-${getUser.data?.user?.date_of_birth.split("-")[0]}`)
+    if (getUser.data?.user?.date_of_birth?.split("-")[2]) {
+      setBirthday(`${getUser.data?.user?.date_of_birth?.split("-")[2]}-${getUser.data?.user?.date_of_birth?.split("-")[1]}-${getUser.data?.user?.date_of_birth?.split("-")[0]}`)
+    }
   }, [getUser?.data?.user])
 
 
@@ -36,7 +38,7 @@ export const UserPrivateFormScreen = (props) => {
   const [showPicker, setShowPicker] = useState(false);
   const handleDateChange = (event, date) => {
     setSelectedDate(date);
-    setBirthday(format(event.nativeEvent.timestamp, 'dd-MM-yyyy').split("-").join("."))
+    setBirthday(format(event.nativeEvent.timestamp, 'dd-MM-yyyy')?.split("-").join("."))
     setShowPicker(false)
     setShowPicker(Platform.OS === 'ios');
   };
