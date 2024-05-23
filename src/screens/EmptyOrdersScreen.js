@@ -10,8 +10,6 @@ export const EmptyOrderScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        {/* <Text style={styles.title}>Корзина</Text> */}
-        {/* <ReturnIcon style={{ left: 20, }} /> */}
         <EmptyCartIcon style={{ marginBottom: 44, }} />
         <Text style={styles.subTitle}>У вас пока нет заказов</Text>
         <Text style={styles.descr}>
@@ -23,7 +21,6 @@ export const EmptyOrderScreen = () => {
           navigation.navigate("CatalogTab", { screen: "CatalogueScreen" })
         } title="Перейти в каталог" />
       </View>
-      {/* <Navbar active="Cart" activeText="Cart"/> */}
     </View>
   );
 };

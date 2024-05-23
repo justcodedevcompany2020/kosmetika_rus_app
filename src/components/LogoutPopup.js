@@ -5,6 +5,7 @@ import { MainButton } from "./MainButton";
 import { useDispatch } from "react-redux";
 import { LogoutAction } from "../services/action/action";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LogoutPopup = ({ close }) => {
   const dispatch = useDispatch()

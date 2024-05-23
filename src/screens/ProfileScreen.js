@@ -43,6 +43,7 @@ export const ProfileScreen = (props) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       GetUser()
+      setOpenLogout(false)
     });
     return unsubscribe;
   }, [navigation]);

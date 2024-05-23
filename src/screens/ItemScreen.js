@@ -248,7 +248,7 @@ export const ItemScreen = (props) => {
                 basket={addTobasket}
                 title={
                   !addTobasket ? `В корзину  ${Math.round(product.price - (product.price * product.discount / 100))} ₽` :
-                    `в корзине ✓`
+                    `В корзине ✓`
                 }
                 onPress={() =>
                   AddRevoeBasket()

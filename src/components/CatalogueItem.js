@@ -94,10 +94,10 @@ export const CatalogueItem = ({
         <View style={styles.saleBox}>
           <Text style={styles.saleText}>{sale}%</Text>
         </View>}
-      <View style={styles.rating}>
+      {rate && <View style={styles.rating}>
         <RatingIcon />
         <Text style={styles.ratingText}>{TruncatedText(rate)}</Text>
-      </View>
+      </View>}
       <View style={styles.centerContainer}>
         <SummaryBgIcon style={{ position: "absolute", top: "15%" }} />
         <Image

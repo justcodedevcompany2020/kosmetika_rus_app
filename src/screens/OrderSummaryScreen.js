@@ -16,7 +16,6 @@ export const OrderSummaryScreen = (props) => {
   const dispatch = useDispatch()
   const id = props.route.params.id;
   const [token, setToken] = useState()
-  const [status, setStatus] = useState('')
   const getSinglOrder = useSelector((st) => st.getSinglOrder)
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -52,7 +51,6 @@ export const OrderSummaryScreen = (props) => {
           {getSinglOrder.data?.products?.map((elm, i) => {
             return <OrderSummaryItem key={i} data={elm} />
           })
-
           }
         </View>
       </ScrollView>

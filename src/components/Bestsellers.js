@@ -51,7 +51,7 @@ export const Bestsellers = (props) => {
                 isbasket={elm?.basket_auth_user?.length}
                 image={elm.photos[0].photo}
                 key={i}
-                rate={elm.rate?.length == 0 ? 5 : elm.rate_avg_star}
+                rate={elm.rate?.length == 0 ? false : elm.rate_avg_star}
                 title={elm.name}
                 currentPrice={Math.round(elm.price - (elm.price * elm.discount / 100))}
                 prevPrice={elm.price}

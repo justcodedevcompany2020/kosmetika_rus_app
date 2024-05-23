@@ -62,18 +62,18 @@ export const OrderItem = ({ orderStatus, orderNum, orderAmount, orderSum, orderD
       </View>
       <View style={styles.right}>
         {(orderStatus + 1 == 1 || orderStatus == 1) &&
-          <View style={styles.status}><Text style={styles.statusText}>Новый</Text></View>
+          <View style={styles.status}><Text style={styles.statusText}>Оплачен</Text></View>
         }
         {orderStatus == 2 &&
-          <View style={styles.status}><Text style={styles.statusText}>Подтвержден</Text></View>
+          <View style={styles.status}><Text style={styles.statusText}>Не оплачен</Text></View>
         }
-
+        {/* 
         {orderStatus == 3 &&
           <View style={styles.status}><Text style={styles.statusText}>Отменен</Text></View>
         }
         {orderStatus == 4 &&
           <View style={styles.status}><Text style={styles.statusText}>Доставлен</Text></View>
-        }
+        } */}
         <Text style={styles.date}>{orderDate?.split('-')[2]}-{orderDate?.split('-')[1]}-{orderDate?.split('-')[0]}</Text>
       </View>
     </TouchableOpacity>
