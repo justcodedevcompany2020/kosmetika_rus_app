@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    btnWrapper: 'center'
   },
   btnWrapper: {
     gap: 20

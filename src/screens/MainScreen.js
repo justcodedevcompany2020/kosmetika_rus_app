@@ -7,17 +7,21 @@ import { Bestsellers } from "../components/Bestsellers";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { ClearOrderStatus, GetAuthUser, GetBaners, GetBasketAction, GetPadborkiWhiteProducts, GetStoryes } from "../services/action/action";
+import { ClearLogin, ClearOrderStatus, GetAuthUser, GetBaners, GetBasketAction, GetPadborkiWhiteProducts, GetStoryes } from "../services/action/action";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SetToken } from "../services/action/successAction";
+import { ClearConfirmCode } from "../services/action/errorAction";
 
 export const MainScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const [token, setToken] = useState()
 
-
+  useEffect(() => {
+    dispatch(ClearConfirmCode())
+    dispatch(ClearLogin())
+  }, [])
   const [search, setSearch] = useState('')
 
   const [loading, setLoadng] = useState(true)
@@ -37,11 +41,13 @@ export const MainScreen = () => {
   }
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      GetUser()
-    });
-    return unsubscribe;
-  }, [navigation]);
+    GetUser()
+
+    // const unsubscribe = navigation.addListener('focus', async () => {
+    //   GetUser()
+    // });
+    // return unsubscribe;
+  }, []);
 
   const getBaner = useSelector((st) => st.getBaner)
   const getPadborki = useSelector((st) => st.getPadborki)

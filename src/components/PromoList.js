@@ -18,7 +18,7 @@ export const PromoList = ({ data, categoryName }) => {
           style={{ marginRight: 0, width: "48.5%", backgroundColor: "#fff" }}
           title={item.name}
           image={item.photos[0].photo}
-          rate={item.rate == 0 ? 5 : +item.rate_avg_star}
+          rate={item.rate != 0 && +item.rate_avg_star}
           sale={item.discount}
           count={item.product_count}
           currentPrice={

@@ -1,12 +1,14 @@
-export const SuccessLogin = () => {
+export const SuccessLogin = (data) => {
     return {
-        type: "SuccessLogin"
+        type: "SuccessLogin",
+        data
     }
 }
 
-export const SuccessConfirmCode = () => {
+export const SuccessConfirmCode = (data) => {
     return {
-        type: 'SuccessConfirmCode'
+        type: 'SuccessConfirmCode',
+        data
     }
 }
 

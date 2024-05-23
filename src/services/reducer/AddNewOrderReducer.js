@@ -23,9 +23,10 @@ export const AddNewOrderReducer = (state = initialState, action) => {
             temp.data = ''
             temp.status = false
             temp.loading = false
-            temp.error = 'رمز خاطئ'
+            temp.error = ''
             break
         case 'ClearOrderStatus':
+            temp.data = []
             temp.status = false
             temp.loading = false
             temp.error = ''

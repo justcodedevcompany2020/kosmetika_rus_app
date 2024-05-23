@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RadioSelect } from "../../components/RadioSelect";
 import { useDispatch, useSelector } from "react-redux";
 import { ClearValidOrder } from "../../services/action/action";
+import { ClearOrderStatus } from "../../services/action/action";
 
 export const OrderSecondForm = (props) => {
   const [deliveryMethod, setDeliveryMethod] = useState(1);
@@ -23,10 +24,6 @@ export const OrderSecondForm = (props) => {
   const dispatch = useDispatch()
 
   const addNewOrder = useSelector((st) => st.addNewOrder)
-
-  const getPaymentType = useSelector((st) => st.getPaymentType)
-
-  const [paymentData, setPaymentData] = useState([])
 
 
   useEffect(() => {
@@ -39,7 +36,8 @@ export const OrderSecondForm = (props) => {
 
   useEffect(() => {
     if (addNewOrder.status) {
-      navigation.navigate("Success")
+      dispatch(ClearOrderStatus())
+      navigation.navigate("ThanksForOrder")
     }
   }, [addNewOrder])
 

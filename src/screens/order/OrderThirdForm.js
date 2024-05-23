@@ -32,12 +32,9 @@ export const OrderThirdForm = (props) => {
     item[name] = e
     setData(item)
   }
-
   const handelClick = () => {
-    console.log(data, '22')
     let send = true
     let item = { ...error }
-    // console.log(data.address.length, 'data', data.delivery_id == 3)
     if (data.address.length == 0) {
       item.address = 'error'
       send = false
@@ -63,16 +60,20 @@ export const OrderThirdForm = (props) => {
       send = true
     }
     if (!data.posht) {
-      console.log("----")
       item.posht = "error"
     }
-    else[
-      item.posht = ""
-    ]
-    if (!item.address && !item.home && !item.city && !item.posht) {
-      navigation.navigate("FourthStep", { data })
+    else {
+      item.posht = ''
     }
-    // console.log(item)
+    if (data.delivery_id == 1) {
+      if (!item.address && !item.home) {
+        navigation.navigate("FourthStep", { data })
+      }
+    }
+    else
+      if (!item.address && !item.home && !item.city && !item.posht) {
+        navigation.navigate("FourthStep", { data })
+      }
     setError(item)
   }
   return (
@@ -154,7 +155,7 @@ export const OrderThirdForm = (props) => {
             multiline
             placeholderTextColor="rgba(55, 55, 55, 0.5)"
             onChangeText={(e) => HandelChange(e, 'posht')}
-            borderColor={error.posht && 'red'}
+            borderColor={error.posht ? 'red' : "black"}
           />}
         </View>
       </ScrollView>

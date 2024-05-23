@@ -12,16 +12,25 @@ import { InputSms } from "../components/InputSms";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { ClearLogin, ConfrimCode } from "../services/action/action";
+import { ClearConfirmCode } from "../services/action/errorAction";
 
 export const PhoneConfirmScreen = ({ route }) => {
   const navigation = useNavigation();
   const [lastNumber, setLastNumber] = useState("");
   const [code, setCode] = useState([]);
   const confirmCode = useSelector((st) => st.confirmCode)
+  console.log(confirmCode.data.new_reg, 'confirmCode')
 
   useEffect(() => {
     if (confirmCode.status) {
-      navigation.navigate("SignupThanksScreen");
+      if (confirmCode.data.new_reg) {
+        navigation.navigate("SignupThanksScreen");
+      }
+      else {
+        dispatch(ClearConfirmCode())
+        dispatch(ClearLogin())
+        navigation.navigate("Main");
+      }
     }
 
   }, [confirmCode])

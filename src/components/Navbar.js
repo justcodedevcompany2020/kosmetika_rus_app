@@ -7,7 +7,7 @@ import { NavProfileIcon } from "../icons/NavProfileIcon";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { GetBasketAction } from "../services/action/action";
+import { GetBasketAction, GetPadborkiWhiteProducts } from "../services/action/action";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Navbar = (props) => {
@@ -60,6 +60,7 @@ export const Navbar = (props) => {
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => {
+            dispatch(GetPadborkiWhiteProducts(token))
             navigation.navigate("Main");
           }}
         >

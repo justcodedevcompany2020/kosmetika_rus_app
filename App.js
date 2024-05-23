@@ -11,8 +11,6 @@ import { RegisterTab } from "./src/tabs/RegisterTab";
 import { OrderTab } from "./src/tabs/OrderTab";
 import { ProfileTab } from "./src/tabs/ProfileTab";
 import { CatalogTab } from "./src/tabs/CatalogTab";
-import { FeedbackScreen } from "./src/screens/FeedbackScreen";
-import { PromoScreen } from "./src/screens/PromoScreen";
 import { MainScreen } from "./src/screens/MainScreen";
 import { ThanksForOrderScreen } from "./src/screens/ThanksForOrderScreen";
 import { LinearGradient } from "expo-linear-gradient";

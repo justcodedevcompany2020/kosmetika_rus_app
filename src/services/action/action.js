@@ -648,7 +648,6 @@ export const AddNewOrder = (data, token) => {
         fetch(`${api}/add_new_order`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r)
                 if (r.status) {
                     dispatch(GetBasketAction(token, 1))
                     dispatch(SuccessNewOrder(r))
@@ -733,13 +732,13 @@ export const GetPadborkiWhiteProducts = (token) => {
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        // body: JSON.stringify(data),
     };
     return (dispatch) => {
         dispatch(StartGetPadborkiWhiteProducts())
         fetch(`${api}/get_podborki_with_products`, requestOptions)
             .then(response => response.json())
             .then(r => {
+                console.log(r.status, "status")
                 if (r.status) {
                     dispatch(SuccessGetPadborkiWhiteProducts(r.data))
                 }
@@ -748,6 +747,7 @@ export const GetPadborkiWhiteProducts = (token) => {
                 }
             })
             .catch(error => {
+                console.log(error)
                 dispatch(ErrorGetPadborkiwhteProducts())
             });
     }
