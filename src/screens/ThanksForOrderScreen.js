@@ -11,11 +11,7 @@ import { ClearOrderStatus } from "../services/action/action";
 
 export const ThanksForOrderScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch()
   const addNewOrder = useSelector((st) => st.addNewOrder)
-  useEffect(() => {
-    dispatch(ClearOrderStatus())
-  }, [])
   return (
     <View style={{ ...styles.container, backgroundColor: "#f7f7f7" }}>
       <View style={styles.mainContainer}>

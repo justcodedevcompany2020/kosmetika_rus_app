@@ -7,7 +7,7 @@ import { NavProfileIcon } from "../icons/NavProfileIcon";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { GetBasketAction, GetPadborkiWhiteProducts } from "../services/action/action";
+import { ClearOrderStatus, GetBasketAction, GetPadborkiWhiteProducts } from "../services/action/action";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Navbar = (props) => {
@@ -60,6 +60,7 @@ export const Navbar = (props) => {
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => {
+            dispatch(ClearOrderStatus())
             dispatch(GetPadborkiWhiteProducts(token))
             navigation.navigate("Main");
           }}
@@ -68,13 +69,21 @@ export const Navbar = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("CatalogTab", { screen: 'CatalogueScreen' })}
+          onPress={() => {
+            dispatch(ClearOrderStatus())
+            navigation.navigate("CatalogTab", { screen: 'CatalogueScreen' })
+          }
+          }
         >
           <NavCatalogueIcon isActive={props.active == "Catalogue"} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("OrderTab", { screen: 'Cart' })}
+          onPress={() => {
+            dispatch(ClearOrderStatus())
+            navigation.navigate("OrderTab", { screen: 'Cart' })
+          }
+          }
         >
           <View style={{ position: 'relative' }}>
             {getBasket.data.data?.length > 0 && <View style={{ position: 'absolute', right: 0, top: -10, backgroundColor: '#e0caae', width: 18, height: 18, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
@@ -85,7 +94,10 @@ export const Navbar = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("ProfileTab")}
+          onPress={() => {
+            dispatch(ClearOrderStatus())
+            navigation.navigate("ProfileTab")
+          }}
         >
           <NavProfileIcon isActive={props.active == "Profile"} />
         </TouchableOpacity>

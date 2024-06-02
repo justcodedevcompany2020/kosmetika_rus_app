@@ -20,7 +20,6 @@ export const OrderFourthForm = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const getUser = useSelector((st) => st.getUser)
-  const getMyOrder = useSelector((st) => st.getMyOrder)
 
   const addNewOrder = useSelector((st) => st.addNewOrder)
 
@@ -142,6 +141,7 @@ export const OrderFourthForm = (props) => {
             if (data.delivery_id == 3) {
               if (elm.id != 2)
                 return <PaymentMethod
+                  key={i}
                   title={elm.name}
                   text={elm.description}
                   onPress={() => setPaymentMethod(elm.id)}
@@ -150,6 +150,7 @@ export const OrderFourthForm = (props) => {
             }
             else {
               return <PaymentMethod
+                key={i}
                 title={elm.name}
                 text={elm.description}
                 onPress={() => setPaymentMethod(elm.id)}
@@ -210,6 +211,7 @@ export const OrderFourthForm = (props) => {
           {/* <View style={{ width: 280 }}> */}
           {getBasket.data?.data?.map((elm, i) => {
             return <OrderItemFinal
+              key={i}
               photo={elm.product.photos[0].photo}
               title={elm.product?.name}
               descr={elm.product.volume}

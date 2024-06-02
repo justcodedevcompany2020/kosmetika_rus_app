@@ -36,7 +36,6 @@ export const OrderSecondForm = (props) => {
 
   useEffect(() => {
     if (addNewOrder.status) {
-      dispatch(ClearOrderStatus())
       navigation.navigate("ThanksForOrder")
     }
   }, [addNewOrder])

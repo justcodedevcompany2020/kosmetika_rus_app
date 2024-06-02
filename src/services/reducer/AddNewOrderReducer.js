@@ -1,5 +1,5 @@
 const initialState = {
-    data: [],
+    data: {},
     status: false,
     loading: true,
     error: ""
@@ -8,7 +8,7 @@ export const AddNewOrderReducer = (state = initialState, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'StartNewOrder':
-            temp.data = []
+            temp.data = {}
             temp.status = false
             temp.loading = true
             temp.error = ''
@@ -26,7 +26,7 @@ export const AddNewOrderReducer = (state = initialState, action) => {
             temp.error = ''
             break
         case 'ClearOrderStatus':
-            temp.data = []
+            temp.data = {}
             temp.status = false
             temp.loading = false
             temp.error = ''

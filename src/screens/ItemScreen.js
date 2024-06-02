@@ -44,7 +44,7 @@ export const ItemScreen = (props) => {
     if (getSinglProduct.data.data) {
       setProduct(getSinglProduct.data.data)
     }
-    if (getSinglProduct.data?.data?.basket_auth_user.length == 0) {
+    if (getSinglProduct.data?.data?.basket_auth_user.length != 0) {
       setAddTobasket(getSinglProduct.data?.data?.basket_auth_user.length > 0)
     }
   }, [getSinglProduct]);
@@ -52,7 +52,11 @@ export const ItemScreen = (props) => {
 
 
   useEffect(() => {
-    dispatch(GetSinglProduct({ product_id: productId }, token))
+
+    const unsubscribe = navigation.addListener('focus', async () => {
+      dispatch(GetSinglProduct({ product_id: productId }, token))
+    });
+    return unsubscribe;
   }, [productId])
 
 

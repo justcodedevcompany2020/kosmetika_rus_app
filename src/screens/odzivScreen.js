@@ -38,7 +38,7 @@ export const OdzivScreen = () => {
                 <View style={styles.inner}>
                     <View>
                         <Text style={styles.title}>{getSinglProduct.data?.data?.name}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                        {getSinglProduct.data.data?.rate?.length != 0 ? <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                             <Stars
                                 half={false}
                                 default={getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 1)}
@@ -52,34 +52,40 @@ export const OdzivScreen = () => {
                             <Text style={{ marginHorizontal: 10, fontWeight: "600" }}>{
                                 getSinglProduct.data.data?.rate?.length == 0 ? 5 : getSinglProduct.data.data?.rate_avg_star?.slice(0, 3)
                             }</Text>
-                        </View>
-                        {getSinglProduct?.data?.comments?.map((elm, i) => {
-                            return <View key={i} style={{ borderWidth: 1, borderColor: 'rgba(55,55,55,0.23)', width: '100%', padding: 20, marginBottom: 20, borderRadius: 10 }}>
-                                <View style={{ flexDirection: 'row', gap: 10 }}>
-                                    <Text style={{ fontSize: 16, color: '#37377' }}>{elm.user.name}</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Stars
-                                            half={false}
-                                            default={elm.star}
-                                            disabled={true}
-                                            spacing={1}
-                                            count={5}
-                                            fullStar={<RatingBigIcon />}
-                                            emptyStar={<EmptyStar2 />}
-                                            halfStar={<RatingBigIcon />}
-                                        />
-                                        <Text style={{ marginHorizontal: 3, fontWeight: "600" }}>{
-                                            elm.star
-                                        }</Text>
-                                    </View>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#373737' }}>
-                                    {elm.created_at.slice(0, 10)}
-                                </Text>
-                                <Text style={{ marginTop: 20, fontSize: 14, color: '#373737' }}>
-                                    {elm.message}
-                                </Text>
+                        </View> :
+                            <View>
+                                <Text>Пока нет отзывов</Text>
                             </View>
+                        }
+                        {getSinglProduct?.data?.comments?.map((elm, i) => {
+                            console.log(elm.status)
+                            if (elm.status == 1)
+                                return <View key={i} style={{ borderWidth: 1, borderColor: 'rgba(55,55,55,0.23)', width: '100%', padding: 20, marginBottom: 20, borderRadius: 10 }}>
+                                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                                        <Text style={{ fontSize: 16, color: '#37377' }}>{elm.user.name}</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Stars
+                                                half={false}
+                                                default={elm.star}
+                                                disabled={true}
+                                                spacing={1}
+                                                count={5}
+                                                fullStar={<RatingBigIcon />}
+                                                emptyStar={<EmptyStar2 />}
+                                                halfStar={<RatingBigIcon />}
+                                            />
+                                            <Text style={{ marginHorizontal: 3, fontWeight: "600" }}>{
+                                                elm.star
+                                            }</Text>
+                                        </View>
+                                    </View>
+                                    <Text style={{ fontSize: 16, color: '#373737' }}>
+                                        {elm.created_at.slice(0, 10)}
+                                    </Text>
+                                    <Text style={{ marginTop: 20, fontSize: 14, color: '#373737' }}>
+                                        {elm.message}
+                                    </Text>
+                                </View>
 
                         })}
                     </View>

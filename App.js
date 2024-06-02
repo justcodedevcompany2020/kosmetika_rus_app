@@ -87,15 +87,15 @@ export default function App() {
                     component={OrderTab}
                   ></Tab.Screen>
                   <Tab.Screen
-                    options={{ tabBarStyle: { display: "none" } }}
-                    name="ProfileTab"
-                    component={ProfileTab}
-                  ></Tab.Screen>
-                  <Tab.Screen
                     name="Main"
                     component={MainScreen}
                     options={{ tabBarStyle: { display: "none" } }}
                   />
+                  <Tab.Screen
+                    options={{ tabBarStyle: { display: "none" } }}
+                    name="ProfileTab"
+                    component={ProfileTab}
+                  ></Tab.Screen>
                   <Tab.Screen
                     name="CatalogTab"
                     component={CatalogTab}

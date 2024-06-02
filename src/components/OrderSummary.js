@@ -5,18 +5,18 @@ export const OrderSummary = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.user}>
-        <Text style={styles.subTitle}>{props.data.name}</Text>
-        <Text style={styles.subDescr}>{props.data.phone}</Text>
-        <Text style={styles.subDescr}>{props.data.email}</Text>
+        <Text style={styles.subTitle}>{props.data?.name}</Text>
+        <Text style={styles.subDescr}>{props.data?.phone}</Text>
+        <Text style={styles.subDescr}>{props.data?.email}</Text>
       </View>
       <View style={styles.deliveryMet}>
         <Text style={styles.subTitle}>Способ доставки</Text>
-        <Text style={styles.subDescr}>{props.data.deliver?.name}</Text>
+        <Text style={styles.subDescr}>{props.data?.deliver?.name}</Text>
       </View>
       <View style={styles.deliveryAddress}>
         <Text style={styles.subTitle}>Адрес доставки</Text>
         <Text style={styles.subDescr}>
-          {props.data.city.name} {props.data.address} {props.data?.home_office}
+          {props.data?.city?.name} {props.data?.address} {props.data?.home_office}
         </Text>
       </View>
       <View style={styles.payment}>
@@ -28,8 +28,8 @@ export const OrderSummary = (props) => {
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Товары на сумму</Text>
           {props.data?.deliver?.id != 2 ?
-            <Text style={styles.subDescr}>{Math.round(props.data.order_sum - 250)} ₽</Text> :
-            <Text style={styles.subDescr}>{Math.round(props.data.order_sum)}  ₽</Text>
+            <Text style={styles.subDescr}>{Math.round(props.data?.order_sum - 250)} ₽</Text> :
+            <Text style={styles.subDescr}>{Math.round(props.data?.order_sum)}  ₽</Text>
           }
         </View>
         {props.data?.deliver?.id != 2 &&
@@ -40,7 +40,7 @@ export const OrderSummary = (props) => {
         }
         <View style={styles.subItem}>
           <Text style={styles.subDescr}>Итого</Text>
-          <Text style={styles.subDescr}>{Math.round(props.data.order_sum)} ₽</Text>
+          <Text style={styles.subDescr}>{Math.round(props.data?.order_sum)} ₽</Text>
         </View>
       </View>
     </View>
