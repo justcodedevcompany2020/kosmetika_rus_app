@@ -23,6 +23,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [token, setToken] = useState("")
   const [fontsLoaded] = useFonts({
     MontserratLight: require("./src/fonts/Montserrat-Light.ttf"),
     MontserratRegular: require("./src/fonts/Montserrat-Regular.ttf"),
@@ -32,17 +33,16 @@ export default function App() {
     MontserratExtraBold: require("./src/fonts/Montserrat-ExtraBold.ttf"),
   });
   const [initialScreen, setInitialScreen] = useState("RegisterTab");
-  const [isSplashVisible, setSplashVisible] = useState(true);
   useEffect(() => {
     setTimeout(() => {
-      setSplashVisible(false);
+      // setSplashVisible(false);
     }, 3000); // Adjust the duration as needed (in milliseconds)
   }, []);
 
   const GetUser = async () => {
     let token = await AsyncStorage.getItem('token')
+    setToken(token)
     if (token) {
-      // setToken(token)
       setInitialScreen('Main')
     }
   }
@@ -50,9 +50,14 @@ export default function App() {
   useEffect(() => {
     GetUser()
   }, []);
+
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
+    }
+    if (token) {
+      setInitialScreen('Main')
     }
   }, [fontsLoaded]);
 
@@ -82,15 +87,15 @@ export default function App() {
                     component={RegisterTab}
                   ></Tab.Screen>
                   <Tab.Screen
-                    options={{ tabBarStyle: { display: "none" } }}
-                    name="OrderTab"
-                    component={OrderTab}
-                  ></Tab.Screen>
-                  <Tab.Screen
                     name="Main"
                     component={MainScreen}
                     options={{ tabBarStyle: { display: "none" } }}
                   />
+                  <Tab.Screen
+                    options={{ tabBarStyle: { display: "none" } }}
+                    name="OrderTab"
+                    component={OrderTab}
+                  ></Tab.Screen>
                   <Tab.Screen
                     options={{ tabBarStyle: { display: "none" } }}
                     name="ProfileTab"

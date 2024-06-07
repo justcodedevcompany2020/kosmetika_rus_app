@@ -58,7 +58,6 @@ export const OdzivScreen = () => {
                             </View>
                         }
                         {getSinglProduct?.data?.comments?.map((elm, i) => {
-                            console.log(elm.status)
                             if (elm.status == 1)
                                 return <View key={i} style={{ borderWidth: 1, borderColor: 'rgba(55,55,55,0.23)', width: '100%', padding: 20, marginBottom: 20, borderRadius: 10 }}>
                                     <View style={{ flexDirection: 'row', gap: 10 }}>

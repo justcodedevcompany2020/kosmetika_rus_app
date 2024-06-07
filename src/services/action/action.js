@@ -738,7 +738,6 @@ export const GetPadborkiWhiteProducts = (token) => {
         fetch(`${api}/get_podborki_with_products`, requestOptions)
             .then(response => response.json())
             .then(r => {
-                console.log(r.status, "status")
                 if (r.status) {
                     dispatch(SuccessGetPadborkiWhiteProducts(r.data))
                 }
@@ -747,7 +746,6 @@ export const GetPadborkiWhiteProducts = (token) => {
                 }
             })
             .catch(error => {
-                console.log(error)
                 dispatch(ErrorGetPadborkiwhteProducts())
             });
     }

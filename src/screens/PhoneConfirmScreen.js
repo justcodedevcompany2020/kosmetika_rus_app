@@ -19,7 +19,6 @@ export const PhoneConfirmScreen = ({ route }) => {
   const [lastNumber, setLastNumber] = useState("");
   const [code, setCode] = useState([]);
   const confirmCode = useSelector((st) => st.confirmCode)
-  console.log(confirmCode.data.new_reg, 'confirmCode')
 
   useEffect(() => {
     if (confirmCode.status) {

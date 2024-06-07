@@ -156,6 +156,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#f7f7f7",
         height: '100%',
     },
+    retunIcon: {
+        left: 10,
+        top: 10,
+        zIndex: 10,
+    },
     mainContainer: {
         flex: 1,
         width: "100%",
